@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "119886056834",
+    "firebase_url": "https://hypnotabac-1c267.firebaseio.com",
+    "project_id": "hypnotabac-1c267",
+    "storage_bucket": "hypnotabac-1c267.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119886056834:android:7e6a2ca71598a25158939b",
+        "android_client_info": {
+          "package_name": "com.hypnotabac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119886056834-1ifm03ge14t01bmhbgqjijuetuct8li7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBZ-C5A2qOnVTCA1RfdtrqrZonw2M3Rlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119886056834-1ifm03ge14t01bmhbgqjijuetuct8li7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
