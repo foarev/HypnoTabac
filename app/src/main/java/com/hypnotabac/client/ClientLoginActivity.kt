@@ -1,71 +1,74 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.client
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_h_login.*
 
-class HypnoLoginActivity : AppCompatActivity() {
-    private var firebaseAuth: FirebaseAuth? = null
+
+class ClientLoginActivity : AppCompatActivity() {
     private val RC_SIGN_IN = 0
-    private val TAG = "LoginActivity"
+    private val TAG = "ClientLoginActivity"
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
+    private val firebaseAuth = FirebaseAuth.getInstance()
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_h_login)
 
-        firebaseAuth = FirebaseAuth.getInstance()
         login!!.setOnClickListener(View.OnClickListener {
             val email = username!!.text.toString().trim { it <= ' ' }
             val password = password!!.text.toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(this@HypnoLoginActivity, "Please enter your email", Toast.LENGTH_SHORT)
+                Toast.makeText(this@ClientLoginActivity, "Please enter your email", Toast.LENGTH_SHORT)
                     .show()
                 return@OnClickListener
             }
+
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(
-                    this@HypnoLoginActivity,
+                    this@ClientLoginActivity,
                     "Please enter your password",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@OnClickListener
             }
-            firebaseAuth!!.signInWithEmailAndPassword(email, password)
+            firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
-                    this@HypnoLoginActivity,
+                    this@ClientLoginActivity,
                     OnCompleteListener<AuthResult?> { task ->
                         if (task.isSuccessful) {
-                            val displayName = firebaseAuth!!.currentUser!!.displayName
+                            val displayName = firebaseAuth.currentUser!!.displayName
                             SaveSharedPreferences.setUserName(
-                                this@HypnoLoginActivity,
+                                this@ClientLoginActivity,
                                 displayName
                             )
-                            startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
+                            startActivity(Intent(applicationContext, ClientMainActivity::class.java))
                             Toast.makeText(
-                                this@HypnoLoginActivity,
+                                this@ClientLoginActivity,
                                 "Successfully logged in as $displayName",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             Toast.makeText(
-                                this@HypnoLoginActivity,
+                                this@ClientLoginActivity,
                                 "Wrong email address or password",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     })
         })
-
-        signup.setOnClickListener{
-            startActivity(Intent(applicationContext, SignupActivity::class.java))
-        }
     }
 }

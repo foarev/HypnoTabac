@@ -1,42 +1,35 @@
-package com.example.chucknorrisjokes
+package com.hypnotabac.hypno
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Bundle
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import kotlinx.serialization.json.Json
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.hypnotabac.SaveSharedPreferences
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlinx.serialization.list
-import kotlinx.serialization.json.Json.Companion.parse
-import kotlinx.serialization.json.Json.Companion.stringify
-import kotlinx.serialization.json.JsonConfiguration
 
 /**
- * @param context, helpful for sharing joke
- * @param sharedPreferences, helpful for saving jokes
+ * @param context, helpful for sharing client
  *
  * @see androidx.lifecycle.ViewModel
  */
-class JokesViewModel(
-    private val context: Context,
-    private val sharedPreferences: SharedPreferences
+class ClientsViewModel(
+    private val context: Context
 ) : ViewModel() {
 
-    val TAG: String = "JokeViewModel"
+    val TAG: String = "ClientViewModel"
     val JOKE_LIST_KEY:String = "JOKE_LIST_KEY"
-    val dataListSerializer = Joke.serializer().list
-    private val service: JokeApiService = JokeApiServiceFactory.factoryBuilder()
-    private val composite: CompositeDisposable = CompositeDisposable()
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val firebaseDatabase = FirebaseDatabase.getInstance()
 
     enum class LoadingStatus { LOADING, NOT_LOADING }
 
@@ -49,19 +42,9 @@ class JokesViewModel(
         object DataSetChangedAction : ListAction()
     }
 
-    /**
-     * Private members of type MutableLiveData.
-     * You can update a MutableLiveData value using setValue() (or postValue() if not main Thread).
-     * Belong private because only the ViewModel should be able to update its liveData.
-     *
-     * @see androidx.lifecycle.MutableLiveData
-     * @see androidx.lifecycle.LiveData#setValue()
-     * @see androidx.lifecycle.LiveData#postValue()
-     */
-    private val _jokesLoadingStatus = MutableLiveData<LoadingStatus>()
-    private val _jokesSetChangedAction = MutableLiveData<ListAction>()
-    private val _jokes = MutableLiveData<List<Joke>>()
-    private val _stared = MutableLiveData<List<Boolean>>()
+    private val _clientsLoadingStatus = MutableLiveData<LoadingStatus>()
+    private val _clientsSetChangedAction = MutableLiveData<ListAction>()
+    private val _clients = MutableLiveData<List<Client>>()
 
 
     /**
@@ -72,157 +55,76 @@ class JokesViewModel(
      * @see androidx.lifecycle.LiveData
      * @see androidx.lifecycle.Transformations
      */
-    val jokesLoadingStatus: LiveData<LoadingStatus> = _jokesLoadingStatus
-    val jokesSetChangedAction: LiveData<ListAction> = _jokesSetChangedAction
-    val jokeModels: LiveData<List<JokeView.Model>> = Transformations.map(_jokes) {
-        it.toJokesViewModel()
+    val clientsLoadingStatus: LiveData<LoadingStatus> = _clientsLoadingStatus
+    val clientsSetChangedAction: LiveData<ListAction> = _clientsSetChangedAction
+    val clientModels: LiveData<List<ClientView.Model>> = Transformations.map(_clients) {
+        it.toClientsViewModel()
     }
 
     init {
-        onSavedJokesRestored()
-        onNewJokesRequest()
+        onNewClientsRequest()
     }
 
-    fun onNewJokesRequest(jokeCount: Int = 10) {
-        _jokesLoadingStatus.value=LoadingStatus.LOADING
-        val jokes:MutableList<Joke> = mutableListOf()
-        val stared:MutableList<Boolean> = mutableListOf()
-        if(!_jokes.value.isNullOrEmpty() && !_stared.value.isNullOrEmpty()) {
-            jokes.addAll(_jokes.value!!)
-            stared.addAll(_stared.value!!)
+    fun onNewClientsRequest() {
+        _clientsLoadingStatus.value=LoadingStatus.LOADING
+        val clients:MutableList<Client> = mutableListOf()
+        if(!_clients.value.isNullOrEmpty() ) {
+            clients.addAll(_clients.value!!)
         }
-        composite.add(service
-            .giveMeAJoke()
-            .subscribeOn(Schedulers.io())
-            .delay(50, TimeUnit.MILLISECONDS)
-            .repeat(jokeCount.toLong())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doAfterTerminate {_jokesLoadingStatus.value=LoadingStatus.NOT_LOADING}
-            .subscribeBy(
-                onError = { e -> Log.wtf(TAG, e) },
-                onNext = {joke ->
-                    jokes.add(joke)
-                    stared.add(false)
-                },
-                onComplete = {
-                    _jokes.value = jokes
-                    _stared.value = stared
-                    _jokesSetChangedAction.value = ListAction.DataSetChangedAction
+
+        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val clientsMap = dataSnapshot.value!! as Map<*, *>
+                    clientsMap.forEach{ c->
+                        val dbClient = c.value as Map<*, *>
+                        if(dbClient.containsKey("userID")){
+                            clients.add(Client( dbClient["userID"] as String,
+                                dbClient["email"] as String,
+                                dbClient["firstName"] as String,
+                                dbClient["lastName"] as String,
+                                dbClient["hypnoID"] as String,
+                                true))
+                        } else {
+                            clients.add(Client( "",
+                                dbClient["email"] as String,
+                                "",
+                                "",
+                                "",
+                                false))
+                        }
+                    }
+                    _clients.value = clients
+                    _clientsSetChangedAction.value = ListAction.DataSetChangedAction
                 }
-            )
-        )
-    }
-
-    fun onJokeRemovedAt(position: Int) {
-        val jokes:MutableList<Joke> = mutableListOf()
-        val stared:MutableList<Boolean> = mutableListOf()
-        jokes.addAll(_jokes.value!!)
-        stared.addAll(_stared.value!!)
-        onJokeUnStared(jokes[position].id)
-        jokes.removeAt(position)
-        stared.removeAt(position)
-        _jokes.value = jokes
-        _stared.value = stared
-        _jokesSetChangedAction.value = ListAction.ItemRemovedAction(position)
-    }
-
-    fun onJokesReset() {
-        val jokes:MutableList<Joke> = mutableListOf()
-        val stared:MutableList<Boolean> = mutableListOf()
-        _jokes.value = jokes
-        _stared.value = stared
-        onSavedJokesRestored()
-        onNewJokesRequest()
-        _jokesSetChangedAction.value = ListAction.DataSetChangedAction
-    }
-
-    fun onJokePositionChanged(previous: Int, target: Int) {
-        _jokes.value = _jokes.value!!.moveItem(previous, target)
-        _stared.value = _stared.value!!.moveItem(previous, target)
-        _jokesSetChangedAction.value = ListAction.ItemMovedAction(previous, target)
-    }
-
-    private fun onJokeStared(id: String) {
-        val stared = mutableListOf<Boolean>()
-        stared.addAll(_stared.value!!)
-        _jokes.value?.forEachIndexed {index, joke ->
-            if(joke.id==id){
-                val sharedPrefs = SharedPrefs()
-                if(sharedPrefs.getFavorites(context)!=null)
-                    sharedPrefs.addFavorite(context, joke)
-                else {
-                    val favJokes: MutableList<Joke> = mutableListOf()
-                    favJokes.add(joke)
-                    sharedPrefs.saveFavorites(context, favJokes)
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(TAG, "Failed to read value.", error.toException())
                 }
-                stared[index] = true
-                _stared.value = stared
-                _jokes.value = _jokes.value
-                _jokesSetChangedAction.value = ListAction.ItemUpdatedAction(index)
-            }
-        }
+            })
     }
 
-    private fun onJokeUnStared(id: String) {
-        val stared = mutableListOf<Boolean>()
-        stared.addAll(_stared.value!!)
-        _jokes.value?.forEachIndexed {index, joke ->
-            if(joke.id==id){
-                SharedPrefs().removeFavorite(context, joke)
-                stared[index] = false
-                _stared.value = stared
-                _jokes.value = _jokes.value
-                _jokesSetChangedAction.value = ListAction.ItemUpdatedAction(index)
-            }
-        }
+    fun onClientsReset() {
+        val clients:MutableList<Client> = mutableListOf()
+        _clients.value = clients
+        onNewClientsRequest()
+        _clientsSetChangedAction.value = ListAction.DataSetChangedAction
     }
 
-    private fun onJokeShared(id: String) {
-        _jokes.value?.forEach {joke ->
-            if(joke.id==id){
-                val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, joke.value)
-                    type = "text/plain"
-                }
-
-                val shareIntent = Intent.createChooser(sendIntent, null)
-                context.startActivity(shareIntent)
-            }
-        }
+    private fun onClientRemoved(id: String) {
+        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).removeValue()
+        onClientsReset()
     }
 
-    private fun onSavedJokesRestored() {
-        val jokes = mutableListOf<Joke>()
-        val stared = mutableListOf<Boolean>()
-        SharedPrefs().getFavorites(context)?.forEach {joke ->
-            if (joke != null) {
-                jokes.add(joke)
-                stared.add(true)
-                _jokes.value = jokes
-                _stared.value = stared
-                _jokesSetChangedAction.value = ListAction.DataSetChangedAction
-            }
-        }
+    private fun onClientEdited(id: String) {
+        startActivity(context, Intent(context, AddClientActivity::class.java),null)
     }
 
-    override fun onCleared() {
-        composite.dispose()
-        super.onCleared()
+    private fun onClientStats(id: String) {
+
     }
 
-    private fun List<Joke>.toJokesViewModel(): List<JokeView.Model> = mapIndexed { index, joke ->
-        var s=false
-        if(_jokes.value!=null && _stared.value!=null) {
-            val stared = mutableListOf<Boolean>()
-            stared.addAll(_stared.value!!)
-            _jokes.value?.forEach {j ->
-                if(j.id==joke.id && stared.size>index){
-                    s = stared[index]
-                }
-            }
-        }
-        JokeView.Model(joke, s, {id -> onJokeShared(id)}, {id -> onJokeStared(id)}, {id -> onJokeUnStared(id)})
+    private fun List<Client>.toClientsViewModel(): List<ClientView.Model> = map { client ->
+        ClientView.Model(client, { clientID -> onClientRemoved(clientID)}, { clientID -> onClientEdited(clientID)}, { clientID -> onClientStats(clientID)} )
     }
 
     /** Convenient method to change an item position in a List */

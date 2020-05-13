@@ -1,57 +1,85 @@
-package com.hypnotabac
+package com.hypnotabac.hypno
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
-import android.widget.Toast
-import com.google.firebase.auth.ActionCodeSettings
-import com.google.firebase.auth.FirebaseAuth
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.hypnotabac.hypno.ClientsViewModel.LoadingStatus
+import com.hypnotabac.hypno.ClientsViewModel.ListAction
+import com.hypnotabac.R
 import kotlinx.android.synthetic.main.activity_h_main.*
 
 class HypnoMainActivity : AppCompatActivity() {
-    val TAG = "hMainActivity"
+    private val TAG = "HypnoMainActivity"
+    private val clientAdapter: ClientAdapter = ClientAdapter()
+    private val llm: RecyclerView.LayoutManager = LinearLayoutManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_h_main)
 
-
-        sendemail.setOnClickListener{
-            val email = username!!.text.toString().trim { it <= ' ' }
-            if (TextUtils.isEmpty(email)) {
-                Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            }
-            Log.d(TAG, email)
-            Toast.makeText(this, email, Toast.LENGTH_SHORT).show()
-            val actionCodeSettings =
-                ActionCodeSettings.newBuilder() // URL you want to redirect back to. The domain (www.example.com) for this
-                    // URL must be whitelisted in the Firebase Console.
-                    .setUrl("https://hypnotabac.page.link/jdF1") // This must be true
-                    .setHandleCodeInApp(true)
-                    .setIOSBundleId("com.hypnotabac.ios")
-                    .setAndroidPackageName(
-                        "com.hypnotabac",
-                        true,  /* installIfNotAvailable */
-                        "12" /* minimumVersion */
-                    )
-                    .build()
-            Log.d(TAG, "built")
-            Toast.makeText(this, "built", Toast.LENGTH_SHORT).show()
-
-            FirebaseAuth.getInstance().sendSignInLinkToEmail(email, actionCodeSettings)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Email sent.")
-                        Toast.makeText(this, "Email sent.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.d(TAG, "Error : "+e.message)
-                    Toast.makeText(this, "Error : "+e.stackTrace, Toast.LENGTH_SHORT).show()
-                }
+        addclient.setOnClickListener{
+            startActivity(Intent(applicationContext, AddClientActivity::class.java))
         }
+        my_recycler_view.layoutManager = llm
+        my_recycler_view.adapter = clientAdapter
+
+        observeViewModel()
+    }
+    private val viewModel: ClientsViewModel by viewModels {
+        ClientsViewModelFactory(this)
+    }
+
+    private fun observeViewModel() {
+        viewModel.clientModels.observe(
+            this,
+            Observer { jokes: List<ClientView.Model> ->
+                clientAdapter.models.clear()
+                clientAdapter.models.addAll(jokes)
+            })
+
+        viewModel.clientsSetChangedAction.observe(
+            this,
+            Observer { listAction: ListAction ->
+                when(listAction) {
+                    is ListAction.ItemUpdatedAction ->
+                        clientAdapter.notifyItemChanged(listAction.position)
+                    is ListAction.ItemRemovedAction ->
+                        clientAdapter.notifyItemRemoved(listAction.position)
+                    is ListAction.ItemInsertedAction ->
+                        clientAdapter.notifyItemInserted(listAction.position)
+                    is ListAction.ItemMovedAction ->
+                        clientAdapter.notifyItemMoved(listAction.fromPosition, listAction.toPosition)
+                    is ListAction.DataSetChangedAction ->
+                        clientAdapter.notifyDataSetChanged()
+                }
+            })
+
+        viewModel.clientsLoadingStatus.observe(
+            this,
+            Observer { loadingStatus: LoadingStatus ->
+                //swipe_refresh_layout.isRefreshing = loadingStatus == LoadingStatus.LOADING
+            })
+    }
+
+
+    /**
+     * Convenient class used to build the instance of our JokeViewModel,
+     * passing some params to its constructor.
+     *
+     * @see androidx.lifecycle.ViewModelProvider
+     */
+    private class ClientsViewModelFactory(
+        private val context: Context
+    ) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+            ClientsViewModel(context) as T
     }
 }

@@ -1,31 +1,26 @@
-package com.example.chucknorrisjokes
+package com.hypnotabac.hypno
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class JokeAdapter(onBottomReachedParam: () -> Unit) : RecyclerView.Adapter<JokeAdapter.JokeViewHolder>(){
-    val TAG:String = "JokeAdapter"
-    val onBottomReached: () -> Unit = onBottomReachedParam
+class ClientAdapter() : RecyclerView.Adapter<ClientAdapter.ClientViewHolder>(){
+    val TAG:String = "ClientAdapter"
 
-    class JokeViewHolder(val v: JokeView) : RecyclerView.ViewHolder(v)
+    class ClientViewHolder(val v: ClientView) : RecyclerView.ViewHolder(v)
 
-    var models:MutableList<JokeView.Model> = mutableListOf()
+    var models:MutableList<ClientView.Model> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokeViewHolder {
-        val v = JokeView(parent.context)
-        return JokeViewHolder(v)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientViewHolder {
+        val v = ClientView(parent.context)
+        return ClientViewHolder(v)
     }
 
     override fun getItemCount(): Int {
         return models.count()
     }
 
-    override fun onBindViewHolder(holder: JokeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ClientViewHolder, position: Int) {
         holder.v.setupView(models[position])
-        if (position >= models.count()-1) {
-            onBottomReached()
-        }
     }
 }

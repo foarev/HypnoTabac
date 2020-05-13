@@ -1,13 +1,8 @@
-package com.hypnotabac
+package com.hypnotabac.client
 
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.ActionCodeSettings
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_c_main.*
+import com.hypnotabac.R
 
 
 class ClientMainActivity : AppCompatActivity() {

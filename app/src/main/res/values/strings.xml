@@ -10,4 +10,10 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="add">ADD</string>
+    <string name="edit">Edit</string>
+    <string name="stats">Stats</string>
+    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_last_name">Last Name</string>
+    <string name="remove">Remove</string>
 </resources>
