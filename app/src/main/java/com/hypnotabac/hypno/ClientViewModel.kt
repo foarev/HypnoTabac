@@ -62,7 +62,7 @@ class ClientsViewModel(
     }
 
     init {
-        onNewClientsRequest()
+        onClientsReset()
     }
 
     fun onNewClientsRequest() {
@@ -71,31 +71,32 @@ class ClientsViewModel(
         if(!_clients.value.isNullOrEmpty() ) {
             clients.addAll(_clients.value!!)
         }
-
         firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val clientsMap = dataSnapshot.value!! as Map<*, *>
-                    clientsMap.forEach{ c->
-                        val dbClient = c.value as Map<*, *>
-                        if(dbClient.containsKey("userID")){
-                            clients.add(Client( dbClient["userID"] as String,
-                                dbClient["email"] as String,
-                                dbClient["firstName"] as String,
-                                dbClient["lastName"] as String,
-                                dbClient["hypnoID"] as String,
-                                true))
-                        } else {
-                            clients.add(Client( "",
-                                dbClient["email"] as String,
-                                "",
-                                "",
-                                "",
-                                false))
+                    if(dataSnapshot.value!=null){
+                        val clientsMap = dataSnapshot.value as Map<*, *>
+                        clientsMap.forEach{ c->
+                            val dbClient = c.value as Map<*, *>
+                            if(dbClient.containsKey("userID")){
+                                clients.add(Client( dbClient["userID"] as String,
+                                    dbClient["email"] as String,
+                                    dbClient["firstName"] as String,
+                                    dbClient["lastName"] as String,
+                                    dbClient["hypnoID"] as String,
+                                    true))
+                            } else {
+                                clients.add(Client( "",
+                                    dbClient["email"] as String,
+                                    "",
+                                    "",
+                                    "",
+                                    false))
+                            }
                         }
+                        _clients.value = clients
+                        _clientsSetChangedAction.value = ListAction.DataSetChangedAction
                     }
-                    _clients.value = clients
-                    _clientsSetChangedAction.value = ListAction.DataSetChangedAction
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(TAG, "Failed to read value.", error.toException())
@@ -104,27 +105,56 @@ class ClientsViewModel(
     }
 
     fun onClientsReset() {
-        val clients:MutableList<Client> = mutableListOf()
-        _clients.value = clients
-        onNewClientsRequest()
+        _clients.value = mutableListOf()
         _clientsSetChangedAction.value = ListAction.DataSetChangedAction
+        onNewClientsRequest()
     }
 
-    private fun onClientRemoved(id: String) {
-        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).removeValue()
-        onClientsReset()
+    private fun onClientRemoved(id: String, email: String) {
+        _clients.value?.forEach {
+            if(it.email == email){
+                if(id!=""){
+                    firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).removeValue()
+                    onClientsReset()
+                }
+                else {
+                    firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients")
+                        .addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                if(dataSnapshot.value!=null){
+                                    val clientsMap = dataSnapshot.value as Map<*, *>
+                                    clientsMap.forEach{ c->
+                                        val dbClient = c.value as Map<*, *>
+                                        if(dbClient["email"] as String == email){
+                                            firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(c.key as String).removeValue()
+                                        }
+                                    }
+                                    onClientsReset()
+                                }
+                            }
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.w(TAG, "Failed to read value.", error.toException())
+                            }
+                        })
+                }
+            }
+        }
     }
 
-    private fun onClientEdited(id: String) {
-        startActivity(context, Intent(context, AddClientActivity::class.java),null)
+    private fun onClientEdited(id: String, email: String) {
+        _clients.value?.forEach {
+            if(it.email == email){
+                startActivity(context, Intent(context, EditClientActivity::class.java).putExtra("clientID", id).putExtra("clientEmail", email),null)
+            }
+        }
     }
 
     private fun onClientStats(id: String) {
-
+        startActivity(context, Intent(context, StatsActivity::class.java).putExtra("clientID", id),null)
     }
 
     private fun List<Client>.toClientsViewModel(): List<ClientView.Model> = map { client ->
-        ClientView.Model(client, { clientID -> onClientRemoved(clientID)}, { clientID -> onClientEdited(clientID)}, { clientID -> onClientStats(clientID)} )
+        ClientView.Model(client, { clientID, clientEmail -> onClientRemoved(clientID, clientEmail)}, { clientID, clientEmail -> onClientEdited(clientID, clientEmail)}, { clientID -> onClientStats(clientID)} )
     }
 
     /** Convenient method to change an item position in a List */

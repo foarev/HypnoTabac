@@ -3,17 +3,13 @@ package com.hypnotabac.client
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_h_login.*
@@ -51,7 +47,7 @@ class ClientLoginActivity : AppCompatActivity() {
                     OnCompleteListener<AuthResult?> { task ->
                         if (task.isSuccessful) {
                             val displayName = firebaseAuth.currentUser!!.displayName
-                            SaveSharedPreferences.setUserName(
+                            SaveSharedPreferences.setEmail(
                                 this@ClientLoginActivity,
                                 displayName
                             )

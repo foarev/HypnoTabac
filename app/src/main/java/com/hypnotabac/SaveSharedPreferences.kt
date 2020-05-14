@@ -13,13 +13,13 @@ object SaveSharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(ctx)
     }
 
-    fun setUserName(ctx: Context?, userName: String?) {
+    fun setEmail(ctx: Context?, userName: String?) {
         val editor = getSharedPreferences(ctx).edit()
         editor.putString(PREF_USER_NAME, userName)
         editor.apply()
     }
 
-    fun getUserName(ctx: Context?): String {
+    fun getEmail(ctx: Context?): String {
         return getSharedPreferences(ctx).getString(PREF_USER_NAME, "")!!
     }
 

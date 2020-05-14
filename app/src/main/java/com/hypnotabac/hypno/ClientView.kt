@@ -15,7 +15,7 @@ class ClientView @JvmOverloads constructor(context: Context,
                                     ConstraintLayout(context, attrs, defStyleAttr)
 {
     val TAG: String = "ClientView"
-    data class Model(val client: Client, var onClickRemove: (String) -> Unit, var onClickEdit: (String) -> Unit, var onClickStats: (String) -> Unit)
+    data class Model(val client: Client, var onClickRemove: (String, String) -> Unit, var onClickEdit: (String, String) -> Unit, var onClickStats: (String) -> Unit)
     init {
         View.inflate(context, R.layout.client_list_layout, this)
         this.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
@@ -23,8 +23,8 @@ class ClientView @JvmOverloads constructor(context: Context,
     fun setupView(model: Model){
         if(model.client.isRegistered) joke_text_view.text = model.client.firstName + " " + model.client.lastName
         else joke_text_view.text = "(Unregistered) " + model.client.email
-        button_remove.setOnClickListener { model.onClickRemove(model.client.userID) }
-        button_edit.setOnClickListener { model.onClickEdit(model.client.userID) }
+        button_remove.setOnClickListener { model.onClickRemove(model.client.userID, model.client.email) }
+        button_edit.setOnClickListener { model.onClickEdit(model.client.userID, model.client.email) }
         button_stats.setOnClickListener { model.onClickStats(model.client.userID) }
     }
 }

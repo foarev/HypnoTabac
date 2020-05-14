@@ -44,7 +44,7 @@ class HypnoLoginActivity : AppCompatActivity() {
                     OnCompleteListener<AuthResult?> { task ->
                         if (task.isSuccessful) {
                             val displayName = firebaseAuth!!.currentUser!!.displayName
-                            SaveSharedPreferences.setUserName(
+                            SaveSharedPreferences.setEmail(
                                 this@HypnoLoginActivity,
                                 displayName
                             )

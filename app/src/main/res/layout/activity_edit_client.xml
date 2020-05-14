@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".hypno.EditClientActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_client"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.071"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:id="@+id/textView"
+        />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:id="@+id/display_email"
+        android:text="@string/prompt_email"
+        android:ems="10"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="33dp"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_creator="1"
+        />
+
+    <ImageButton
+        android:id="@+id/btnEditEmail"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_create_black_24dp"
+        android:visibility="visible"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="@id/display_email"
+        app:layout_constraintBottom_toBottomOf="@id/display_email"
+        app:layout_constraintTop_toTopOf="@id/display_email" />
+
+    <EditText
+        android:visibility="invisible"
+        android:id="@+id/editEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="@string/prompt_email"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@id/display_email"
+        app:layout_constraintRight_toRightOf="@id/display_email"
+        app:layout_constraintBottom_toBottomOf="@id/display_email"
+        app:layout_constraintTop_toTopOf="@id/display_email"
+        />
+
+    <ImageButton
+        android:visibility="invisible"
+        android:id="@+id/btnEditEmailOk"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_done_black_24dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="@id/display_email"
+        app:layout_constraintBottom_toBottomOf="@id/editEmail"
+        app:layout_constraintTop_toTopOf="@id/editEmail" />
+
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:id="@+id/display_first_name"
+        android:text="@string/prompt_first_name"
+        android:ems="10"
+        android:textSize="20sp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/editEmail"
+        app:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_creator="1"
+        />
+
+    <ImageButton
+        android:id="@+id/btnEditFirstName"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_create_black_24dp"
+        android:visibility="visible"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="@id/display_first_name"
+        app:layout_constraintBottom_toBottomOf="@id/display_first_name"
+        app:layout_constraintTop_toTopOf="@id/display_first_name" />
+
+    <EditText
+        android:visibility="invisible"
+        android:id="@+id/editFirstName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/prompt_first_name"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@id/display_first_name"
+        app:layout_constraintRight_toRightOf="@id/display_first_name"
+        app:layout_constraintBottom_toBottomOf="@id/display_first_name"
+        app:layout_constraintTop_toTopOf="@id/display_first_name"
+        />
+
+    <ImageButton
+        android:visibility="invisible"
+        android:id="@+id/btnEditFirstNameOk"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_done_black_24dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="@id/display_first_name"
+        app:layout_constraintBottom_toBottomOf="@id/editFirstName"
+        app:layout_constraintTop_toTopOf="@id/editFirstName" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:id="@+id/display_last_name"
+        android:text="@string/prompt_last_name"
+        android:ems="10"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/editFirstName"
+        app:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_creator="1"
+        />
+
+    <ImageButton
+        android:id="@+id/btnEditLastName"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_create_black_24dp"
+        android:visibility="visible"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="@id/display_last_name"
+        app:layout_constraintBottom_toBottomOf="@id/display_last_name"
+        app:layout_constraintTop_toTopOf="@id/display_last_name" />
+
+    <EditText
+        android:visibility="invisible"
+        android:id="@+id/editLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/prompt_last_name"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@id/display_last_name"
+        app:layout_constraintRight_toRightOf="@id/display_last_name"
+        app:layout_constraintBottom_toBottomOf="@id/display_last_name"
+        app:layout_constraintTop_toTopOf="@id/display_last_name"
+        />
+
+    <ImageButton
+        android:visibility="invisible"
+        android:id="@+id/btnEditLastNameOk"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_done_black_24dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintRight_toRightOf="@id/editLastName"
+        app:layout_constraintBottom_toBottomOf="@id/editLastName"
+        app:layout_constraintTop_toTopOf="@id/editLastName" />
+
+
+    <Button
+        android:id="@+id/btnDone"
+        android:text="@string/done"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/editLastName"
+        app:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_creator="1"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
