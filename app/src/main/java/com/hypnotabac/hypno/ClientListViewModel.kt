@@ -2,7 +2,6 @@ package com.hypnotabac.hypno
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
@@ -14,7 +13,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.hypnotabac.SaveSharedPreferences
 import java.util.*
 
 /**
@@ -57,7 +55,7 @@ class ClientsViewModel(
      */
     val clientsLoadingStatus: LiveData<LoadingStatus> = _clientsLoadingStatus
     val clientsSetChangedAction: LiveData<ListAction> = _clientsSetChangedAction
-    val clientModels: LiveData<List<ClientView.Model>> = Transformations.map(_clients) {
+    val clientListModels: LiveData<List<ClientListView.Model>> = Transformations.map(_clients) {
         it.toClientsViewModel()
     }
 
@@ -153,8 +151,8 @@ class ClientsViewModel(
         startActivity(context, Intent(context, StatsActivity::class.java).putExtra("clientID", id),null)
     }
 
-    private fun List<Client>.toClientsViewModel(): List<ClientView.Model> = map { client ->
-        ClientView.Model(client, { clientID, clientEmail -> onClientRemoved(clientID, clientEmail)}, { clientID, clientEmail -> onClientEdited(clientID, clientEmail)}, { clientID -> onClientStats(clientID)} )
+    private fun List<Client>.toClientsViewModel(): List<ClientListView.Model> = map { client ->
+        ClientListView.Model(client, { clientID, clientEmail -> onClientRemoved(clientID, clientEmail)}, { clientID, clientEmail -> onClientEdited(clientID, clientEmail)}, { clientID -> onClientStats(clientID)} )
     }
 
     /** Convenient method to change an item position in a List */

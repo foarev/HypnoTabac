@@ -2,7 +2,6 @@ package com.hypnotabac.hypno
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -11,14 +10,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hypnotabac.FirstLoginActivity
 import com.hypnotabac.hypno.ClientsViewModel.LoadingStatus
 import com.hypnotabac.hypno.ClientsViewModel.ListAction
 import com.hypnotabac.R
+import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_h_main.*
 
 class HypnoMainActivity : AppCompatActivity() {
     private val TAG = "HypnoMainActivity"
-    private val clientAdapter: ClientAdapter = ClientAdapter()
+    private val clientListAdapter: ClientListAdapter = ClientListAdapter()
     private val llm: RecyclerView.LayoutManager = LinearLayoutManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +29,16 @@ class HypnoMainActivity : AppCompatActivity() {
         addclient.setOnClickListener{
             startActivity(Intent(applicationContext, AddClientActivity::class.java))
         }
+        editQuestions.setOnClickListener{
+            startActivity(Intent(applicationContext, EditQuestionsActivity::class.java))
+        }
+        logout.setOnClickListener{
+            SaveSharedPreferences.resetAll(this)
+            startActivity(Intent(applicationContext, FirstLoginActivity::class.java))
+        }
+
         my_recycler_view.layoutManager = llm
-        my_recycler_view.adapter = clientAdapter
+        my_recycler_view.adapter = clientListAdapter
 
         observeViewModel()
     }
@@ -38,11 +47,11 @@ class HypnoMainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.clientModels.observe(
+        viewModel.clientListModels.observe(
             this,
-            Observer { jokes: List<ClientView.Model> ->
-                clientAdapter.models.clear()
-                clientAdapter.models.addAll(jokes)
+            Observer { jokes: List<ClientListView.Model> ->
+                clientListAdapter.models.clear()
+                clientListAdapter.models.addAll(jokes)
             })
 
         viewModel.clientsSetChangedAction.observe(
@@ -50,15 +59,15 @@ class HypnoMainActivity : AppCompatActivity() {
             Observer { listAction: ListAction ->
                 when(listAction) {
                     is ListAction.ItemUpdatedAction ->
-                        clientAdapter.notifyItemChanged(listAction.position)
+                        clientListAdapter.notifyItemChanged(listAction.position)
                     is ListAction.ItemRemovedAction ->
-                        clientAdapter.notifyItemRemoved(listAction.position)
+                        clientListAdapter.notifyItemRemoved(listAction.position)
                     is ListAction.ItemInsertedAction ->
-                        clientAdapter.notifyItemInserted(listAction.position)
+                        clientListAdapter.notifyItemInserted(listAction.position)
                     is ListAction.ItemMovedAction ->
-                        clientAdapter.notifyItemMoved(listAction.fromPosition, listAction.toPosition)
+                        clientListAdapter.notifyItemMoved(listAction.fromPosition, listAction.toPosition)
                     is ListAction.DataSetChangedAction ->
-                        clientAdapter.notifyDataSetChanged()
+                        clientListAdapter.notifyDataSetChanged()
                 }
             })
 

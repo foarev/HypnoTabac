@@ -22,7 +22,7 @@ class AddClientActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_client)
         sendemail.setOnClickListener{
-            val email = username!!.text.toString().trim { it <= ' ' }
+            val email = editEmail!!.text.toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT)
                     .show()

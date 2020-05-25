@@ -43,15 +43,12 @@ class HypnoLoginActivity : AppCompatActivity() {
                     this@HypnoLoginActivity,
                     OnCompleteListener<AuthResult?> { task ->
                         if (task.isSuccessful) {
-                            val displayName = firebaseAuth!!.currentUser!!.displayName
-                            SaveSharedPreferences.setEmail(
-                                this@HypnoLoginActivity,
-                                displayName
-                            )
+                            SaveSharedPreferences.setEmail(this@HypnoLoginActivity, email)
+                            SaveSharedPreferences.setUserType(this@HypnoLoginActivity, "hypno")
                             startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
                             Toast.makeText(
                                 this@HypnoLoginActivity,
-                                "Successfully logged in as $displayName",
+                                "Successfully logged in as $email",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {

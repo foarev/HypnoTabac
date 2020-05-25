@@ -4,15 +4,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class ClientAdapter() : RecyclerView.Adapter<ClientAdapter.ClientViewHolder>(){
+class ClientListAdapter() : RecyclerView.Adapter<ClientListAdapter.ClientViewHolder>(){
     val TAG:String = "ClientAdapter"
 
-    class ClientViewHolder(val v: ClientView) : RecyclerView.ViewHolder(v)
+    class ClientViewHolder(val v: ClientListView) : RecyclerView.ViewHolder(v)
 
-    var models:MutableList<ClientView.Model> = mutableListOf()
+    var models:MutableList<ClientListView.Model> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientViewHolder {
-        val v = ClientView(parent.context)
+        val v = ClientListView(parent.context)
         return ClientViewHolder(v)
     }
 

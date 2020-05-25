@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hypno.AddClientActivity">
+    tools:context=".hypno.EditQuestionsActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_client"
+        android:text="@string/your_questions"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -22,20 +22,6 @@
         android:id="@+id/textView"
         />
 
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
@@ -43,30 +29,45 @@
         android:scrollbars="vertical"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editEmail"
-        app:layout_constraintBottom_toTopOf="@id/sendemail" />
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintBottom_toTopOf="@id/addQuestion" />
 
     <ImageView
-        android:id="@+id/sendemail"
+        android:id="@+id/addQuestion"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="48dp"
         android:src="@drawable/ic_add_circle_black_24dp"
         android:tint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnDone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1"
-        android:contentDescription="@string/add_client"
+        android:contentDescription="@string/add"
         android:layout_marginLeft="48dp" />
 
+    <ImageView
+        android:id="@+id/btnDone"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/ic_check_circle_black_24dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addQuestion"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        android:contentDescription="@string/add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

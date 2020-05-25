@@ -21,4 +21,9 @@
     <string name="first_name_not_set">First name not set yet</string>
     <string name="last_name_not_set">Last name not set yet</string>
     <string name="your_clients">Your clients</string>
+    <string name="your_questions">Your questions</string>
+    <string name="prompt_question">Type a question here</string>
+    <string name="prompt_response">Type your response here</string>
+    <string name="logout">Log Out</string>
+    <string name="add_client">Add Client</string>
 </resources>

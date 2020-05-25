@@ -16,7 +16,7 @@
             app:layout_constraintEnd_toStartOf="@id/button_edit"
             android:gravity="center_horizontal"
             android:text="Example client"
-            android:id="@+id/joke_text_view"/>
+            android:id="@+id/client_text_view"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
