@@ -24,6 +24,17 @@ class EditQuestionsAdapter() : RecyclerView.Adapter<EditQuestionsAdapter.Questio
     }
 
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
-        holder.v.setupView(models[position], position)
+        if(position<=models.lastIndex)
+            holder.v.setupView(models[position], position)
     }
+
+    override fun onViewDetachedFromWindow(holder: QuestionViewHolder) {
+        holder.v.removeView()
+        super.onViewDetachedFromWindow(holder)
+    }
+/*
+    override fun onViewRecycled(holder: QuestionViewHolder) {
+        holder.v.removeView()
+        super.onViewRecycled(holder)
+    }*/
 }

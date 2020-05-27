@@ -69,5 +69,5 @@
         app:layout_constraintStart_toEndOf="@id/addQuestion"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1"
-        android:contentDescription="@string/add" />
+        android:contentDescription="@string/done" />
 </androidx.constraintlayout.widget.ConstraintLayout>

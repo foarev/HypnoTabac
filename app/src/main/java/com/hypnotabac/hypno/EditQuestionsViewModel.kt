@@ -149,10 +149,10 @@ class QuestionsViewModel(
         val questions:MutableList<String> = mutableListOf()
         Log.w(TAG, "onQuestionEdited : i = "+i+"; newText = "+newText)
         questions.addAll(_questions.value!!)
-        questions.set(i, newText)
+        if(i<=_questions.value!!.lastIndex && i>=0)
+            questions[i] = newText
         _questions.value = questions
         _questionsSetChangedAction.value = ListAction.ItemUpdatedAction(i)
-        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
     }
 
     private fun List<String>.toQuestionsViewModel(): List<EditQuestionsView.Model> = mapIndexed { i, question ->

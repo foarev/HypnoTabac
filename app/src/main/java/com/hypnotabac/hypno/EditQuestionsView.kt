@@ -20,6 +20,8 @@ class EditQuestionsView @JvmOverloads constructor(context: Context,
                                     ConstraintLayout(context, attrs, defStyleAttr)
 {
     val TAG: String = "QuestionsView"
+    var tw:TextWatcher = object : TextWatcher{override fun afterTextChanged(s: Editable?) {} override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}}
+
     data class Model(var editTextValue:String, var onTextEdited:(Int, String) -> Unit)
     init {
         View.inflate(context, R.layout.question_list_layout, this)
@@ -29,13 +31,22 @@ class EditQuestionsView @JvmOverloads constructor(context: Context,
         Log.w(TAG, "setupView : " + model.toString())
 
         editQuestion.hint="Question #"+(index+1)
-        if(editQuestion.text.toString()!=model.editTextValue){
+        /*if(editQuestion.text.toString()!=model.editTextValue && editQuestion.text.toString()==""){
             editQuestion.setText(model.editTextValue)
+            //editQuestion.setSelection(editQuestion.text.length)
+        }*/
+        tw = object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                Log.w(TAG, "doOnTextChanged : index = "+index+" ; Value : "+model.editTextValue)
+                model.onTextEdited(index, editQuestion.text.toString())
+                //editQuestion.setSelection(editQuestion.text.length)
+            }
         }
-
-        editQuestion.doOnTextChanged { text, start, count, after ->
-            Log.w(TAG, "doOnTextChanged : index = "+index+" ; Value : "+model.editTextValue + "; start : "+start+"; count : "+count+"; after : "+after)
-            model.onTextEdited(index, editQuestion.text.toString())
-        }
+        editQuestion.addTextChangedListener(tw)
+    }
+    fun removeView(){
+        editQuestion.removeTextChangedListener(tw)
     }
 }

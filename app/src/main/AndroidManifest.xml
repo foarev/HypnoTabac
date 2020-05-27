@@ -11,9 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".hypno.EditQuestionsActivity"></activity>
+        <activity android:name=".client.ClientStatsActivity"></activity>
+        <activity android:name=".HypnoSettingsActivity" />
+        <activity android:name=".client.ClientSettingsActivity" />
+        <activity android:name=".hypno.EditQuestionsActivity" />
         <activity android:name=".hypno.EditClientActivity" />
-        <activity android:name=".hypno.StatsActivity" />
+        <activity android:name=".hypno.HypnoStatsActivity" />
         <activity android:name=".hypno.AddClientActivity" />
         <activity android:name=".hypno.HypnoMainActivity" />
         <activity android:name=".hypno.HypnoSignupActivity" />

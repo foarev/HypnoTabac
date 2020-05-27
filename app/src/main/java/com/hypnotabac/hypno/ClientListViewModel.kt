@@ -148,7 +148,7 @@ class ClientsViewModel(
     }
 
     private fun onClientStats(id: String) {
-        startActivity(context, Intent(context, StatsActivity::class.java).putExtra("clientID", id),null)
+        startActivity(context, Intent(context, HypnoStatsActivity::class.java).putExtra("clientID", id),null)
     }
 
     private fun List<Client>.toClientsViewModel(): List<ClientListView.Model> = map { client ->
