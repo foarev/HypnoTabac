@@ -139,20 +139,12 @@ class ClientsViewModel(
         }
     }
 
-    private fun onClientEdited(id: String, email: String) {
-        _clients.value?.forEach {
-            if(it.email == email){
-                startActivity(context, Intent(context, EditClientActivity::class.java).putExtra("clientID", id).putExtra("clientEmail", email),null)
-            }
-        }
-    }
-
     private fun onClientStats(id: String) {
         startActivity(context, Intent(context, HypnoStatsActivity::class.java).putExtra("clientID", id),null)
     }
 
     private fun List<Client>.toClientsViewModel(): List<ClientListView.Model> = map { client ->
-        ClientListView.Model(client, { clientID, clientEmail -> onClientRemoved(clientID, clientEmail)}, { clientID, clientEmail -> onClientEdited(clientID, clientEmail)}, { clientID -> onClientStats(clientID)} )
+        ClientListView.Model(client, { clientID, clientEmail -> onClientRemoved(clientID, clientEmail)}, { clientID -> onClientStats(clientID)} )
     }
 
     /** Convenient method to change an item position in a List */

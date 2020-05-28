@@ -46,11 +46,6 @@ class HypnoLoginActivity : AppCompatActivity() {
                             SaveSharedPreferences.setEmail(this@HypnoLoginActivity, email)
                             SaveSharedPreferences.setUserType(this@HypnoLoginActivity, "hypno")
                             startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
-                            Toast.makeText(
-                                this@HypnoLoginActivity,
-                                "Successfully logged in as $email",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         } else {
                             Toast.makeText(
                                 this@HypnoLoginActivity,

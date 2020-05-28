@@ -91,4 +91,8 @@ class HypnoMainActivity : AppCompatActivity() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
             ClientsViewModel(context) as T
     }
+
+    override fun onBackPressed() {
+
+    }
 }

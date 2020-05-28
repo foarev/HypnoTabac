@@ -53,6 +53,10 @@ data class Date (private val year: Int, private val month: Int, private val day:
     }
 
     operator fun rangeTo(that: Date) = DateRange(this, that)
+
+    override fun toString(): String {
+        return String.format("%02d/%02d/20%02d", day,month,year)
+    }
 }
 
 class DateRange(override val start: Date, override val endInclusive: Date)

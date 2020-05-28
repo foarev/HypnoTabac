@@ -69,11 +69,6 @@ class ClientLoginActivity : AppCompatActivity() {
                                                 if(m.containsKey(firebaseAuth.uid)){
                                                     SaveSharedPreferences.setHypnoID(this@ClientLoginActivity, h.key.toString())
                                                     startActivity(Intent(applicationContext, ClientMainActivity::class.java))
-                                                    Toast.makeText(
-                                                        this@ClientLoginActivity,
-                                                        "Successfully logged in as $email",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
                                                 }
                                             }
                                         }

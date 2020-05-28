@@ -13,27 +13,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/button_edit"
+            app:layout_constraintEnd_toStartOf="@id/button_remove"
             android:gravity="center_horizontal"
             android:text="Example client"
             android:id="@+id/client_text_view"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_edit"
-            android:layout_margin="15dp"
-            android:tint="@color/colorPrimaryDark"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/button_remove"
-            android:src="@drawable/ic_create_black_24dp"
-            android:contentDescription="@string/edit" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/button_remove"
             android:layout_margin="15dp"
-            android:tint="@color/colorPrimaryDark"
+            android:tint="@color/colorPrimaryLight"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/button_stats"
@@ -44,11 +33,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/button_stats"
             android:layout_margin="15dp"
-            app:layout_constraintLeft_toRightOf="@id/button_edit"
+            app:layout_constraintLeft_toRightOf="@id/button_remove"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:tint="@color/colorPrimaryDark"
+            android:tint="@color/colorPrimaryLight"
             android:src="@drawable/ic_equalizer_black_24dp"
             android:contentDescription="@string/stats" />
 

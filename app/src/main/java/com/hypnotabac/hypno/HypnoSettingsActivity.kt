@@ -1,7 +1,8 @@
-package com.hypnotabac
+package com.hypnotabac.hypno
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.hypnotabac.R
 
 class HypnoSettingsActivity : AppCompatActivity() {
 

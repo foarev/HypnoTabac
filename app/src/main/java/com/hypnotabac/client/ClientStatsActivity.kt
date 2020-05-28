@@ -8,9 +8,11 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.LargeValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,8 +42,8 @@ class ClientStatsActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if(dataSnapshot.value!=null){
                     val cigs = dataSnapshot.value as ArrayList<*>
-                    val numGrade = MutableList(4) { _ -> 0 }
-                    val numCondition = mutableMapOf("Ennui" to 0, "Café" to 0,"Pause" to 0,"Soirée" to 0,"Après manger" to 0,"Autre" to 0)
+                    val numGrade = MutableList(3) { _ -> 0 }
+                    val numCondition = mutableMapOf<String, Int>()
                     var totalCigs = 0
                     var dateMax = Date(1,1,1)
                     var dateMin = Date(9999,1,1)
@@ -52,11 +54,11 @@ class ClientStatsActivity : AppCompatActivity() {
                         if(date > dateMax) dateMax = date
                         if(date < dateMin) dateMin = date
 
-                        numGrade[(cig["grade"] as Long).toInt()] += 1
+                        numGrade[(cig["grade"] as Long).toInt()-1] += 1
                         if(numCondition.containsKey(cig["condition"] as String))
                             numCondition[cig["condition"] as String] = numCondition[cig["condition"] as String]?.plus(1) as Int
                         else
-                            numCondition["Autre"] = numCondition["Autre"]?.plus(1) as Int
+                            numCondition[cig["condition"] as String] = 1
                         totalCigs += 1
                     }
                     val avg = (totalCigs.toFloat()/((dateMin..dateMax).count().toFloat())*100).roundToInt()/100.0
@@ -68,15 +70,14 @@ class ClientStatsActivity : AppCompatActivity() {
                     xAxisValues1.add("1")
                     xAxisValues1.add("2")
                     xAxisValues1.add("3")
-
                     val yValueGroup1 = ArrayList<BarEntry>()
-                    numGrade.forEachIndexed{i, n ->
-                        if(i>0)
-                            yValueGroup1.add(BarEntry(i.toFloat(), n.toFloat()))
+                    xAxisValues1.forEach{k ->
+                        yValueGroup1.add(BarEntry(k.toFloat(), numGrade[k.toInt()-1].toFloat()))
                     }
 
                     val barDataSet1 = BarDataSet(yValueGroup1, "Nombre de cigarettes par note")
-                    barDataSet1.color = ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary)
+                    barDataSet1.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
+                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary))
                     barDataSet1.setDrawIcons(false)
                     barDataSet1.setDrawValues(false)
 
@@ -95,13 +96,13 @@ class ClientStatsActivity : AppCompatActivity() {
                     xAxis1.setDrawGridLines(false)
                     xAxis1.position = XAxis.XAxisPosition.BOTTOM
                     xAxis1.textSize = 9f
-                    xAxis1.labelCount = barDataSet1.entryCount
-                    xAxis1.valueFormatter = IAxisValueFormatter { value, axis -> value.roundToInt().toString() }
+                    xAxis1.labelCount = xAxisValues1.count()
+                    xAxis1.valueFormatter = LargeValueFormatter()
                     xAxis1.spaceMin = 4f
                     xAxis1.spaceMax = 4f
 
                     val leftAxis1 = barChartViewGrade.axisLeft
-                    leftAxis1.valueFormatter = IAxisValueFormatter { value, axis -> value.roundToInt().toString() }
+                    leftAxis1.valueFormatter = LargeValueFormatter()
                     leftAxis1.setDrawGridLines(false)
                     leftAxis1.labelCount = barDataSet1.yMax.roundToInt()
                     leftAxis1.spaceTop = 1f
@@ -119,17 +120,21 @@ class ClientStatsActivity : AppCompatActivity() {
                     xAxisValues2.add("Pause")
                     xAxisValues2.add("Soirée")
                     xAxisValues2.add("Après manger")
-                    xAxisValues2.add("Autre")
-
-                    val yValueGroup2 = ArrayList<BarEntry>()
-                    var index = 0
                     numCondition.forEach{n ->
-                        yValueGroup2.add(BarEntry(index.toFloat(), n.value.toFloat()))
-                        index += 1
+                        if(!xAxisValues2.contains(n.key))
+                            xAxisValues2.add(n.key)
+                    }
+                    val yValueGroup2 = ArrayList<BarEntry>()
+                    xAxisValues2.forEachIndexed{i, k ->
+                        if(numCondition.containsKey(k))
+                            yValueGroup2.add(BarEntry(i.toFloat(), numCondition[k]!!.toFloat()))
+                        else
+                            yValueGroup2.add(BarEntry(i.toFloat(), 0F))
                     }
 
                     val barDataSet2 = BarDataSet(yValueGroup2, "Nombre de cigarettes par condition")
-                    barDataSet2.color = ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary)
+                    barDataSet2.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
+                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary))
                     barDataSet2.setDrawIcons(false)
                     barDataSet2.setDrawValues(false)
 
@@ -140,21 +145,22 @@ class ClientStatsActivity : AppCompatActivity() {
                     barChartViewCondition.data = barData2
                     barChartViewCondition.barData.barWidth = 0.8f
                     barChartViewCondition.xAxis.axisMinimum = -0.5f
-                    barChartViewCondition.xAxis.axisMaximum = 5.5f
+                    barChartViewCondition.xAxis.axisMaximum = xAxisValues2.count().toFloat() - 1.5f
                     barChartViewCondition.data.isHighlightEnabled = false
-                    barChartViewCondition.setVisibleXRange(1f, 6f)
+                    barChartViewCondition.setVisibleXRange(1f, xAxisValues2.count().toFloat())
 
                     val xAxis2 = barChartViewCondition.xAxis
                     xAxis2.setDrawGridLines(false)
                     xAxis2.position = XAxis.XAxisPosition.BOTTOM
                     xAxis2.textSize = 9f
-                    xAxis2.labelCount = barDataSet2.entryCount
+                    xAxis2.labelCount = xAxisValues2.count()
                     xAxis2.valueFormatter = IndexAxisValueFormatter(xAxisValues2)
                     xAxis2.spaceMin = 4f
                     xAxis2.spaceMax = 4f
 
                     val leftAxis2 = barChartViewCondition.axisLeft
-                    leftAxis2.valueFormatter = IAxisValueFormatter { value, axis -> value.roundToInt().toString() }
+                    leftAxis2.valueFormatter =
+                        /*IAxisValueFormatter { value, axis -> value.roundToInt().toString() } */ LargeValueFormatter()
                     leftAxis2.setDrawGridLines(false)
                     leftAxis2.labelCount = barDataSet2.yMax.roundToInt()
                     leftAxis2.spaceTop = 1f

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.widget.ListAdapter
+import android.widget.ListView
 import android.widget.Toast
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +23,8 @@ class AddClientActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_client)
+
+
         sendemail.setOnClickListener{
             val email = editEmail!!.text.toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
