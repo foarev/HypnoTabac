@@ -46,7 +46,7 @@ class QuestionsViewModel(
 
     private val _questionsLoadingStatus = MutableLiveData<LoadingStatus>()
     private val _questionsSetChangedAction = MutableLiveData<ListAction>()
-    private val _questions = MutableLiveData<List<String>>()
+    private val _questions = MutableLiveData<List<EditQuestionsView.Model>>()
 
 
     /**
@@ -59,9 +59,7 @@ class QuestionsViewModel(
      */
     val questionsLoadingStatus: LiveData<LoadingStatus> = _questionsLoadingStatus
     val questionsSetChangedAction: LiveData<ListAction> = _questionsSetChangedAction
-    val questionModels: LiveData<List<EditQuestionsView.Model>> = Transformations.map(_questions) {
-        it.toQuestionsViewModel()
-    }
+    val questionModels: LiveData<List<EditQuestionsView.Model>> = _questions
 
     init {
         addQuestionsFromDatabase()
@@ -69,7 +67,7 @@ class QuestionsViewModel(
 
     fun addQuestionsFromDatabase() {
         _questionsLoadingStatus.value=LoadingStatus.LOADING
-        val questions:MutableList<String> = mutableListOf()
+        val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
         if(!_questions.value.isNullOrEmpty() ) {
             questions.addAll(_questions.value!!)
         }
@@ -79,13 +77,13 @@ class QuestionsViewModel(
                     if(dataSnapshot.value!=null){
                         val questionsList = dataSnapshot.value as ArrayList<*>
                         questionsList.forEach{ q->
-                            questions.add(q as String)
+                            questions.add(EditQuestionsView.Model(getNewId(), q as String, { i:Int, id:String, newText:String -> onQuestionEdited(i, id, newText) }))
                         }
                         _questions.value = questions
                         _questionsSetChangedAction.value = ListAction.DataSetChangedAction
                     }  else {
                         DefaultQuestions.DEFAULT_QUESTIONS.forEach {
-                            questions.add(it)
+                            questions.add(EditQuestionsView.Model(getNewId(), it, { i:Int, id:String, newText:String -> onQuestionEdited(i, id, newText) }))
                         }
                         _questions.value = questions
                         _questionsSetChangedAction.value = ListAction.DataSetChangedAction
@@ -111,16 +109,15 @@ class QuestionsViewModel(
 
     }
     fun addQuestionBox() {
-        val questions:MutableList<String> = mutableListOf()
+        val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
         if(!_questions.value.isNullOrEmpty() ) {
             Log.wtf(TAG, _questions.value.toString())
             questions.addAll(_questions.value!!)
         }
-        questions.add("")
+        questions.add(EditQuestionsView.Model(getNewId(), "", {i:Int, id:String, newText:String -> onQuestionEdited(i, id, newText) }))
         _questions.value = questions
         Log.wtf(TAG, "addQuestionBox : "+_questions.value.toString())
         _questionsSetChangedAction.value = ListAction.ItemInsertedAction(_questions.value!!.lastIndex)
-        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
     }
 
     fun onQuestionsReset() {
@@ -135,8 +132,8 @@ class QuestionsViewModel(
     }
 
     fun onQuestionRemovedAt(i: Int) {
-        val questions:MutableList<String> = mutableListOf()
-        Log.w(TAG, "onQuestionRemoved : i = "+i)
+        val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
+        Log.w(TAG, "onQuestionRemoved : i = "+i+"; id = "+_questions.value!![i].id)
         questions.addAll(_questions.value!!)
         questions.removeAt(i)
         _questions.value = questions
@@ -145,24 +142,47 @@ class QuestionsViewModel(
         if(_questions.value.isNullOrEmpty()) onQuestionsReset()
     }
 
-    fun onQuestionEdited(i: Int, newText:String) {
-        val questions:MutableList<String> = mutableListOf()
-        Log.w(TAG, "onQuestionEdited : i = "+i+"; newText = "+newText)
-        questions.addAll(_questions.value!!)
-        if(i<=_questions.value!!.lastIndex && i>=0)
-            questions[i] = newText
-        _questions.value = questions
-        _questionsSetChangedAction.value = ListAction.ItemUpdatedAction(i)
-    }
 
-    private fun List<String>.toQuestionsViewModel(): List<EditQuestionsView.Model> = mapIndexed { i, question ->
-        Log.w(TAG, "toquestionsVM : index = "+i+" ; Value : "+question)
-        EditQuestionsView.Model(question, { n:Int, newText:String -> onQuestionEdited(n, newText) })
+    fun onQuestionEdited(i:Int, id: String, newText:String) {
+        val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
+        questions.addAll(_questions.value!!)
+        var finalIndex=-1
+        questions.forEachIndexed {index, q->
+            Log.w(TAG, "onQuestionEdited : index = "+index+"; id = "+q.id+"; value = "+q.editTextValue)
+            if(id==q.id && index==i){
+                q.editTextValue = newText
+                finalIndex=index
+            }
+        }
+        if(finalIndex!=-1){
+            Log.w(TAG, "onQuestionEdited : i = "+finalIndex+"; id = "+id+"; newText = "+newText)
+            _questions.value = questions
+            _questionsSetChangedAction.value = ListAction.ItemUpdatedAction(finalIndex)
+        }
+        else {
+            Log.w(TAG, "onQuestionEdited : ID not found")
+        }
     }
 
     override fun onCleared() {
         composite.dispose()
         super.onCleared()
+    }
+
+    fun getNewId(): String {
+        val STRING_CHARACTERS = (('A'..'Z') + ('0'..'9') + ('a'..'z')).toList().toTypedArray()
+        var newId = ""
+        if(!_questions.value.isNullOrEmpty() ) {
+            var b = true
+            do {
+                newId = (1..10).map { STRING_CHARACTERS.random() }.joinToString("")
+                _questions.value!!.forEach { q -> if (q.id == newId) b = false }
+            } while(!b)
+        } else {
+            newId = (1..10).map { STRING_CHARACTERS.random() }.joinToString("")
+        }
+        Log.w(TAG, "ID : "+newId)
+        return newId
     }
 
     /** Convenient method to change an item position in a List */

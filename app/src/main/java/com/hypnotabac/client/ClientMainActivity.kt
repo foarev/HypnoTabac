@@ -26,6 +26,7 @@ import com.hypnotabac.FirstLoginActivity
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_c_main.*
+import kotlinx.android.synthetic.main.status_bar.*
 import org.xmlpull.v1.XmlPullParser
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -156,7 +157,7 @@ class ClientMainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Veuillez choisir une condition", Toast.LENGTH_SHORT).show()
             }
         }
-        statsBg.setOnClickListener {
+        stats.setOnClickListener {
             startActivity(Intent(applicationContext, ClientStatsActivity::class.java))
         }
     }

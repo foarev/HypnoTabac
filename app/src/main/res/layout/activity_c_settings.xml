@@ -5,5 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".client.ClientSettingsActivity">
+    <include layout="@layout/status_bar"
+        android:id="@+id/status_bar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

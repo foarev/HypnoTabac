@@ -4,7 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hypno.EditQuestionsActivity">
+    android:background="@color/colorBackground"
+    tools:context=".client.ClientMainActivity">
+
+    <include
+        layout="@layout/status_bar"
+        android:id="@+id/status_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:context=".hypno.EditQuestionsActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,4 +89,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1"
         android:contentDescription="@string/done" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

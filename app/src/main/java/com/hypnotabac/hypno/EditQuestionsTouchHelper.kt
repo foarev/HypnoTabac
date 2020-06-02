@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 //import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-class QuestionTouchHelper(
+class EditQuestionsTouchHelper(
     private val onItemMoved: (Int, Int) -> Unit ,
     private val onQuestionRemoved: (Int) -> Unit
     //private val swiperefreshLayout:SwipeRefreshLayout

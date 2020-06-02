@@ -1,9 +1,9 @@
 package com.hypnotabac.hypno
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
@@ -75,9 +75,8 @@ class HypnoStatsActivity : AppCompatActivity() {
 
                     val xAxisValues = ArrayList<String>()
 
-                    //Part1
+                    //Graph days
                     val entries = ArrayList<Entry>()
-//Part2
                     var indexDate = 0
                     (dateMin..dateMax).forEach{d ->
                         if(numDate.containsKey(d))
@@ -87,25 +86,17 @@ class HypnoStatsActivity : AppCompatActivity() {
                         xAxisValues.add(d.toString())
                         indexDate += 1
                     }
-
-//Part3
                     val vl = LineDataSet(entries, "Evolution du nombre de cigarettes")
-
-//Part4
                     vl.setDrawValues(false)
                     vl.setDrawFilled(true)
                     vl.lineWidth = 3f
-                    //vl.fillColor = R.color.colorPrimary
-                    //vl.fillAlpha = R.color.colorPrimary2
                     vl.fillDrawable = ContextCompat.getDrawable(this@HypnoStatsActivity, R.drawable.gradient_bg_graphs)
-
-//Part5
                     lineChart.xAxis.labelRotationAngle = 0f
                     lineChart.xAxis.setDrawGridLines(false)
                     lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
                     lineChart.xAxis.textSize = 9f
                     lineChart.xAxis.labelCount = xAxisValues.count()-1
-                    lineChart.xAxis.valueFormatter = /*IAxisValueFormatter { value, axis -> value.roundToInt().toString() }*/ IndexAxisValueFormatter(xAxisValues)
+                    lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
                     lineChart.xAxis.spaceMin = 4f
                     lineChart.xAxis.spaceMax = 4f
                     lineChart.xAxis.axisMaximum = xAxisValues.count()-1f
@@ -116,42 +107,10 @@ class HypnoStatsActivity : AppCompatActivity() {
                     lineChart.axisLeft.labelCount = numDate.values.max()!!
                     lineChart.axisLeft.spaceTop = 1f
                     lineChart.axisLeft.axisMinimum = 0f
-//Part6
                     lineChart.data = LineData(vl)
-
-//Part7
                     lineChart.axisRight.isEnabled = false
-
-//Part9
-                    lineChart.description.text = "Days"
-                    lineChart.setNoDataText("No forex yet!")
-
-//Part10
-                    lineChart.animateX(1800, Easing.EaseInExpo)
-
-//Part11
-                    /*val markerView = CustomMarker(this@HypnoStatsActivity, R.layout.marker_view)
-                    lineChart.marker = markerView*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    lineChart.description.isEnabled = false
+                    lineChart.animateX(10, Easing.EaseInExpo)
 
 
                     // Graph 1
@@ -263,8 +222,12 @@ class HypnoStatsActivity : AppCompatActivity() {
                     barChartViewCondition.invalidate()
                     dbRef.removeEventListener(this)
                 }
-                else
+                else{
                     textView.text = "Ce client n'a pas encore consommé de cigarette."
+                    barChartViewGrade.visibility = GONE
+                    barChartViewCondition.visibility = GONE
+                    lineChart.visibility = GONE
+                }
             }
 
             override fun onCancelled(p0: DatabaseError) {

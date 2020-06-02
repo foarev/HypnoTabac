@@ -16,6 +16,7 @@ import com.hypnotabac.hypno.ClientsViewModel.ListAction
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_h_main.*
+import kotlinx.android.synthetic.main.status_bar.*
 
 class HypnoMainActivity : AppCompatActivity() {
     private val TAG = "HypnoMainActivity"

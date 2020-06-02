@@ -3,6 +3,10 @@
     <color name="colorPrimary">#5EB9A5</color>
     <color name="colorPrimary2">#85DCEC</color>
     <color name="colorPrimaryLight">#ADDFE4</color>
-    <color name="colorAccent">#EFAFFF</color>
+    <color name="colorPrimarySuperLight">#DCFCFF</color>
+    <color name="colorPrimaryDark">#182E2A</color>
+    <color name="colorAccentLight">#EFAFFF</color>
+    <color name="colorAccent">#E91E63</color>
+    <color name="colorAccentDark">#5E1142</color>
     <color name="colorBackground">#FFFFFF</color>
 </resources>

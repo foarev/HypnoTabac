@@ -1,10 +1,7 @@
 package com.hypnotabac.hypno
 
-import android.util.Log
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.question_list_layout.view.*
 
 
 class EditQuestionsAdapter() : RecyclerView.Adapter<EditQuestionsAdapter.QuestionViewHolder>(){
@@ -24,13 +21,19 @@ class EditQuestionsAdapter() : RecyclerView.Adapter<EditQuestionsAdapter.Questio
     }
 
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
-        if(position<=models.lastIndex)
-            holder.v.setupView(models[position], position)
+        holder.v.setupView(models[position], position)
     }
 
     override fun onViewDetachedFromWindow(holder: QuestionViewHolder) {
-        holder.v.removeView()
-        super.onViewDetachedFromWindow(holder)
+        holder.v.removeWatcher()
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 /*
     override fun onViewRecycled(holder: QuestionViewHolder) {
