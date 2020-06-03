@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:screenOrientation="nosensor"
         android:theme="@style/AppTheme">
-        <activity android:name=".FirstLoginActivity"
+
+        <activity android:name=".LoginActivity"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,23 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".hypno.HypnoLoginActivity"
-            android:screenOrientation="nosensor" />
         <activity android:name=".hypno.HypnoSignupActivity"
             android:screenOrientation="nosensor" />
         <activity android:name=".hypno.HypnoMainActivity"
             android:screenOrientation="nosensor" />
         <activity android:name=".hypno.HypnoSettingsActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".hypno.EditQuestionsActivity"
+        <activity android:name=".hypno.edit_questions.EditQuestionsActivity"
             android:screenOrientation="nosensor" />
         <activity android:name=".hypno.HypnoStatsActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".hypno.AddClientActivity"
-            android:screenOrientation="nosensor" />
-
-        <activity android:name=".client.ClientLoginActivity"
+        <activity android:name=".hypno.add_client.AddClientActivity"
             android:screenOrientation="nosensor" />
         <activity android:name=".client.ClientSignupActivity"
             android:screenOrientation="nosensor">

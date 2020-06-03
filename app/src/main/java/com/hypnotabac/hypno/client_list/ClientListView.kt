@@ -1,4 +1,4 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.client_list
 
 import android.content.Context
 import android.util.AttributeSet

@@ -1,4 +1,4 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.edit_questions
 
 import android.content.Context
 import android.content.Intent
@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.hypnotabac.R
+import com.hypnotabac.hypno.*
 import kotlinx.android.synthetic.main.activity_edit_questions.*
 
 class EditQuestionsActivity : AppCompatActivity() {
     private val TAG = "EditQuestionsActivity"
-    private val editQuestionsAdapter: EditQuestionsAdapter = EditQuestionsAdapter()
+    private val editQuestionsAdapter: EditQuestionsAdapter =
+        EditQuestionsAdapter()
     private val llm: RecyclerView.LayoutManager = LinearLayoutManager(this)
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseDatabase = FirebaseDatabase.getInstance()
@@ -32,6 +34,7 @@ class EditQuestionsActivity : AppCompatActivity() {
 
         btnDone.setOnClickListener{
             val responses = mutableListOf<String>()
+            editQuestionsAdapter.retrieveAllValues()
             editQuestionsAdapter.models.forEachIndexed { i, model ->
                 responses.add(model.editTextValue)
                 firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("questions").child(""+i).setValue(model.editTextValue)
@@ -39,7 +42,12 @@ class EditQuestionsActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
         }
         EditQuestionsTouchHelper(
-            { fromPosition, toPosition -> viewModel.onQuestionPositionChanged(fromPosition, toPosition) },
+            { fromPosition, toPosition ->
+                viewModel.onQuestionPositionChanged(
+                    fromPosition,
+                    toPosition
+                )
+            },
             { position -> viewModel.onQuestionRemovedAt(position) }
         ).attachToRecyclerView(my_recycler_view)
 
@@ -50,7 +58,9 @@ class EditQuestionsActivity : AppCompatActivity() {
     }
 
     private val viewModel: QuestionsViewModel by viewModels {
-        QuestionsViewModelFactory(this)
+        QuestionsViewModelFactory(
+            this
+        )
     }
 
     private fun observeViewModel() {

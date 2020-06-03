@@ -1,4 +1,4 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.edit_questions
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

@@ -1,10 +1,9 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.edit_questions
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -12,11 +11,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.DefaultQuestions
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * @param context, helpful for sharing question
@@ -66,7 +62,8 @@ class QuestionsViewModel(
     }
 
     fun addQuestionsFromDatabase() {
-        _questionsLoadingStatus.value=LoadingStatus.LOADING
+        _questionsLoadingStatus.value=
+            LoadingStatus.LOADING
         val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
         if(!_questions.value.isNullOrEmpty() ) {
             questions.addAll(_questions.value!!)
@@ -77,16 +74,18 @@ class QuestionsViewModel(
                     if(dataSnapshot.value!=null){
                         val questionsList = dataSnapshot.value as ArrayList<*>
                         questionsList.forEach{ q->
-                            questions.add(EditQuestionsView.Model(getNewId(), q as String, { i:Int, id:String, newText:String -> onQuestionEdited(i, id, newText) }))
+                            questions.add(EditQuestionsView.Model(getNewId(), q as String, { id:String, newText:String -> onQuestionEdited(id, newText) }))
                         }
                         _questions.value = questions
-                        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
+                        _questionsSetChangedAction.value =
+                            ListAction.DataSetChangedAction
                     }  else {
                         DefaultQuestions.DEFAULT_QUESTIONS.forEach {
-                            questions.add(EditQuestionsView.Model(getNewId(), it, { i:Int, id:String, newText:String -> onQuestionEdited(i, id, newText) }))
+                            questions.add(EditQuestionsView.Model(getNewId(), it, { id:String, newText:String -> onQuestionEdited(id, newText) }))
                         }
                         _questions.value = questions
-                        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
+                        _questionsSetChangedAction.value =
+                            ListAction.DataSetChangedAction
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -114,21 +113,29 @@ class QuestionsViewModel(
             Log.wtf(TAG, _questions.value.toString())
             questions.addAll(_questions.value!!)
         }
-        questions.add(EditQuestionsView.Model(getNewId(), "", {i:Int, id:String, newText:String -> onQuestionEdited(i, id, newText) }))
+        questions.add(EditQuestionsView.Model(getNewId(), "", { id:String, newText:String -> onQuestionEdited(id, newText) }))
         _questions.value = questions
         Log.wtf(TAG, "addQuestionBox : "+_questions.value.toString())
-        _questionsSetChangedAction.value = ListAction.ItemInsertedAction(_questions.value!!.lastIndex)
+        _questionsSetChangedAction.value =
+            ListAction.ItemInsertedAction(
+                _questions.value!!.lastIndex
+            )
     }
 
     fun onQuestionsReset() {
         _questions.value = mutableListOf()
-        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
+        _questionsSetChangedAction.value =
+            ListAction.DataSetChangedAction
         addQuestionBox()
     }
 
     fun onQuestionPositionChanged(previous: Int, target: Int) {
         _questions.value = _questions.value!!.moveItem(previous, target)
-        _questionsSetChangedAction.value = ListAction.ItemMovedAction(previous, target)
+        _questionsSetChangedAction.value =
+            ListAction.ItemMovedAction(
+                previous,
+                target
+            )
     }
 
     fun onQuestionRemovedAt(i: Int) {
@@ -137,19 +144,23 @@ class QuestionsViewModel(
         questions.addAll(_questions.value!!)
         questions.removeAt(i)
         _questions.value = questions
-        _questionsSetChangedAction.value = ListAction.ItemRemovedAction(i)
-        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
+        _questionsSetChangedAction.value =
+            ListAction.ItemRemovedAction(
+                i
+            )
+        _questionsSetChangedAction.value =
+            ListAction.DataSetChangedAction
         if(_questions.value.isNullOrEmpty()) onQuestionsReset()
     }
 
 
-    fun onQuestionEdited(i:Int, id: String, newText:String) {
+    fun onQuestionEdited(id: String, newText:String) {
         val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
         questions.addAll(_questions.value!!)
         var finalIndex=-1
         questions.forEachIndexed {index, q->
             Log.w(TAG, "onQuestionEdited : index = "+index+"; id = "+q.id+"; value = "+q.editTextValue)
-            if(id==q.id && index==i){
+            if(id==q.id){
                 q.editTextValue = newText
                 finalIndex=index
             }
@@ -157,7 +168,10 @@ class QuestionsViewModel(
         if(finalIndex!=-1){
             Log.w(TAG, "onQuestionEdited : i = "+finalIndex+"; id = "+id+"; newText = "+newText)
             _questions.value = questions
-            _questionsSetChangedAction.value = ListAction.ItemUpdatedAction(finalIndex)
+            _questionsSetChangedAction.value =
+                ListAction.ItemUpdatedAction(
+                    finalIndex
+                )
         }
         else {
             Log.w(TAG, "onQuestionEdited : ID not found")

@@ -1,4 +1,4 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.client_list
 
 data class Client(
     val userID: String,

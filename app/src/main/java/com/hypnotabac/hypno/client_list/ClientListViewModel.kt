@@ -1,4 +1,4 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.client_list
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.hypnotabac.hypno.HypnoStatsActivity
 import java.util.*
 
 /**
@@ -64,7 +65,8 @@ class ClientsViewModel(
     }
 
     fun onNewClientsRequest() {
-        _clientsLoadingStatus.value=LoadingStatus.LOADING
+        _clientsLoadingStatus.value=
+            LoadingStatus.LOADING
         val clients:MutableList<Client> = mutableListOf()
         if(!_clients.value.isNullOrEmpty() ) {
             clients.addAll(_clients.value!!)
@@ -77,23 +79,32 @@ class ClientsViewModel(
                         clientsMap.forEach{ c->
                             val dbClient = c.value as Map<*, *>
                             if(dbClient.containsKey("userID")){
-                                clients.add(Client( dbClient["userID"] as String,
-                                    dbClient["email"] as String,
-                                    dbClient["firstName"] as String,
-                                    dbClient["lastName"] as String,
-                                    dbClient["hypnoID"] as String,
-                                    true))
+                                clients.add(
+                                    Client(
+                                        dbClient["userID"] as String,
+                                        dbClient["email"] as String,
+                                        dbClient["firstName"] as String,
+                                        dbClient["lastName"] as String,
+                                        dbClient["hypnoID"] as String,
+                                        true
+                                    )
+                                )
                             } else {
-                                clients.add(Client( "",
-                                    dbClient["email"] as String,
-                                    "",
-                                    "",
-                                    "",
-                                    false))
+                                clients.add(
+                                    Client(
+                                        "",
+                                        dbClient["email"] as String,
+                                        "",
+                                        "",
+                                        "",
+                                        false
+                                    )
+                                )
                             }
                         }
                         _clients.value = clients
-                        _clientsSetChangedAction.value = ListAction.DataSetChangedAction
+                        _clientsSetChangedAction.value =
+                            ListAction.DataSetChangedAction
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -104,7 +115,8 @@ class ClientsViewModel(
 
     fun onClientsReset() {
         _clients.value = mutableListOf()
-        _clientsSetChangedAction.value = ListAction.DataSetChangedAction
+        _clientsSetChangedAction.value =
+            ListAction.DataSetChangedAction
         onNewClientsRequest()
     }
 

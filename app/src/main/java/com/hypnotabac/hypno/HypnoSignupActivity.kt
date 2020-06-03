@@ -3,13 +3,13 @@ package com.hypnotabac.hypno
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.FirebaseDatabase
+import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import kotlinx.android.synthetic.main.activity_signup.*
 
@@ -93,7 +93,7 @@ class HypnoSignupActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(
                                     applicationContext,
-                                    HypnoLoginActivity::class.java
+                                    LoginActivity::class.java
                                 )
                             )
                             Toast.makeText(

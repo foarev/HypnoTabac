@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/status_bar"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:context=".hypno.EditQuestionsActivity">
+        tools:context=".hypno.edit_questions.EditQuestionsActivity">
 
     <TextView
         android:layout_width="wrap_content"

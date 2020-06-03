@@ -1,4 +1,4 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.client_list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +13,9 @@ class ClientListAdapter() : RecyclerView.Adapter<ClientListAdapter.ClientViewHol
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientViewHolder {
         val v = ClientListView(parent.context)
-        return ClientViewHolder(v)
+        return ClientViewHolder(
+            v
+        )
     }
 
     override fun getItemCount(): Int {

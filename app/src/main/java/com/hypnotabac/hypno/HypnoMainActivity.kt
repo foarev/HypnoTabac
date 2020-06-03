@@ -10,17 +10,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hypnotabac.FirstLoginActivity
-import com.hypnotabac.hypno.ClientsViewModel.LoadingStatus
-import com.hypnotabac.hypno.ClientsViewModel.ListAction
+import com.hypnotabac.LoginActivity
+import com.hypnotabac.hypno.client_list.ClientsViewModel.LoadingStatus
+import com.hypnotabac.hypno.client_list.ClientsViewModel.ListAction
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
+import com.hypnotabac.hypno.add_client.AddClientActivity
+import com.hypnotabac.hypno.client_list.ClientListAdapter
+import com.hypnotabac.hypno.client_list.ClientListView
+import com.hypnotabac.hypno.client_list.ClientsViewModel
+import com.hypnotabac.hypno.edit_questions.EditQuestionsActivity
 import kotlinx.android.synthetic.main.activity_h_main.*
 import kotlinx.android.synthetic.main.status_bar.*
 
 class HypnoMainActivity : AppCompatActivity() {
     private val TAG = "HypnoMainActivity"
-    private val clientListAdapter: ClientListAdapter = ClientListAdapter()
+    private val clientListAdapter: ClientListAdapter =
+        ClientListAdapter()
     private val llm: RecyclerView.LayoutManager = LinearLayoutManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +41,7 @@ class HypnoMainActivity : AppCompatActivity() {
         }
         logout.setOnClickListener{
             SaveSharedPreferences.resetAll(this)
-            startActivity(Intent(applicationContext, FirstLoginActivity::class.java))
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
         }
 
         my_recycler_view.layoutManager = llm

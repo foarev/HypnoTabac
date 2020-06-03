@@ -14,7 +14,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.R
-import kotlinx.android.synthetic.main.activity_signup.*
+import com.hypnotabac.SaveSharedPreferences
+import kotlinx.android.synthetic.main.activity_c_login.*
+import kotlin.reflect.typeOf
 
 class ClientSignupActivity : AppCompatActivity() {
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -24,55 +26,11 @@ class ClientSignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        btnSignUp!!.setOnClickListener(View.OnClickListener {
+        login!!.setOnClickListener(View.OnClickListener {
             val email = editEmail!!.text.toString().trim { it <= ' ' }
-            val firstName = editFirstName!!.text.toString().trim { it <= ' ' }
-            val lastName = editLastName!!.text.toString().trim { it <= ' ' }
-            val password = editPassword!!.text.toString().trim { it <= ' ' }
-            val confirmPwd = confirmPassword!!.text.toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(this@ClientSignupActivity, "Please enter your email", Toast.LENGTH_SHORT)
+                Toast.makeText(this@ClientSignupActivity, "Veuillez entrer votre adresse email", Toast.LENGTH_SHORT)
                     .show()
-                return@OnClickListener
-            }
-            if (TextUtils.isEmpty(firstName)) {
-                Toast.makeText(
-                    this@ClientSignupActivity,
-                    "Please enter your first name",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
-            if (TextUtils.isEmpty(lastName)) {
-                Toast.makeText(
-                    this@ClientSignupActivity,
-                    "Please enter your last name",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
-            if (TextUtils.isEmpty(password)) {
-                Toast.makeText(
-                    this@ClientSignupActivity,
-                    "Please enter your password",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
-            if (TextUtils.isEmpty(confirmPwd)) {
-                Toast.makeText(
-                    this@ClientSignupActivity,
-                    "Please confirm your password",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
-            if (password.length < 3 || password.length > 12) {
-                Toast.makeText(
-                    this@ClientSignupActivity,
-                    "Please enter a password between 3 and 12 characters",
-                    Toast.LENGTH_SHORT
-                ).show()
                 return@OnClickListener
             }
 
@@ -81,6 +39,9 @@ class ClientSignupActivity : AppCompatActivity() {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         var isEmailRegistered = false
                         var randomID=""
+                        var firstName=""
+                        var lastName=""
+                        var responses = listOf<String>()
                         var hypnoID=""
 
                         val hypnos = dataSnapshot.value as Map<*, *>
@@ -94,6 +55,9 @@ class ClientSignupActivity : AppCompatActivity() {
                                         isEmailRegistered = true
                                         randomID = c.key.toString()
                                         hypnoID = hypno["userID"] as String
+                                        firstName = singleClient["firstName"] as String
+                                        lastName = singleClient["lastName"] as String
+                                        responses = singleClient["responses"] as List<String>
                                         return@forEach
                                     }
                                 }
@@ -107,18 +71,30 @@ class ClientSignupActivity : AppCompatActivity() {
                                 .show()
                             return
                         } else {
-                            if (password == confirmPwd) {
-                                firebaseAuth.createUserWithEmailAndPassword(email, password)
-                                    .addOnCompleteListener(
-                                        this@ClientSignupActivity
-                                    ) { task ->
+                            val intent = intent
+                            val emailLink = intent.data!!.toString()
+
+                            // Confirm the link is a sign-in with email link.
+                            if (firebaseAuth.isSignInWithEmailLink(emailLink)) {
+
+                                // The client SDK will parse the code from the link for you.
+                                firebaseAuth.signInWithEmailLink(email, emailLink)
+                                    .addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
+                                            Log.d(TAG, "Successfully signed in with email link!")
+                                            // You can access the new user via result.getUser()
+                                            // Additional user info profile *not* available via:
+                                            // result.getAdditionalUserInfo().getProfile() == null
+                                            // You can check if the user is new or existing:
+                                            // result.getAdditionalUserInfo().isNewUser()
+
                                             val user = firebaseAuth.currentUser
                                             val profileUpdates =
                                                 UserProfileChangeRequest.Builder()
                                                     .setDisplayName(email).build()
                                             user!!.updateProfile(profileUpdates)
 
+                                            firebaseDatabase.getReference("users").removeEventListener(this)
                                             //Remove random ID
                                             firebaseDatabase.getReference("users")
                                                 .child(hypnoID)
@@ -136,32 +112,25 @@ class ClientSignupActivity : AppCompatActivity() {
                                             dbCurrentUser.child("hypnoID").setValue(hypnoID)
                                             dbCurrentUser.child("firstName").setValue(firstName)
                                             dbCurrentUser.child("lastName").setValue(lastName)
-                                            startActivity(
-                                                Intent(
-                                                    applicationContext,
-                                                    ClientLoginActivity::class.java
-                                                )
-                                            )
+                                            responses.forEachIndexed {i, r ->
+                                                dbCurrentUser.child("responses").child(i.toString()).setValue(r)
+                                            }
+                                            SaveSharedPreferences.setEmail(this@ClientSignupActivity, email)
+                                            SaveSharedPreferences.setUserType(this@ClientSignupActivity, "client")
+                                            SaveSharedPreferences.setUserID(this@ClientSignupActivity, firebaseAuth.uid)
+                                            SaveSharedPreferences.setHypnoID(this@ClientSignupActivity, hypnoID)
+                                            startActivity(Intent(applicationContext, ClientMainActivity::class.java))
                                             Toast.makeText(
                                                 this@ClientSignupActivity,
                                                 "Sign up complete",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         } else {
-                                            Toast.makeText(
-                                                this@ClientSignupActivity,
-                                                "Sign up failed",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            Log.e(TAG, "Error signing in with email link", task.exception)
                                         }
                                     }
                             } else {
-                                Toast.makeText(
-                                    this@ClientSignupActivity,
-                                    "The confirmed password doesn't match the password",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                return
+                                Toast.makeText(this@ClientSignupActivity, "You need to sign in with an email link", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
