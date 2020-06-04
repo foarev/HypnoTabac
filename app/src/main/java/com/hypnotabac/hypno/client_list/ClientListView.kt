@@ -1,6 +1,8 @@
 package com.hypnotabac.hypno.client_list
 
 import android.content.Context
+import android.graphics.Typeface
+import android.graphics.Typeface.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +23,9 @@ class ClientListView @JvmOverloads constructor(context: Context,
         this.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
     }
     fun setupView(model: Model){
-        if(model.client.isRegistered) client_text_view.text = model.client.firstName + " " + model.client.lastName
-        else client_text_view.text = "(Unregistered) " + model.client.email
+        client_text_view.text = model.client.firstName + " " + model.client.lastName
+        if(model.client.isRegistered) client_text_view.setTypeface(null, NORMAL)
+        else client_text_view.setTypeface(null, ITALIC)
         button_remove.setOnClickListener { model.onClickRemove(model.client.userID, model.client.email) }
         button_stats.setOnClickListener { model.onClickStats(model.client.userID) }
     }

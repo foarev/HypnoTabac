@@ -16,8 +16,8 @@ class EditQuestionsView @JvmOverloads constructor(context: Context,
                                                   defStyleAttr: Int = 0) :
                                     ConstraintLayout(context, attrs, defStyleAttr)
 {
-    val TAG: String = "QuestionsView"
-    var m: EditQuestionsView.Model = EditQuestionsView.Model("", "", { s: String, s2: String -> })
+    val TAG: String = "EditQuestionsView"
+    var m: Model = Model("", "", { s: String, s2: String -> })
     var i:Int = -1
 
     data class Model(val id:String, var editTextValue:String, var onTextEdited:(String, String) -> Unit)
@@ -26,8 +26,6 @@ class EditQuestionsView @JvmOverloads constructor(context: Context,
         this.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
     }
     fun setupView(model: Model, index:Int){
-        Log.w(TAG, "setupView : " + model.toString()+"; i = "+index)
-
         editQuestion.hint="Question #"+(index+1)
         editQuestion.setText(model.editTextValue)
         m = model

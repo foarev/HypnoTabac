@@ -30,7 +30,7 @@
             android:screenOrientation="nosensor" />
         <activity android:name=".hypno.edit_questions.EditQuestionsActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".hypno.HypnoStatsActivity"
+        <activity android:name=".hypno.stats.HypnoStatsActivity"
             android:screenOrientation="nosensor" />
         <activity android:name=".hypno.add_client.AddClientActivity"
             android:screenOrientation="nosensor" />

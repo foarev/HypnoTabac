@@ -13,7 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.hypnotabac.hypno.HypnoStatsActivity
+import com.hypnotabac.hypno.stats.HypnoStatsActivity
 import java.util.*
 
 /**
@@ -78,10 +78,10 @@ class ClientsViewModel(
                         val clientsMap = dataSnapshot.value as Map<*, *>
                         clientsMap.forEach{ c->
                             val dbClient = c.value as Map<*, *>
-                            if(dbClient.containsKey("userID")){
+                            if((c.key as String).length>10){
                                 clients.add(
                                     Client(
-                                        dbClient["userID"] as String,
+                                        c.key as String,
                                         dbClient["email"] as String,
                                         dbClient["firstName"] as String,
                                         dbClient["lastName"] as String,
@@ -90,21 +90,22 @@ class ClientsViewModel(
                                     )
                                 )
                             } else {
-                                clients.add(
-                                    Client(
-                                        "",
-                                        dbClient["email"] as String,
-                                        "",
-                                        "",
-                                        "",
-                                        false
+                                if(dbClient["email"]!=null && dbClient["firstName"]!=null && dbClient["lastName"]!=null)
+                                    clients.add(
+                                        Client(
+                                            c.key as String,
+                                            dbClient["email"] as String,
+                                            dbClient["firstName"] as String,
+                                            dbClient["lastName"] as String,
+                                            "",
+                                            false
+                                        )
                                     )
-                                )
                             }
                         }
                         _clients.value = clients
-                        _clientsSetChangedAction.value =
-                            ListAction.DataSetChangedAction
+                        _clientsSetChangedAction.value = ListAction.DataSetChangedAction
+                        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").removeEventListener(this)
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {

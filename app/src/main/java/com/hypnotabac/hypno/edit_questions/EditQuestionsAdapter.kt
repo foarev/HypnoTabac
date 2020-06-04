@@ -31,8 +31,6 @@ class EditQuestionsAdapter() : RecyclerView.Adapter<EditQuestionsAdapter.Questio
     }
 
     override fun onViewDetachedFromWindow(holder: QuestionViewHolder) {
-        //holder.v.removeWatcher()
-        Log.w(TAG, "onViewDetachedFromWindow")
         holder.v.retrieveValue()
         holders.remove(holder)
     }
@@ -46,19 +44,11 @@ class EditQuestionsAdapter() : RecyclerView.Adapter<EditQuestionsAdapter.Questio
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        Log.w(TAG, "onDetachedFromRecyclerView")
         retrieveAllValues()
     }
     fun retrieveAllValues(){
-        Log.w(TAG, "retrieveAllValues")
         holders.forEach{
             it.v.retrieveValue()
         }
     }
-
-    /*
-    override fun onViewRecycled(holder: QuestionViewHolder) {
-        holder.v.removeView()
-        super.onViewRecycled(holder)
-    }*/
 }

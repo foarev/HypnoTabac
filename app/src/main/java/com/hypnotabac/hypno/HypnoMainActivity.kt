@@ -56,9 +56,9 @@ class HypnoMainActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.clientListModels.observe(
             this,
-            Observer { jokes: List<ClientListView.Model> ->
+            Observer { models: List<ClientListView.Model> ->
                 clientListAdapter.models.clear()
-                clientListAdapter.models.addAll(jokes)
+                clientListAdapter.models.addAll(models)
             })
 
         viewModel.clientsSetChangedAction.observe(

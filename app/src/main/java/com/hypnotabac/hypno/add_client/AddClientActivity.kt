@@ -34,9 +34,23 @@ class AddClientActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_client)
 
         sendemail.setOnClickListener{
-            val email = editEmail!!.text.toString().trim { it <= ' ' }
+            questionsResponsesAdapter.retrieveAllValues()
+            val email = questionsResponsesAdapter.models[0].editTextValue//editEmail!!.text.toString().trim { it <= ' ' }
+            val firstName = questionsResponsesAdapter.models[1].editTextValue
+            val lastName = questionsResponsesAdapter.models[2].editTextValue
+
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+            if (TextUtils.isEmpty(firstName)) {
+                Toast.makeText(this, "Please enter a first name", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+            if (TextUtils.isEmpty(lastName)) {
+                Toast.makeText(this, "Please enter a last name", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
@@ -61,10 +75,12 @@ class AddClientActivity : AppCompatActivity() {
                         val id = (1..10).map { STRING_CHARACTERS.random() }.joinToString("")
 
                         firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("email").setValue(email)
-                        val responses = mutableListOf<String>()
+                        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("firstName").setValue(firstName)
+                        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("lastName").setValue(lastName)
                         questionsResponsesAdapter.models.forEachIndexed { i, model ->
-                            responses.add(model.editTextValue)
-                            firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("responses").child(""+i).setValue(model.editTextValue)
+                            Log.w(TAG, "Model : "+model.toString())
+                            if(i>2)
+                                firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("responses").child((i-3).toString()).setValue(model.editTextValue)
                         }
 
                         Log.d(TAG, "Email sent.")

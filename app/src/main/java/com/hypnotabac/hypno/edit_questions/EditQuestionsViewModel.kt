@@ -92,30 +92,14 @@ class QuestionsViewModel(
                     Log.w(TAG, "Failed to read value.", error.toException())
                 }
             })
-        /*composite.add(
-            .subscribeOn(Schedulers.io())
-            .delay(50, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doAfterTerminate {_questionsLoadingStatus.value=LoadingStatus.NOT_LOADING}
-            .subscribeBy(
-                onError = { e -> Log.wtf(TAG, ""+e) },
-                onComplete = {
-                    _questions.value = questions
-                    _questionsSetChangedAction.value = ListAction.DataSetChangedAction
-                }
-            )
-                )*/
-
     }
     fun addQuestionBox() {
         val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
         if(!_questions.value.isNullOrEmpty() ) {
-            Log.wtf(TAG, _questions.value.toString())
             questions.addAll(_questions.value!!)
         }
         questions.add(EditQuestionsView.Model(getNewId(), "", { id:String, newText:String -> onQuestionEdited(id, newText) }))
         _questions.value = questions
-        Log.wtf(TAG, "addQuestionBox : "+_questions.value.toString())
         _questionsSetChangedAction.value =
             ListAction.ItemInsertedAction(
                 _questions.value!!.lastIndex
@@ -140,7 +124,6 @@ class QuestionsViewModel(
 
     fun onQuestionRemovedAt(i: Int) {
         val questions:MutableList<EditQuestionsView.Model> = mutableListOf()
-        Log.w(TAG, "onQuestionRemoved : i = "+i+"; id = "+_questions.value!![i].id)
         questions.addAll(_questions.value!!)
         questions.removeAt(i)
         _questions.value = questions
@@ -159,19 +142,14 @@ class QuestionsViewModel(
         questions.addAll(_questions.value!!)
         var finalIndex=-1
         questions.forEachIndexed {index, q->
-            Log.w(TAG, "onQuestionEdited : index = "+index+"; id = "+q.id+"; value = "+q.editTextValue)
             if(id==q.id){
                 q.editTextValue = newText
                 finalIndex=index
             }
         }
         if(finalIndex!=-1){
-            Log.w(TAG, "onQuestionEdited : i = "+finalIndex+"; id = "+id+"; newText = "+newText)
             _questions.value = questions
-            _questionsSetChangedAction.value =
-                ListAction.ItemUpdatedAction(
-                    finalIndex
-                )
+            _questionsSetChangedAction.value = ListAction.ItemUpdatedAction(finalIndex)
         }
         else {
             Log.w(TAG, "onQuestionEdited : ID not found")
@@ -195,7 +173,6 @@ class QuestionsViewModel(
         } else {
             newId = (1..10).map { STRING_CHARACTERS.random() }.joinToString("")
         }
-        Log.w(TAG, "ID : "+newId)
         return newId
     }
 

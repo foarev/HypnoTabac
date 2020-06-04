@@ -16,7 +16,7 @@ class QuestionsResponsesView @JvmOverloads constructor(context: Context,
                                                        defStyleAttr: Int = 0) :
                                     ConstraintLayout(context, attrs, defStyleAttr)
 {
-    val TAG: String = "QuestionsResponsesView"
+    val TAG: String = "ResponsesView"
     var m:Model = Model("","",{ i:Int, s:String->})
     var i:Int = -1
 
@@ -30,7 +30,7 @@ class QuestionsResponsesView @JvmOverloads constructor(context: Context,
 
         question_text_view.text = model.textViewValue
 
-        editResponse.hint="Réponse"
+        //editResponse.hint=model.textViewValue
         editResponse.setText(model.editTextValue)
 
         m = model

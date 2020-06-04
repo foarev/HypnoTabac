@@ -21,8 +21,8 @@
     <string name="last_name_not_set">Nom de famille non spécifié</string>
     <string name="your_clients">Vos clients</string>
     <string name="your_questions">Vos questions</string>
-    <string name="prompt_question">Tapez une question ici</string>
-    <string name="prompt_response">Tapez votre réponse ici</string>
+    <string name="prompt_question">Entrez une question ici</string>
+    <string name="prompt_response">Entrez votre réponse ici</string>
     <string name="logout">Se déconnecter</string>
     <string name="add_client">Ajouter un client</string>
     <string name="next">Suivant</string>

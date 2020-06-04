@@ -1,16 +1,17 @@
-package com.hypnotabac.hypno
+package com.hypnotabac.hypno.stats
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.LargeValueFormatter
-import com.github.mikephil.charting.model.GradientColor
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,6 +22,7 @@ import com.hypnotabac.R
 import kotlinx.android.synthetic.main.activity_h_stats.*
 import kotlinx.android.synthetic.main.activity_h_stats.barChartViewCondition
 import kotlinx.android.synthetic.main.activity_h_stats.barChartViewGrade
+import kotlinx.android.synthetic.main.activity_h_stats.my_recycler_view
 import kotlinx.android.synthetic.main.activity_h_stats.textView
 import kotlin.math.roundToInt
 
@@ -28,6 +30,8 @@ class HypnoStatsActivity : AppCompatActivity() {
     var clientID = ""
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val firebaseAuth = FirebaseAuth.getInstance()
+
+    private val responsesAdapter: ResponsesAdapter = ResponsesAdapter()
     val TAG = "HypnoStatsActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,13 +41,17 @@ class HypnoStatsActivity : AppCompatActivity() {
 
         val dbRef = firebaseDatabase.getReference("users")
             .child(firebaseAuth.currentUser!!.uid)
-            .child("clients")
-            .child(clientID)
-            .child("cigs")
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot.value!=null){
-                    val cigs = dataSnapshot.value as ArrayList<*>
+                val root = dataSnapshot.value as Map<*,*>
+                val clientsRoot = root["clients"] as Map<*,*>
+                val clientRoot = clientsRoot[clientID] as Map<*,*>
+                val firstName = clientRoot["firstName"] as String
+                val lastName = clientRoot["lastName"] as String
+                val questions = root["questions"] as ArrayList<*>
+                val responses = clientRoot["responses"] as ArrayList<*>
+                if(clientRoot["cigs"]!=null){
+                    val cigs = clientRoot["cigs"] as ArrayList<*>
                     val numGrade = MutableList(3) { _ -> 0 }
                     val numCondition = mutableMapOf<String, Int>()
                     val numDate:MutableMap<Date, Int> = mutableMapOf()
@@ -71,7 +79,7 @@ class HypnoStatsActivity : AppCompatActivity() {
                     }
                     val avg = (totalCigs.toFloat()/((dateMin..dateMax).count().toFloat())*100).roundToInt()/100.0
 
-                    textView.text = "Ce client a consommé un total de $totalCigs cigarettes, soit environ $avg par jour."
+                    textView.text = "$firstName $lastName a consommé un total de $totalCigs cigarettes, soit environ $avg par jour."
 
                     val xAxisValues = ArrayList<String>()
 
@@ -228,6 +236,10 @@ class HypnoStatsActivity : AppCompatActivity() {
                     barChartViewCondition.visibility = GONE
                     lineChart.visibility = GONE
                 }
+                responses.forEachIndexed {i, r -> responsesAdapter.models.add(ResponsesView.Model(questions[i] as String, r as String)) }
+
+                my_recycler_view.adapter = responsesAdapter
+                my_recycler_view.layoutManager = LinearLayoutManager(this@HypnoStatsActivity)
             }
 
             override fun onCancelled(p0: DatabaseError) {

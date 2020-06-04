@@ -24,9 +24,10 @@ class ClientSignupActivity : AppCompatActivity() {
     private val TAG = "ClientSignupActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
+        setContentView(R.layout.activity_c_login)
 
         login!!.setOnClickListener(View.OnClickListener {
+            loading.visibility = View.VISIBLE
             val email = editEmail!!.text.toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(this@ClientSignupActivity, "Veuillez entrer votre adresse email", Toast.LENGTH_SHORT)
@@ -107,7 +108,6 @@ class ClientSignupActivity : AppCompatActivity() {
                                                     .child(hypnoID)
                                                     .child("clients")
                                                     .child(user.uid)
-                                            dbCurrentUser.child("userID").setValue(user.uid)
                                             dbCurrentUser.child("email").setValue(email)
                                             dbCurrentUser.child("hypnoID").setValue(hypnoID)
                                             dbCurrentUser.child("firstName").setValue(firstName)
@@ -119,6 +119,7 @@ class ClientSignupActivity : AppCompatActivity() {
                                             SaveSharedPreferences.setUserType(this@ClientSignupActivity, "client")
                                             SaveSharedPreferences.setUserID(this@ClientSignupActivity, firebaseAuth.uid)
                                             SaveSharedPreferences.setHypnoID(this@ClientSignupActivity, hypnoID)
+                                            loading.visibility = View.GONE
                                             startActivity(Intent(applicationContext, ClientMainActivity::class.java))
                                             Toast.makeText(
                                                 this@ClientSignupActivity,
@@ -126,6 +127,7 @@ class ClientSignupActivity : AppCompatActivity() {
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         } else {
+                                            loading.visibility = View.GONE
                                             Log.e(TAG, "Error signing in with email link", task.exception)
                                         }
                                     }

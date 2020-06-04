@@ -86,7 +86,6 @@ class HypnoSignupActivity : AppCompatActivity() {
                             val dbCurrentUser =
                                 firebaseDatabase.getReference("users")
                                     .child(user.uid)
-                            dbCurrentUser.child("userID").setValue(user.uid)
                             dbCurrentUser.child("email").setValue(email)
                             dbCurrentUser.child("firstName").setValue(firstName)
                             dbCurrentUser.child("lastName").setValue(lastName)

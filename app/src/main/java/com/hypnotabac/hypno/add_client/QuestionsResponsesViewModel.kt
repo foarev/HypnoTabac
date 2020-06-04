@@ -56,7 +56,20 @@ class QuestionsResponsesViewModel(
     val questionModels: LiveData<List<QuestionsResponsesView.Model>> = _questions
 
     init {
+        addEmailAndName()
         addQuestionsFromDatabase()
+    }
+
+    fun addEmailAndName() {
+        val questionsResponses:MutableList<QuestionsResponsesView.Model> = mutableListOf()
+        if(!_questions.value.isNullOrEmpty() ) {
+            questionsResponses.addAll(_questions.value!!)
+        }
+        questionsResponses.add(QuestionsResponsesView.Model("Adresse email", "", { i:Int, newText:String -> onQuestionEdited(i, newText) }))
+        questionsResponses.add(QuestionsResponsesView.Model("Prénom", "", { i:Int, newText:String -> onQuestionEdited(i, newText) }))
+        questionsResponses.add(QuestionsResponsesView.Model("Nom de famille", "", { i:Int, newText:String -> onQuestionEdited(i, newText) }))
+        _questions.value = questionsResponses
+        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
     }
 
     fun addQuestionsFromDatabase() {
@@ -92,8 +105,8 @@ class QuestionsResponsesViewModel(
 
     fun onQuestionsReset() {
         _questions.value = mutableListOf()
-        _questionsSetChangedAction.value =
-            ListAction.DataSetChangedAction
+        _questionsSetChangedAction.value = ListAction.DataSetChangedAction
+        addEmailAndName()
         addQuestionsFromDatabase()
     }
 
