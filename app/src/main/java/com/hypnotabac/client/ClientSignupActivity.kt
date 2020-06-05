@@ -55,7 +55,7 @@ class ClientSignupActivity : AppCompatActivity() {
                                     if(singleEmail==email){
                                         isEmailRegistered = true
                                         randomID = c.key.toString()
-                                        hypnoID = hypno["userID"] as String
+                                        hypnoID = h.key.toString()
                                         firstName = singleClient["firstName"] as String
                                         lastName = singleClient["lastName"] as String
                                         responses = singleClient["responses"] as List<String>

@@ -15,13 +15,16 @@ import com.hypnotabac.hypno.client_list.ClientsViewModel.LoadingStatus
 import com.hypnotabac.hypno.client_list.ClientsViewModel.ListAction
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
+import com.hypnotabac.client.ClientSettingsActivity
 import com.hypnotabac.hypno.add_client.AddClientActivity
 import com.hypnotabac.hypno.client_list.ClientListAdapter
 import com.hypnotabac.hypno.client_list.ClientListView
 import com.hypnotabac.hypno.client_list.ClientsViewModel
 import com.hypnotabac.hypno.edit_questions.EditQuestionsActivity
 import kotlinx.android.synthetic.main.activity_h_main.*
-import kotlinx.android.synthetic.main.status_bar.*
+import kotlinx.android.synthetic.main.status_bar_client.*
+import kotlinx.android.synthetic.main.status_bar_hypno.*
+import kotlinx.android.synthetic.main.status_bar_hypno.settings
 
 class HypnoMainActivity : AppCompatActivity() {
     private val TAG = "HypnoMainActivity"
@@ -42,6 +45,9 @@ class HypnoMainActivity : AppCompatActivity() {
         logout.setOnClickListener{
             SaveSharedPreferences.resetAll(this)
             startActivity(Intent(applicationContext, LoginActivity::class.java))
+        }
+        settings.setOnClickListener{
+            startActivity(Intent(applicationContext, HypnoSettingsActivity::class.java))
         }
 
         my_recycler_view.layoutManager = llm

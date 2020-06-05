@@ -1,5 +1,6 @@
 package com.hypnotabac.hypno.stats
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,18 +19,21 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.Date
+import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
+import com.hypnotabac.SaveSharedPreferences
+import com.hypnotabac.hypno.HypnoSettingsActivity
 import kotlinx.android.synthetic.main.activity_h_stats.*
 import kotlinx.android.synthetic.main.activity_h_stats.barChartViewCondition
 import kotlinx.android.synthetic.main.activity_h_stats.barChartViewGrade
 import kotlinx.android.synthetic.main.activity_h_stats.my_recycler_view
 import kotlinx.android.synthetic.main.activity_h_stats.textView
+import kotlinx.android.synthetic.main.status_bar_hypno.*
 import kotlin.math.roundToInt
 
 class HypnoStatsActivity : AppCompatActivity() {
     var clientID = ""
     private val firebaseDatabase = FirebaseDatabase.getInstance()
-    private val firebaseAuth = FirebaseAuth.getInstance()
 
     private val responsesAdapter: ResponsesAdapter = ResponsesAdapter()
     val TAG = "HypnoStatsActivity"
@@ -38,9 +42,16 @@ class HypnoStatsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_h_stats)
         clientID = intent.getStringExtra("clientID")
+        logout.setOnClickListener{
+            SaveSharedPreferences.resetAll(this)
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+        }
+        settings.setOnClickListener{
+            startActivity(Intent(applicationContext, HypnoSettingsActivity::class.java))
+        }
 
         val dbRef = firebaseDatabase.getReference("users")
-            .child(firebaseAuth.currentUser!!.uid)
+            .child(SaveSharedPreferences.getUserID(this))
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val root = dataSnapshot.value as Map<*,*>

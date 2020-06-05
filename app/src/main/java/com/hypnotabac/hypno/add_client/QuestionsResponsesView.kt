@@ -1,6 +1,7 @@
 package com.hypnotabac.hypno.add_client
 
 import android.content.Context
+import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -30,7 +31,19 @@ class QuestionsResponsesView @JvmOverloads constructor(context: Context,
 
         question_text_view.text = model.textViewValue
 
-        //editResponse.hint=model.textViewValue
+        if(index==0){
+            editResponse.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            editResponse.hint="Adresse email"
+        } else if(index==1){
+            editResponse.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            editResponse.hint = "Prénom"
+        } else if(index==2){
+            editResponse.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            editResponse.hint = "Nom de famille"
+        } else {
+            editResponse.inputType = InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE
+            editResponse.hint = "Réponse"
+        }
         editResponse.setText(model.editTextValue)
 
         m = model

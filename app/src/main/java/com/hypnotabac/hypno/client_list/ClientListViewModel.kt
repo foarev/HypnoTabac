@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.hypnotabac.SaveSharedPreferences
 import com.hypnotabac.hypno.stats.HypnoStatsActivity
 import java.util.*
 
@@ -71,7 +72,7 @@ class ClientsViewModel(
         if(!_clients.value.isNullOrEmpty() ) {
             clients.addAll(_clients.value!!)
         }
-        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients")
+        firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(context)).child("clients")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if(dataSnapshot.value!=null){
@@ -105,7 +106,7 @@ class ClientsViewModel(
                         }
                         _clients.value = clients
                         _clientsSetChangedAction.value = ListAction.DataSetChangedAction
-                        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").removeEventListener(this)
+                        firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(context)).child("clients").removeEventListener(this)
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -125,11 +126,11 @@ class ClientsViewModel(
         _clients.value?.forEach {
             if(it.email == email){
                 if(id!=""){
-                    firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).removeValue()
+                    firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(context)).child("clients").child(id).removeValue()
                     onClientsReset()
                 }
                 else {
-                    firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients")
+                    firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(context)).child("clients")
                         .addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
                                 if(dataSnapshot.value!=null){
@@ -137,7 +138,7 @@ class ClientsViewModel(
                                     clientsMap.forEach{ c->
                                         val dbClient = c.value as Map<*, *>
                                         if(dbClient["email"] as String == email){
-                                            firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(c.key as String).removeValue()
+                                            firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(context)).child("clients").child(c.key as String).removeValue()
                                         }
                                     }
                                     onClientsReset()

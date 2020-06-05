@@ -20,7 +20,7 @@ import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_c_main.*
-import kotlinx.android.synthetic.main.status_bar.*
+import kotlinx.android.synthetic.main.status_bar_client.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

@@ -17,9 +17,13 @@ import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.hypnotabac.BuildConfig
+import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
+import com.hypnotabac.SaveSharedPreferences
 import com.hypnotabac.hypno.HypnoMainActivity
+import com.hypnotabac.hypno.HypnoSettingsActivity
 import kotlinx.android.synthetic.main.activity_add_client.*
+import kotlinx.android.synthetic.main.status_bar_hypno.*
 
 class AddClientActivity : AppCompatActivity() {
     val TAG = "AddClientActivity"
@@ -33,6 +37,13 @@ class AddClientActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_client)
 
+        logout.setOnClickListener{
+            SaveSharedPreferences.resetAll(this)
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+        }
+        settings.setOnClickListener{
+            startActivity(Intent(applicationContext, HypnoSettingsActivity::class.java))
+        }
         sendemail.setOnClickListener{
             questionsResponsesAdapter.retrieveAllValues()
             val email = questionsResponsesAdapter.models[0].editTextValue//editEmail!!.text.toString().trim { it <= ' ' }
@@ -74,13 +85,13 @@ class AddClientActivity : AppCompatActivity() {
                         val STRING_CHARACTERS = (('A'..'Z') + ('0'..'9') + ('a'..'z')).toList().toTypedArray()
                         val id = (1..10).map { STRING_CHARACTERS.random() }.joinToString("")
 
-                        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("email").setValue(email)
-                        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("firstName").setValue(firstName)
-                        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("lastName").setValue(lastName)
+                        firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this)).child("clients").child(id).child("email").setValue(email)
+                        firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this)).child("clients").child(id).child("firstName").setValue(firstName)
+                        firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this)).child("clients").child(id).child("lastName").setValue(lastName)
                         questionsResponsesAdapter.models.forEachIndexed { i, model ->
                             Log.w(TAG, "Model : "+model.toString())
                             if(i>2)
-                                firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("clients").child(id).child("responses").child((i-3).toString()).setValue(model.editTextValue)
+                                firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this)).child("clients").child(id).child("responses").child((i-3).toString()).setValue(model.editTextValue)
                         }
 
                         Log.d(TAG, "Email sent.")

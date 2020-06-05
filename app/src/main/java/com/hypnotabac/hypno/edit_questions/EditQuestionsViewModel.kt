@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.DefaultQuestions
+import com.hypnotabac.SaveSharedPreferences
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
@@ -68,7 +69,7 @@ class QuestionsViewModel(
         if(!_questions.value.isNullOrEmpty() ) {
             questions.addAll(_questions.value!!)
         }
-        firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("questions")
+        firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(context)).child("questions")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if(dataSnapshot.value!=null){

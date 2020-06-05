@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
+import com.hypnotabac.SaveSharedPreferences
 import com.hypnotabac.hypno.*
 import kotlinx.android.synthetic.main.activity_edit_questions.*
+import kotlinx.android.synthetic.main.status_bar_hypno.*
 
 class EditQuestionsActivity : AppCompatActivity() {
     private val TAG = "EditQuestionsActivity"
@@ -28,6 +31,14 @@ class EditQuestionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_questions)
 
+        logout.setOnClickListener{
+            SaveSharedPreferences.resetAll(this)
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+        }
+        settings.setOnClickListener{
+            startActivity(Intent(applicationContext, HypnoSettingsActivity::class.java))
+        }
+
         addQuestion.setOnClickListener{
             viewModel.addQuestionBox()
         }
@@ -37,7 +48,7 @@ class EditQuestionsActivity : AppCompatActivity() {
             editQuestionsAdapter.retrieveAllValues()
             editQuestionsAdapter.models.forEachIndexed { i, model ->
                 responses.add(model.editTextValue)
-                firebaseDatabase.getReference("users").child(firebaseAuth.currentUser!!.uid).child("questions").child(""+i).setValue(model.editTextValue)
+                firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this)).child("questions").child(""+i).setValue(model.editTextValue)
             }
             startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
         }

@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 SaveSharedPreferences.setEmail(this@LoginActivity, email)
                                 SaveSharedPreferences.setUserType(this@LoginActivity, "hypno")
+                                SaveSharedPreferences.setUserID(this@LoginActivity, firebaseAuth!!.uid)
                                 startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
                             } else {
                                 Toast.makeText(
