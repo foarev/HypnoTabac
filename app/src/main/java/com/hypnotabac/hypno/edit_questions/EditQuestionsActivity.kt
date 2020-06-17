@@ -31,14 +31,6 @@ class EditQuestionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_questions)
 
-        logout.setOnClickListener{
-            SaveSharedPreferences.resetAll(this)
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
-        }
-        settings.setOnClickListener{
-            startActivity(Intent(applicationContext, HypnoSettingsActivity::class.java))
-        }
-
         addQuestion.setOnClickListener{
             viewModel.addQuestionBox()
         }

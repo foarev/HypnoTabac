@@ -5,7 +5,7 @@
     android:startY="30"
     android:endY="70"
     android:type="linear"
-    android:startColor="@color/colorPrimary"
+    android:startColor="@color/colorPrimary2"
     android:centerColor="@color/colorPrimaryLight"
-    android:endColor="@color/colorPrimary2"
+    android:endColor="@color/colorPrimary"
     android:angle="270"/>

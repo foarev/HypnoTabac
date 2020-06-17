@@ -132,7 +132,7 @@ class ClientSignupActivity : AppCompatActivity() {
                                         }
                                     }
                             } else {
-                                Toast.makeText(this@ClientSignupActivity, "You need to sign in with an email link", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ClientSignupActivity, "Vous devez vous connecter à l'aide d'un lien email", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

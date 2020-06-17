@@ -1,33 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:state_pressed="true" android:state_focused="true">
-        <shape>
-            <solid android:color="@color/colorPrimary"/>
-            <corners
-                android:radius="50dp" />
-        </shape>
-    </item>
+        <layer-list>
+            <item>
+                <shape>
+                    <gradient
+                        android:startColor="@color/colorPrimaryLight"
+                        android:endColor="@color/colorPrimary"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
 
+            <item
+                android:bottom="4dp"
+                android:left="4dp"
+                android:right="4dp"
+                android:top="4dp">
+                <shape>
+                    <gradient
+                        android:startColor="#d8d8d8"
+                        android:endColor="#c8c8c8"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
     <item android:state_pressed="true" android:state_focused="false">
-        <shape>
-            <solid android:color="@color/colorPrimary"/>
-            <corners
-                android:radius="50dp" />
-        </shape>
+        <layer-list>
+            <item>
+                <shape>
+                    <gradient
+                        android:startColor="@color/colorPrimaryLight"
+                        android:endColor="@color/colorPrimary"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
+
+            <item
+                android:bottom="4dp"
+                android:left="4dp"
+                android:right="4dp"
+                android:top="4dp">
+                <shape>
+                    <gradient
+                        android:startColor="#d8d8d8"
+                        android:endColor="#c8c8c8"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
+    <item android:state_pressed="false" android:state_focused="true">
+        <layer-list>
+            <item>
+                <shape>
+                    <gradient
+                        android:startColor="@color/colorPrimaryLight"
+                        android:endColor="@color/colorPrimary"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
 
-
+            <item
+                android:bottom="4dp"
+                android:left="4dp"
+                android:right="4dp"
+                android:top="4dp">
+                <shape>
+                    <gradient
+                        android:startColor="#d8d8d8"
+                        android:endColor="#c8c8c8"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
     <item android:state_pressed="false" android:state_focused="false">
-        <shape>
-            <gradient
-                android:startColor="@color/colorPrimaryLight"
-                android:endColor="@color/colorPrimary"
-                android:angle="0"
-                />
-            <corners
-                android:radius="50dp" />
-        </shape>
+        <layer-list>
+            <item>
+                <shape>
+                    <gradient
+                        android:startColor="@color/colorPrimaryLight"
+                        android:endColor="@color/colorPrimary"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
+
+            <item
+                android:bottom="4dp"
+                android:left="4dp"
+                android:right="4dp"
+                android:top="4dp">
+                <shape>
+                    <gradient
+                        android:startColor="#d8d8d8"
+                        android:endColor="#c8c8c8"
+                        android:angle="0"
+                        />
+                    <corners
+                        android:radius="50dp" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 
     <item android:state_enabled="true">

@@ -5,6 +5,22 @@
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:id="@+id/lineTop"
+        android:gravity="center_horizontal">
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#CCCCCC"
+            android:layout_gravity="center"/>
+    </LinearLayout>
         <TextView
             android:id="@+id/question_text_view"
             android:layout_height="wrap_content"
@@ -14,7 +30,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineTop"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="Example question?"/>
         <EditText
@@ -24,7 +40,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="2dp"
+            android:background="@drawable/edittext_rounded_corners"
             android:textSize="20sp"
             android:inputType="textShortMessage"
             android:hint="@string/prompt_response"

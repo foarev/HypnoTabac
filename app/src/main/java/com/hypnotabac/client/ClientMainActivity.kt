@@ -1,16 +1,22 @@
 package com.hypnotabac.client
 
+import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.*
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,7 +26,7 @@ import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_c_main.*
-import kotlinx.android.synthetic.main.status_bar_client.*
+import kotlinx.android.synthetic.main.condition_button_layout.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -31,14 +37,39 @@ class ClientMainActivity : AppCompatActivity() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     var grade = 0
     var condition = ""
+    val conditions_list = arrayOf(
+        "Récompense/Motivation",
+        "Café",
+        "Alcool/Soirée",
+        "Après un repas",
+        "Pause",
+        "Avant le coucher",
+        "Voiture",
+        "Téléphone/Internet",
+        "Film"
+    )
+    private var layoutManager: GridLayoutManager? = null
+    private var adapter : SimpleAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_c_main)
 
-        settings.setOnClickListener{
-            startActivity(Intent(applicationContext, ClientSettingsActivity::class.java))
+        layoutManager = GridLayoutManager(this, 3)
+        (layoutManager as GridLayoutManager).spanSizeLookup = object:
+            GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                if (position == conditions_list.size+1) {
+                    return 3 // the item in position now takes up 4 spans
+                }
+                return 1
+            }
         }
+        adapter = SimpleAdapter(layoutManager, this, conditions_list, other, 3)
+        buttonsRecyclerView.layoutManager = layoutManager
+        buttonsRecyclerView.adapter = adapter
+
+        buttonsRecyclerView.adapter!!.notifyDataSetChanged()
 
         addcig.setOnClickListener{
             addLayout.visibility = GONE
@@ -70,49 +101,12 @@ class ClientMainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Veuillez choisir une note", Toast.LENGTH_SHORT).show()
             }
         }
-
-        btnCafe.setOnClickListener {
-            condition = "Café"
-            resetButtonTint2()
-            btnCafe.setImageResource(R.drawable.btn_empty_pressed)
-            //btnCafe.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
-        }
-        btnEnnui.setOnClickListener {
-            condition = "Ennui"
-            resetButtonTint2()
-            btnEnnui.setImageResource(R.drawable.btn_empty_pressed)
-            //btnEnnui.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
-        }
-        btnPause.setOnClickListener {
-            condition = "Pause"
-            resetButtonTint2()
-            btnPause.setImageResource(R.drawable.btn_empty_pressed)
-            //btnPause.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
-        }
-        btnApresManger.setOnClickListener {
-            condition = "Après manger"
-            resetButtonTint2()
-            btnApresManger.setImageResource(R.drawable.btn_empty_pressed)
-            //btnApresManger.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
-        }
-        btnSoiree.setOnClickListener {
-            condition = "Soirée"
-            resetButtonTint2()
-            btnSoiree.setImageResource(R.drawable.btn_empty_pressed)
-            //btnSoiree.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
-        }
-        btnAutre.setOnClickListener {
-            condition = "Autre"
-            resetButtonTint2()
-            btnAutre.setImageResource(R.drawable.btn_empty_pressed)
-            other.visibility = VISIBLE
-            //btnAutre.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
-        }
         done.setOnClickListener {
+            condition = adapter!!.condition
             if(condition!=""){
                 resetButtonTint1()
                 resetButtonTint2()
-                if(condition == "Autre" && other.text.toString()!="") condition = other.text.toString()
+                if(condition == getString(R.string.other) && other.text.toString()!="") condition = other.text.toString()
                 conditionsLayout.visibility = GONE
                 addLayout.visibility = VISIBLE
                 if(SaveSharedPreferences.getHypnoID(this)!="" && SaveSharedPreferences.getUserID(this)!="") {
@@ -177,23 +171,65 @@ class ClientMainActivity : AppCompatActivity() {
         btn1.setImageResource(R.drawable.btn1)
         btn2.setImageResource(R.drawable.btn2)
         btn3.setImageResource(R.drawable.btn3)
-        /*btn1.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))
-        btn2.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))
-        btn3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))*/
     }
     fun resetButtonTint2(){
-        btnCafe.setImageResource(R.drawable.btn_empty)
-        btnEnnui.setImageResource(R.drawable.btn_empty)
-        btnSoiree.setImageResource(R.drawable.btn_empty)
-        btnPause.setImageResource(R.drawable.btn_empty)
-        btnApresManger.setImageResource(R.drawable.btn_empty)
-        btnAutre.setImageResource(R.drawable.btn_empty)
+        adapter!!.resetButtonsTint()
         other.visibility = GONE
-        /*btnCafe.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))
-        btnEnnui.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))
-        btnPause.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))
-        btnApresManger.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))
-        btnSoiree.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))
-        btnAutre.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary))*/
     }
+
+}
+
+class ButtonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    constructor(parent: ViewGroup)
+            : this(LayoutInflater.from(parent.context).inflate(R.layout.condition_button_layout, parent, false))
+}
+
+class SimpleAdapter(
+    private val layoutManager: GridLayoutManager? = null,
+    private val context: Context,
+    private val conditions_list: Array<String>,
+    private val other: EditText,
+    private val spanCount:Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return ButtonViewHolder(parent)
+    }
+    val buttons:MutableList<Button> = mutableListOf()
+    var condition:String = ""
+    var TAG:String = "SimpleAdapter"
+
+    override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
+        val linearLayout = p0.itemView as LinearLayout
+        val btns = mutableListOf<Button>()
+        btns.add(linearLayout.btn_condition1 as Button)
+        btns.add(linearLayout.btn_condition2 as Button)
+        btns.add(linearLayout.btn_condition3 as Button)
+        (0..spanCount-1).forEach { index ->
+            val position = (p1-index)/spanCount
+            Log.w(TAG, "position : "+position+"; index : "+index+"; p1 : "+p1)
+            if(p1>conditions_list.lastIndex)
+                btns[index].text = context.getString(R.string.other)
+            else
+                btns[index].text = conditions_list[p1]
+            buttons.add(btns[index])
+
+            btns[index].setOnClickListener {
+                if(p1>conditions_list.lastIndex){
+                    condition = context.getString(R.string.other)
+                    other.visibility = VISIBLE
+                }
+                else{
+                    condition = conditions_list[p1]
+                    other.visibility = GONE
+                }
+                resetButtonsTint()
+                btns[index].setBackgroundResource(R.drawable.button)
+            }
+        }
+    }
+    fun resetButtonsTint(){
+        buttons.forEach{it.setBackgroundResource(R.drawable.button_notpressed)}
+    }
+    override fun getItemCount() = conditions_list.size+1
 }

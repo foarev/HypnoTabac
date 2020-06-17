@@ -17,13 +17,10 @@ import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.hypnotabac.BuildConfig
-import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import com.hypnotabac.hypno.HypnoMainActivity
-import com.hypnotabac.hypno.HypnoSettingsActivity
 import kotlinx.android.synthetic.main.activity_add_client.*
-import kotlinx.android.synthetic.main.status_bar_hypno.*
 
 class AddClientActivity : AppCompatActivity() {
     val TAG = "AddClientActivity"
@@ -37,13 +34,6 @@ class AddClientActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_client)
 
-        logout.setOnClickListener{
-            SaveSharedPreferences.resetAll(this)
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
-        }
-        settings.setOnClickListener{
-            startActivity(Intent(applicationContext, HypnoSettingsActivity::class.java))
-        }
         sendemail.setOnClickListener{
             questionsResponsesAdapter.retrieveAllValues()
             val email = questionsResponsesAdapter.models[0].editTextValue//editEmail!!.text.toString().trim { it <= ' ' }
@@ -51,17 +41,17 @@ class AddClientActivity : AppCompatActivity() {
             val lastName = questionsResponsesAdapter.models[2].editTextValue
 
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Veuillez entrer un email", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(firstName)) {
-                Toast.makeText(this, "Please enter a first name", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Veuillez entrer un prénom", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(lastName)) {
-                Toast.makeText(this, "Please enter a last name", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Veuillez entrer un nom de famille", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
@@ -94,15 +84,15 @@ class AddClientActivity : AppCompatActivity() {
                                 firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this)).child("clients").child(id).child("responses").child((i-3).toString()).setValue(model.editTextValue)
                         }
 
-                        Log.d(TAG, "Email sent.")
-                        Toast.makeText(this, "Email sent.", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "Email envoyé.")
+                        Toast.makeText(this, "Email envoyé.", Toast.LENGTH_SHORT).show()
 
                         startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
                     }
                 }
                 .addOnFailureListener { e ->
                     Log.d(TAG, "Error : "+e.message)
-                    Toast.makeText(this, "Error : "+e.stackTrace, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Erreur : "+e.stackTrace, Toast.LENGTH_SHORT).show()
                 }
         }
 

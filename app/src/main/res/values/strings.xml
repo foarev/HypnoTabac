@@ -3,7 +3,7 @@
     <string name="prompt_email">Adresse email</string>
     <string name="prompt_password">Mot de passe</string>
     <string name="action_sign_in">Connexion</string>
-    <string name="action_sign_up">Créer un compte</string>
+    <string name="action_sign_up">S\'inscrire</string>
     <string name="welcome">"Bienvenue !"</string>
     <string name="invalid_username">Nom d\'utilisateur incorrect.</string>
     <string name="invalid_password">Le mot de passe doit contenir plus de 5 caractères. </string>
@@ -16,7 +16,7 @@
     <string name="prompt_last_name">Nom de famille</string>
     <string name="remove">Supprimer</string>
     <string name="edit_client">Modifier le client</string>
-    <string name="done">Terminé</string>
+    <string name="done">Valider</string>
     <string name="first_name_not_set">Prénom non spécifié</string>
     <string name="last_name_not_set">Nom de famille non spécifié</string>
     <string name="your_clients">Vos clients</string>
@@ -26,7 +26,14 @@
     <string name="logout">Se déconnecter</string>
     <string name="add_client">Ajouter un client</string>
     <string name="next">Suivant</string>
-    <string name="other">Autre…</string>
+    <string name="other">Autre</string>
     <string name="back">Retour</string>
     <string name="confirm_email">Confirmer votre email</string>
+    <string name="question_condition">Dans quelles conditions consommez-vous cette cigarette ?</string>
+    <string name="not_registered_yet">Vous n\'avez pas encore de compte ?</string>
+    <string name="already_signed_up">Déjà inscrit ?</string>
+    <string name="edit_questions">Modifier les questions</string>
+    <string name="add_question">Ajouter une question</string>
+    <string name="add_cig">Ajouter une cigarette</string>
+    <string name="see_stats">Voir les statistiques</string>
 </resources>

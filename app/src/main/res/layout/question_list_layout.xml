@@ -5,7 +5,19 @@
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/dragIndicator"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_baseline_drag_indicator_24"
+        />
+
+    <EditText
             android:id="@+id/editQuestion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -13,9 +25,11 @@
             android:textSize="20sp"
             android:inputType="text"
             android:hint="@string/prompt_question"
-            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="2dp"
+            android:background="@drawable/edittext_rounded_corners"
+            app:layout_constraintEnd_toStartOf="@id/dragIndicator"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:autofillHints="@string/prompt_question"
             />

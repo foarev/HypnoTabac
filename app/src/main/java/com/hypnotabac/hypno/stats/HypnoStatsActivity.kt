@@ -1,35 +1,28 @@
 package com.hypnotabac.hypno.stats
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.LargeValueFormatter
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.Date
-import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
-import com.hypnotabac.hypno.HypnoSettingsActivity
 import kotlinx.android.synthetic.main.activity_h_stats.*
-import kotlinx.android.synthetic.main.activity_h_stats.barChartViewCondition
-import kotlinx.android.synthetic.main.activity_h_stats.barChartViewGrade
-import kotlinx.android.synthetic.main.activity_h_stats.my_recycler_view
-import kotlinx.android.synthetic.main.activity_h_stats.textView
-import kotlinx.android.synthetic.main.status_bar_hypno.*
+import kotlin.math.max
 import kotlin.math.roundToInt
+
 
 class HypnoStatsActivity : AppCompatActivity() {
     var clientID = ""
@@ -42,13 +35,6 @@ class HypnoStatsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_h_stats)
         clientID = intent.getStringExtra("clientID")
-        logout.setOnClickListener{
-            SaveSharedPreferences.resetAll(this)
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
-        }
-        settings.setOnClickListener{
-            startActivity(Intent(applicationContext, HypnoSettingsActivity::class.java))
-        }
 
         val dbRef = firebaseDatabase.getReference("users")
             .child(SaveSharedPreferences.getUserID(this))
@@ -65,6 +51,7 @@ class HypnoStatsActivity : AppCompatActivity() {
                     val cigs = clientRoot["cigs"] as ArrayList<*>
                     val numGrade = MutableList(3) { _ -> 0 }
                     val numCondition = mutableMapOf<String, Int>()
+                    val numGradeCondition = mutableMapOf<String, MutableList<Int>>()
                     val numDate:MutableMap<Date, Int> = mutableMapOf()
                     var totalCigs = 0
                     var dateMax = Date(1,1,1)
@@ -86,6 +73,15 @@ class HypnoStatsActivity : AppCompatActivity() {
                             numCondition[cig["condition"] as String] = numCondition[cig["condition"] as String]?.plus(1) as Int
                         else
                             numCondition[cig["condition"] as String] = 1
+
+                        if(numGradeCondition.containsKey(cig["condition"] as String))
+                            (numGradeCondition[cig["condition"] as String])!![(cig["grade"] as Long).toInt()-1] +=1
+                        else{
+                            numGradeCondition[cig["condition"] as String] = mutableListOf(0,0,0)
+                            (numGradeCondition[cig["condition"] as String])!![(cig["grade"] as Long).toInt()-1] +=1
+                        }
+                        Log.w(TAG, numGradeCondition.toString())
+
                         totalCigs += 1
                     }
                     val avg = (totalCigs.toFloat()/((dateMin..dateMax).count().toFloat())*100).roundToInt()/100.0
@@ -144,7 +140,7 @@ class HypnoStatsActivity : AppCompatActivity() {
 
                     val barDataSet1 = BarDataSet(yValueGroup1, "Nombre de cigarettes par note")
                     barDataSet1.setGradientColor(ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimaryLight),
-                        ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary))
+                        ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary2))
                     barDataSet1.setDrawIcons(false)
                     barDataSet1.setDrawValues(false)
 
@@ -158,6 +154,12 @@ class HypnoStatsActivity : AppCompatActivity() {
                     barChartViewGrade.xAxis.axisMinimum = 0.5f
                     barChartViewGrade.xAxis.axisMaximum = 3.5f
                     barChartViewGrade.setVisibleXRange(1f, 3f)
+
+                    barChartViewGrade.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                    barChartViewGrade.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                    barChartViewGrade.legend.orientation = Legend.LegendOrientation.VERTICAL
+                    barChartViewGrade.legend.setDrawInside(true)
+                    barChartViewGrade.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
 
                     val xAxis1 = barChartViewGrade.xAxis
                     xAxis1.setDrawGridLines(false)
@@ -182,11 +184,6 @@ class HypnoStatsActivity : AppCompatActivity() {
 
                     // Graph 2
                     val xAxisValues2 = ArrayList<String>()
-                    xAxisValues2.add("Ennui")
-                    xAxisValues2.add("Café")
-                    xAxisValues2.add("Pause")
-                    xAxisValues2.add("Soirée")
-                    xAxisValues2.add("Après manger")
                     numCondition.forEach{n ->
                         if(!xAxisValues2.contains(n.key))
                             xAxisValues2.add(n.key)
@@ -200,9 +197,9 @@ class HypnoStatsActivity : AppCompatActivity() {
                     }
 
                     val barDataSet2 = BarDataSet(yValueGroup2, "Nombre de cigarettes par condition")
-                    //barDataSet2.color = ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary)
+                    //barDataSet2.color = ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary2)
                     barDataSet2.setGradientColor(ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimaryLight),
-                        ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary))
+                        ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary2))
                     barDataSet2.setDrawIcons(false)
                     barDataSet2.setDrawValues(false)
 
@@ -216,6 +213,12 @@ class HypnoStatsActivity : AppCompatActivity() {
                     barChartViewCondition.xAxis.axisMaximum = xAxisValues2.count().toFloat() - 1.5f
                     barChartViewCondition.data.isHighlightEnabled = false
                     barChartViewCondition.setVisibleXRange(1f, xAxisValues2.count().toFloat())
+
+                    barChartViewCondition.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                    barChartViewCondition.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                    barChartViewCondition.legend.orientation = Legend.LegendOrientation.VERTICAL
+                    barChartViewCondition.legend.setDrawInside(true)
+                    barChartViewCondition.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
 
                     val xAxis2 = barChartViewCondition.xAxis
                     xAxis2.setDrawGridLines(false)
@@ -239,6 +242,101 @@ class HypnoStatsActivity : AppCompatActivity() {
                     rightAxis2.isEnabled = false
 
                     barChartViewCondition.invalidate()
+
+
+                    Log.w(TAG, numGradeCondition.toString())
+
+                    // Graph 3
+                    val xAxisValues3 = ArrayList<String>()
+                    numGradeCondition.forEach{n ->
+                        if(!xAxisValues3.contains(n.key))
+                            xAxisValues3.add(n.key)
+                    }
+                    val yValueGroup31 = ArrayList<BarEntry>()
+                    val yValueGroup32 = ArrayList<BarEntry>()
+                    val yValueGroup33 = ArrayList<BarEntry>()
+                    xAxisValues3.forEachIndexed{i, k ->
+                        if(numGradeCondition.containsKey(k)) {
+                            yValueGroup31.add(BarEntry(i.toFloat(), numGradeCondition[k]!![0].toFloat()))
+                            yValueGroup32.add(BarEntry(i.toFloat(), numGradeCondition[k]!![1].toFloat()))
+                            yValueGroup33.add(BarEntry(i.toFloat(), numGradeCondition[k]!![2].toFloat()))
+                        }
+                        else {
+                            xAxisValues3.remove(k)
+                        }
+                    }
+                    Log.w(TAG, "1 : "+yValueGroup31.toString())
+                    Log.w(TAG, "2 : "+yValueGroup32.toString())
+                    Log.w(TAG, "3 : "+yValueGroup33.toString())
+
+                    val barDataSet31 = BarDataSet(yValueGroup31, "Cigarettes notées 1")
+                    val barDataSet32 = BarDataSet(yValueGroup32, "Cigarettes notées 2")
+                    val barDataSet33 = BarDataSet(yValueGroup33, "Cigarettes notées 3")
+
+                    barDataSet31.color = ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary)
+                    barDataSet32.color = ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary2)
+                    barDataSet33.color = ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary3)
+                    barDataSet31.setGradientColor(ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimaryLight),
+                        ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary))
+                    barDataSet32.setGradientColor(ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary2Light),
+                        ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary2))
+                    barDataSet33.setGradientColor(ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary3Light),
+                        ContextCompat.getColor(this@HypnoStatsActivity, R.color.colorPrimary3))
+
+                    barDataSet31.setDrawIcons(false)
+                    barDataSet32.setDrawIcons(false)
+                    barDataSet33.setDrawIcons(false)
+                    barDataSet31.setDrawValues(false)
+                    barDataSet32.setDrawValues(false)
+                    barDataSet33.setDrawValues(false)
+
+
+                    val barData3 = BarData(barDataSet31, barDataSet32, barDataSet33)
+                    barChartViewGradeCondition.description.isEnabled = false
+                    barChartViewGradeCondition.description.textSize = 0f
+                    barData3.setValueFormatter(LargeValueFormatter())
+                    barChartViewGradeCondition.data = barData3
+                    val barSpace = 0.0f
+                    val groupSpace = 0.1f
+                    //(barSpace + barWidth)*3 + groupSpace = 1
+                    //(0.05 + 0.25)*3 + 0.1
+                    val barWidth = 0.3f
+                    barChartViewGradeCondition.barData.barWidth = barWidth
+                    barChartViewGradeCondition.groupBars(0f, groupSpace, barSpace)
+                    barChartViewGradeCondition.xAxis.axisMinimum =  0.0f
+                    barChartViewGradeCondition.xAxis.axisMaximum = xAxisValues3.count().toFloat()
+                    barChartViewGradeCondition.data.isHighlightEnabled = false
+                    barChartViewGradeCondition.setVisibleXRange(1f, xAxisValues3.count().toFloat())
+
+                    barChartViewGradeCondition.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                    barChartViewGradeCondition.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                    barChartViewGradeCondition.legend.orientation = Legend.LegendOrientation.VERTICAL
+                    barChartViewGradeCondition.legend.setDrawInside(true)
+                    barChartViewGradeCondition.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
+
+                    val xAxis3 = barChartViewGradeCondition.xAxis
+                    xAxis3.position = XAxis.XAxisPosition.BOTTOM
+                    xAxis3.textSize = 9f
+                    xAxis3.labelCount = xAxisValues3.count()
+                    xAxis3.valueFormatter = IndexAxisValueFormatter(xAxisValues3)
+                    xAxis3.spaceMin = 4f
+                    xAxis3.spaceMax = 4f
+                    xAxis3.setCenterAxisLabels(true)
+                    xAxis3.setDrawGridLines(false)
+
+                    val leftAxis3 = barChartViewGradeCondition.axisLeft
+                    leftAxis3.valueFormatter = LargeValueFormatter()
+                    leftAxis3.setDrawGridLines(false)
+                    leftAxis3.labelCount = max(barDataSet31.yMax.roundToInt(), max(barDataSet32.yMax.roundToInt(), barDataSet33.yMax.roundToInt()))
+                    leftAxis3.spaceTop = 1f
+                    leftAxis3.axisMinimum = 0f
+
+                    val rightAxis3 = barChartViewGradeCondition.axisRight
+                    rightAxis3.setDrawGridLines(false)
+                    rightAxis3.isEnabled = false
+
+
+                    barChartViewGradeCondition.invalidate()
                     dbRef.removeEventListener(this)
                 }
                 else{

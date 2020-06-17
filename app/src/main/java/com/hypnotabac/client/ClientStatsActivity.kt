@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -23,6 +23,9 @@ import com.hypnotabac.Date
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_c_stats.*
+import kotlinx.android.synthetic.main.activity_c_stats.barChartViewCondition
+import kotlinx.android.synthetic.main.activity_c_stats.barChartViewGrade
+import kotlinx.android.synthetic.main.activity_c_stats.textView
 import kotlinx.android.synthetic.main.status_bar_client.*
 import kotlin.math.roundToInt
 
@@ -34,9 +37,7 @@ class ClientStatsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_c_stats)
-        settings.setOnClickListener{
-            startActivity(Intent(applicationContext, ClientSettingsActivity::class.java))
-        }
+
         val dbRef = firebaseDatabase.getReference("users")
             .child(SaveSharedPreferences.getHypnoID(this))
             .child("clients")
@@ -81,7 +82,7 @@ class ClientStatsActivity : AppCompatActivity() {
 
                     val barDataSet1 = BarDataSet(yValueGroup1, "Nombre de cigarettes par note")
                     barDataSet1.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
-                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary))
+                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary2))
                     barDataSet1.setDrawIcons(false)
                     barDataSet1.setDrawValues(false)
 
@@ -95,6 +96,12 @@ class ClientStatsActivity : AppCompatActivity() {
                     barChartViewGrade.xAxis.axisMinimum = 0.5f
                     barChartViewGrade.xAxis.axisMaximum = 3.5f
                     barChartViewGrade.setVisibleXRange(1f, 3f)
+
+                    barChartViewGrade.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                    barChartViewGrade.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                    barChartViewGrade.legend.orientation = Legend.LegendOrientation.VERTICAL
+                    barChartViewGrade.legend.setDrawInside(true)
+                    barChartViewGrade.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
 
                     val xAxis1 = barChartViewGrade.xAxis
                     xAxis1.setDrawGridLines(false)
@@ -119,11 +126,6 @@ class ClientStatsActivity : AppCompatActivity() {
 
                     // Graph 2
                     val xAxisValues2 = ArrayList<String>()
-                    xAxisValues2.add("Ennui")
-                    xAxisValues2.add("Café")
-                    xAxisValues2.add("Pause")
-                    xAxisValues2.add("Soirée")
-                    xAxisValues2.add("Après manger")
                     numCondition.forEach{n ->
                         if(!xAxisValues2.contains(n.key))
                             xAxisValues2.add(n.key)
@@ -138,7 +140,7 @@ class ClientStatsActivity : AppCompatActivity() {
 
                     val barDataSet2 = BarDataSet(yValueGroup2, "Nombre de cigarettes par condition")
                     barDataSet2.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
-                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary))
+                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary2))
                     barDataSet2.setDrawIcons(false)
                     barDataSet2.setDrawValues(false)
 
@@ -152,6 +154,12 @@ class ClientStatsActivity : AppCompatActivity() {
                     barChartViewCondition.xAxis.axisMaximum = xAxisValues2.count().toFloat() - 1.5f
                     barChartViewCondition.data.isHighlightEnabled = false
                     barChartViewCondition.setVisibleXRange(1f, xAxisValues2.count().toFloat())
+
+                    barChartViewCondition.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                    barChartViewCondition.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                    barChartViewCondition.legend.orientation = Legend.LegendOrientation.VERTICAL
+                    barChartViewCondition.legend.setDrawInside(true)
+                    barChartViewCondition.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
 
                     val xAxis2 = barChartViewCondition.xAxis
                     xAxis2.setDrawGridLines(false)

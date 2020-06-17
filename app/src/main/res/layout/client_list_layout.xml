@@ -5,6 +5,7 @@
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="260dp"
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/button_remove"
             android:layout_margin="15dp"
-            android:tint="@color/colorPrimaryLight"
+            android:tint="@color/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/button_stats"
@@ -37,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:tint="@color/colorPrimaryLight"
+            android:tint="@color/colorPrimary"
             android:src="@drawable/ic_equalizer_black_24dp"
             android:contentDescription="@string/stats" />
 
