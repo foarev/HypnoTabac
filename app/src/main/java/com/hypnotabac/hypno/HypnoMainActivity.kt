@@ -36,6 +36,7 @@ class HypnoMainActivity : AppCompatActivity() {
         editQuestions.setOnClickListener{
             startActivity(Intent(applicationContext, EditQuestionsActivity::class.java))
         }
+        swipe_refresh_layout.setOnRefreshListener { viewModel.onClientsReset() }
 
         my_recycler_view.layoutManager = llm
         my_recycler_view.adapter = clientListAdapter
@@ -74,7 +75,7 @@ class HypnoMainActivity : AppCompatActivity() {
         viewModel.clientsLoadingStatus.observe(
             this,
             Observer { loadingStatus: LoadingStatus ->
-                //swipe_refresh_layout.isRefreshing = loadingStatus == LoadingStatus.LOADING
+                swipe_refresh_layout.isRefreshing = loadingStatus == LoadingStatus.LOADING
             })
     }
 

@@ -2,7 +2,9 @@ package com.hypnotabac.hypno.stats
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +38,7 @@ class HypnoStatsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_h_stats)
         clientID = intent.getStringExtra("clientID")
 
+        loading.visibility = View.VISIBLE
         val dbRef = firebaseDatabase.getReference("users")
             .child(SaveSharedPreferences.getUserID(this))
         dbRef.addValueEventListener(object : ValueEventListener {
@@ -126,6 +129,7 @@ class HypnoStatsActivity : AppCompatActivity() {
                     lineChart.axisRight.isEnabled = false
                     lineChart.description.isEnabled = false
                     lineChart.animateX(10, Easing.EaseInExpo)
+                    lineChart.setTouchEnabled(false)
 
 
                     // Graph 1
@@ -160,6 +164,7 @@ class HypnoStatsActivity : AppCompatActivity() {
                     barChartViewGrade.legend.orientation = Legend.LegendOrientation.VERTICAL
                     barChartViewGrade.legend.setDrawInside(true)
                     barChartViewGrade.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
+                    barChartViewGrade.setTouchEnabled(false)
 
                     val xAxis1 = barChartViewGrade.xAxis
                     xAxis1.setDrawGridLines(false)
@@ -219,6 +224,7 @@ class HypnoStatsActivity : AppCompatActivity() {
                     barChartViewCondition.legend.orientation = Legend.LegendOrientation.VERTICAL
                     barChartViewCondition.legend.setDrawInside(true)
                     barChartViewCondition.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
+                    barChartViewCondition.setTouchEnabled(false)
 
                     val xAxis2 = barChartViewCondition.xAxis
                     xAxis2.setDrawGridLines(false)
@@ -313,6 +319,7 @@ class HypnoStatsActivity : AppCompatActivity() {
                     barChartViewGradeCondition.legend.orientation = Legend.LegendOrientation.VERTICAL
                     barChartViewGradeCondition.legend.setDrawInside(true)
                     barChartViewGradeCondition.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
+                    barChartViewGradeCondition.setTouchEnabled(false)
 
                     val xAxis3 = barChartViewGradeCondition.xAxis
                     xAxis3.position = XAxis.XAxisPosition.BOTTOM
@@ -337,13 +344,20 @@ class HypnoStatsActivity : AppCompatActivity() {
 
 
                     barChartViewGradeCondition.invalidate()
+                    loading.visibility = GONE
+                    barChartViewGrade.visibility = VISIBLE
+                    barChartViewCondition.visibility = VISIBLE
+                    barChartViewGradeCondition.visibility = VISIBLE
+                    lineChart.visibility = VISIBLE
                     dbRef.removeEventListener(this)
                 }
                 else{
-                    textView.text = "Ce client n'a pas encore consommé de cigarette."
+                    textView.text = getString(R.string.h_no_cig_yet)
                     barChartViewGrade.visibility = GONE
                     barChartViewCondition.visibility = GONE
+                    barChartViewGradeCondition.visibility = GONE
                     lineChart.visibility = GONE
+                    loading.visibility = GONE
                 }
                 responses.forEachIndexed {i, r -> responsesAdapter.models.add(ResponsesView.Model(questions[i] as String, r as String)) }
 

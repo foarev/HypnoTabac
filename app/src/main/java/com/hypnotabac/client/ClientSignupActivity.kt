@@ -32,6 +32,7 @@ class ClientSignupActivity : AppCompatActivity() {
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(this@ClientSignupActivity, "Veuillez entrer votre adresse email", Toast.LENGTH_SHORT)
                     .show()
+                loading.visibility = View.GONE
                 return@OnClickListener
             }
 
@@ -70,6 +71,7 @@ class ClientSignupActivity : AppCompatActivity() {
                         if(!isEmailRegistered){
                             Toast.makeText(this@ClientSignupActivity, "Cette adresse email n'est pas associée à un compte d'hypnothérapeute.", Toast.LENGTH_SHORT)
                                 .show()
+                            loading.visibility = View.GONE
                             return
                         } else {
                             val intent = intent
@@ -115,6 +117,7 @@ class ClientSignupActivity : AppCompatActivity() {
                                             responses.forEachIndexed {i, r ->
                                                 dbCurrentUser.child("responses").child(i.toString()).setValue(r)
                                             }
+                                            SaveSharedPreferences.resetAll(this@ClientSignupActivity)
                                             SaveSharedPreferences.setEmail(this@ClientSignupActivity, email)
                                             SaveSharedPreferences.setUserType(this@ClientSignupActivity, "client")
                                             SaveSharedPreferences.setUserID(this@ClientSignupActivity, firebaseAuth.uid)
@@ -123,15 +126,16 @@ class ClientSignupActivity : AppCompatActivity() {
                                             startActivity(Intent(applicationContext, ClientMainActivity::class.java))
                                             Toast.makeText(
                                                 this@ClientSignupActivity,
-                                                "Sign up complete",
+                                                "Connexion réussie",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         } else {
                                             loading.visibility = View.GONE
-                                            Log.e(TAG, "Error signing in with email link", task.exception)
+                                            Log.e(TAG, "Erreur lors de la connexion par lien email", task.exception)
                                         }
                                     }
                             } else {
+                                loading.visibility = View.GONE
                                 Toast.makeText(this@ClientSignupActivity, "Vous devez vous connecter à l'aide d'un lien email", Toast.LENGTH_SHORT).show()
                             }
                         }

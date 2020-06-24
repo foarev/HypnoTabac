@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -25,8 +27,10 @@ import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_c_stats.*
 import kotlinx.android.synthetic.main.activity_c_stats.barChartViewCondition
 import kotlinx.android.synthetic.main.activity_c_stats.barChartViewGrade
+import kotlinx.android.synthetic.main.activity_c_stats.loading
 import kotlinx.android.synthetic.main.activity_c_stats.textView
-import kotlinx.android.synthetic.main.status_bar_client.*
+import kotlinx.android.synthetic.main.activity_c_stats.textView2
+import kotlinx.android.synthetic.main.activity_h_stats.*
 import kotlin.math.roundToInt
 
 class ClientStatsActivity : AppCompatActivity() {
@@ -37,6 +41,7 @@ class ClientStatsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_c_stats)
+        loading.visibility = VISIBLE
 
         val dbRef = firebaseDatabase.getReference("users")
             .child(SaveSharedPreferences.getHypnoID(this))
@@ -70,123 +75,139 @@ class ClientStatsActivity : AppCompatActivity() {
 
                     textView.text = "Vous avez consommé un total de $totalCigs cigarettes, soit environ $avg par jour."
 
-                    // Graph 1
-                    val xAxisValues1 = ArrayList<String>()
-                    xAxisValues1.add("1")
-                    xAxisValues1.add("2")
-                    xAxisValues1.add("3")
-                    val yValueGroup1 = ArrayList<BarEntry>()
-                    xAxisValues1.forEach{k ->
-                        yValueGroup1.add(BarEntry(k.toFloat(), numGrade[k.toInt()-1].toFloat()))
+                    if(totalCigs>2){
+                        textView2.visibility = GONE
+                        // Graph 1
+                        val xAxisValues1 = ArrayList<String>()
+                        xAxisValues1.add("1")
+                        xAxisValues1.add("2")
+                        xAxisValues1.add("3")
+                        val yValueGroup1 = ArrayList<BarEntry>()
+                        xAxisValues1.forEach{k ->
+                            yValueGroup1.add(BarEntry(k.toFloat(), numGrade[k.toInt()-1].toFloat()))
+                        }
+
+                        val barDataSet1 = BarDataSet(yValueGroup1, "Nombre de cigarettes par note")
+                        barDataSet1.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
+                            ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary2))
+                        barDataSet1.setDrawIcons(false)
+                        barDataSet1.setDrawValues(false)
+
+                        val barData1 = BarData(barDataSet1)
+                        barData1.setValueFormatter(LargeValueFormatter())
+                        barChartViewGrade.description.isEnabled = false
+                        barChartViewGrade.description.textSize = 0f
+                        barChartViewGrade.data = barData1
+                        barChartViewGrade.barData.barWidth = 0.8f
+                        barChartViewGrade.data.isHighlightEnabled = false
+                        barChartViewGrade.xAxis.axisMinimum = 0.5f
+                        barChartViewGrade.xAxis.axisMaximum = 3.5f
+                        barChartViewGrade.setVisibleXRange(1f, 3f)
+
+                        barChartViewGrade.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                        barChartViewGrade.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                        barChartViewGrade.legend.orientation = Legend.LegendOrientation.VERTICAL
+                        barChartViewGrade.legend.setDrawInside(true)
+                        barChartViewGrade.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
+                        barChartViewGrade.setTouchEnabled(false)
+
+                        val xAxis1 = barChartViewGrade.xAxis
+                        xAxis1.setDrawGridLines(false)
+                        xAxis1.position = XAxis.XAxisPosition.BOTTOM
+                        xAxis1.textSize = 9f
+                        xAxis1.labelCount = xAxisValues1.count()
+                        xAxis1.valueFormatter = LargeValueFormatter()
+                        xAxis1.spaceMin = 4f
+                        xAxis1.spaceMax = 4f
+
+                        val leftAxis1 = barChartViewGrade.axisLeft
+                        leftAxis1.valueFormatter = LargeValueFormatter()
+                        leftAxis1.setDrawGridLines(false)
+                        leftAxis1.labelCount = barDataSet1.yMax.roundToInt()
+                        leftAxis1.spaceTop = 1f
+                        leftAxis1.axisMinimum = 0f
+
+                        val rightAxis1 = barChartViewGrade.axisRight
+                        rightAxis1.setDrawGridLines(false)
+                        rightAxis1.isEnabled = false
+                        barChartViewGrade.invalidate()
+
+                        // Graph 2
+                        val xAxisValues2 = ArrayList<String>()
+                        numCondition.forEach{n ->
+                            if(!xAxisValues2.contains(n.key))
+                                xAxisValues2.add(n.key)
+                        }
+                        val yValueGroup2 = ArrayList<BarEntry>()
+                        xAxisValues2.forEachIndexed{i, k ->
+                            if(numCondition.containsKey(k))
+                                yValueGroup2.add(BarEntry(i.toFloat(), numCondition[k]!!.toFloat()))
+                            else
+                                yValueGroup2.add(BarEntry(i.toFloat(), 0F))
+                        }
+
+                        val barDataSet2 = BarDataSet(yValueGroup2, "Nombre de cigarettes par condition")
+                        barDataSet2.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
+                            ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary2))
+                        barDataSet2.setDrawIcons(false)
+                        barDataSet2.setDrawValues(false)
+
+                        val barData2 = BarData(barDataSet2)
+                        barChartViewCondition.description.isEnabled = false
+                        barChartViewCondition.description.textSize = 0f
+                        barData2.setValueFormatter(LargeValueFormatter())
+                        barChartViewCondition.data = barData2
+                        barChartViewCondition.barData.barWidth = 0.8f
+                        barChartViewCondition.xAxis.axisMinimum = -0.5f
+                        barChartViewCondition.xAxis.axisMaximum = xAxisValues2.count().toFloat() - 1.5f
+                        barChartViewCondition.data.isHighlightEnabled = false
+                        barChartViewCondition.setVisibleXRange(1f, xAxisValues2.count().toFloat())
+
+                        barChartViewCondition.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                        barChartViewCondition.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                        barChartViewCondition.legend.orientation = Legend.LegendOrientation.VERTICAL
+                        barChartViewCondition.legend.setDrawInside(true)
+                        barChartViewCondition.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
+                        barChartViewCondition.setTouchEnabled(false)
+
+                        val xAxis2 = barChartViewCondition.xAxis
+                        xAxis2.setDrawGridLines(false)
+                        xAxis2.position = XAxis.XAxisPosition.BOTTOM
+                        xAxis2.textSize = 9f
+                        xAxis2.labelCount = xAxisValues2.count()
+                        xAxis2.valueFormatter = IndexAxisValueFormatter(xAxisValues2)
+                        xAxis2.spaceMin = 4f
+                        xAxis2.spaceMax = 4f
+
+                        val leftAxis2 = barChartViewCondition.axisLeft
+                        leftAxis2.valueFormatter = LargeValueFormatter()
+                        leftAxis2.setDrawGridLines(false)
+                        leftAxis2.labelCount = barDataSet2.yMax.roundToInt()
+                        leftAxis2.spaceTop = 1f
+                        leftAxis2.axisMinimum = 0f
+
+                        val rightAxis2 = barChartViewCondition.axisRight
+                        rightAxis2.setDrawGridLines(false)
+                        rightAxis2.isEnabled = false
+
+                        barChartViewGrade.visibility = VISIBLE
+                        barChartViewCondition.visibility = VISIBLE
+                        barChartViewCondition.invalidate()
+                    } else {
+                        textView2.visibility = VISIBLE
+                        barChartViewGrade.visibility = GONE
+                        barChartViewCondition.visibility = GONE
+                        loading.visibility = GONE
                     }
-
-                    val barDataSet1 = BarDataSet(yValueGroup1, "Nombre de cigarettes par note")
-                    barDataSet1.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
-                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary2))
-                    barDataSet1.setDrawIcons(false)
-                    barDataSet1.setDrawValues(false)
-
-                    val barData1 = BarData(barDataSet1)
-                    barData1.setValueFormatter(LargeValueFormatter())
-                    barChartViewGrade.description.isEnabled = false
-                    barChartViewGrade.description.textSize = 0f
-                    barChartViewGrade.data = barData1
-                    barChartViewGrade.barData.barWidth = 0.8f
-                    barChartViewGrade.data.isHighlightEnabled = false
-                    barChartViewGrade.xAxis.axisMinimum = 0.5f
-                    barChartViewGrade.xAxis.axisMaximum = 3.5f
-                    barChartViewGrade.setVisibleXRange(1f, 3f)
-
-                    barChartViewGrade.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-                    barChartViewGrade.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-                    barChartViewGrade.legend.orientation = Legend.LegendOrientation.VERTICAL
-                    barChartViewGrade.legend.setDrawInside(true)
-                    barChartViewGrade.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
-
-                    val xAxis1 = barChartViewGrade.xAxis
-                    xAxis1.setDrawGridLines(false)
-                    xAxis1.position = XAxis.XAxisPosition.BOTTOM
-                    xAxis1.textSize = 9f
-                    xAxis1.labelCount = xAxisValues1.count()
-                    xAxis1.valueFormatter = LargeValueFormatter()
-                    xAxis1.spaceMin = 4f
-                    xAxis1.spaceMax = 4f
-
-                    val leftAxis1 = barChartViewGrade.axisLeft
-                    leftAxis1.valueFormatter = LargeValueFormatter()
-                    leftAxis1.setDrawGridLines(false)
-                    leftAxis1.labelCount = barDataSet1.yMax.roundToInt()
-                    leftAxis1.spaceTop = 1f
-                    leftAxis1.axisMinimum = 0f
-
-                    val rightAxis1 = barChartViewGrade.axisRight
-                    rightAxis1.setDrawGridLines(false)
-                    rightAxis1.isEnabled = false
-                    barChartViewGrade.invalidate()
-
-                    // Graph 2
-                    val xAxisValues2 = ArrayList<String>()
-                    numCondition.forEach{n ->
-                        if(!xAxisValues2.contains(n.key))
-                            xAxisValues2.add(n.key)
-                    }
-                    val yValueGroup2 = ArrayList<BarEntry>()
-                    xAxisValues2.forEachIndexed{i, k ->
-                        if(numCondition.containsKey(k))
-                            yValueGroup2.add(BarEntry(i.toFloat(), numCondition[k]!!.toFloat()))
-                        else
-                            yValueGroup2.add(BarEntry(i.toFloat(), 0F))
-                    }
-
-                    val barDataSet2 = BarDataSet(yValueGroup2, "Nombre de cigarettes par condition")
-                    barDataSet2.setGradientColor(ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimaryLight),
-                        ContextCompat.getColor(this@ClientStatsActivity, R.color.colorPrimary2))
-                    barDataSet2.setDrawIcons(false)
-                    barDataSet2.setDrawValues(false)
-
-                    val barData2 = BarData(barDataSet2)
-                    barChartViewCondition.description.isEnabled = false
-                    barChartViewCondition.description.textSize = 0f
-                    barData2.setValueFormatter(LargeValueFormatter())
-                    barChartViewCondition.data = barData2
-                    barChartViewCondition.barData.barWidth = 0.8f
-                    barChartViewCondition.xAxis.axisMinimum = -0.5f
-                    barChartViewCondition.xAxis.axisMaximum = xAxisValues2.count().toFloat() - 1.5f
-                    barChartViewCondition.data.isHighlightEnabled = false
-                    barChartViewCondition.setVisibleXRange(1f, xAxisValues2.count().toFloat())
-
-                    barChartViewCondition.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-                    barChartViewCondition.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-                    barChartViewCondition.legend.orientation = Legend.LegendOrientation.VERTICAL
-                    barChartViewCondition.legend.setDrawInside(true)
-                    barChartViewCondition.legend.direction = Legend.LegendDirection.RIGHT_TO_LEFT
-
-                    val xAxis2 = barChartViewCondition.xAxis
-                    xAxis2.setDrawGridLines(false)
-                    xAxis2.position = XAxis.XAxisPosition.BOTTOM
-                    xAxis2.textSize = 9f
-                    xAxis2.labelCount = xAxisValues2.count()
-                    xAxis2.valueFormatter = IndexAxisValueFormatter(xAxisValues2)
-                    xAxis2.spaceMin = 4f
-                    xAxis2.spaceMax = 4f
-
-                    val leftAxis2 = barChartViewCondition.axisLeft
-                    leftAxis2.valueFormatter =
-                        /*IAxisValueFormatter { value, axis -> value.roundToInt().toString() } */ LargeValueFormatter()
-                    leftAxis2.setDrawGridLines(false)
-                    leftAxis2.labelCount = barDataSet2.yMax.roundToInt()
-                    leftAxis2.spaceTop = 1f
-                    leftAxis2.axisMinimum = 0f
-
-                    val rightAxis2 = barChartViewCondition.axisRight
-                    rightAxis2.setDrawGridLines(false)
-                    rightAxis2.isEnabled = false
-
-                    barChartViewCondition.invalidate()
+                    loading.visibility = GONE
                     dbRef.removeEventListener(this)
                 }
-                else
-                    textView.text = "Vous n'avez pas encore consommé de cigarette."
+                else{
+                    textView.text = getString(R.string.c_no_cig_yet)
+                    barChartViewGrade.visibility = GONE
+                    barChartViewCondition.visibility = GONE
+                    loading.visibility = GONE
+                }
             }
 
             override fun onCancelled(p0: DatabaseError) {

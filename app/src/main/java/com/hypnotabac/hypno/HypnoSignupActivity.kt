@@ -33,6 +33,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
         login.setOnClickListener{
             startActivity(Intent(applicationContext, LoginActivity::class.java))
         }
+        setupBillingClient()
     }
 
     private fun setupBillingClient(){
@@ -69,6 +70,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                 for (skuDetails in skuDetailsList) {
                     if (skuDetails.sku == "hypno"){
                         btnSignUp!!.setOnClickListener(View.OnClickListener {
+                            loading.visibility = View.VISIBLE
                             email = editEmail!!.text.toString().trim { it <= ' ' }
                             firstName = editFirstName!!.text.toString().trim { it <= ' ' }
                             lastName = editLastName!!.text.toString().trim { it <= ' ' }
@@ -77,6 +79,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                             if (TextUtils.isEmpty(email)) {
                                 Toast.makeText(this@HypnoSignupActivity, "Veuillez entrer un email", Toast.LENGTH_SHORT)
                                     .show()
+                                loading.visibility = View.GONE
                                 return@OnClickListener
                             }
                             if (TextUtils.isEmpty(firstName)) {
@@ -85,6 +88,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                                     "Veuillez entrer un prénom",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                                 return@OnClickListener
                             }
                             if (TextUtils.isEmpty(lastName)) {
@@ -93,6 +97,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                                     "Veuillez entrer un nom de famille",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                                 return@OnClickListener
                             }
                             if (TextUtils.isEmpty(password)) {
@@ -101,6 +106,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                                     "Veuillez entrer un mot de passe",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                                 return@OnClickListener
                             }
                             if (TextUtils.isEmpty(confirmPwd)) {
@@ -109,6 +115,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                                     "Veuillez confirmer votre mot de passe",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                                 return@OnClickListener
                             }
                             if (password.length < 3 || password.length > 12) {
@@ -117,6 +124,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                                     "Veuillez choisir un mot de passe entre 3 et 12 caractères",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                                 return@OnClickListener
                             }
                             if (password == confirmPwd) {
@@ -124,6 +132,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                                     .newBuilder()
                                     .setSkuDetails(skuDetails)
                                     .build()
+                                Log.w(TAG, "billingFlowParams")
                                 billingClient.launchBillingFlow(this, billingFlowParams)
                             } else {
                                 Toast.makeText(
@@ -131,6 +140,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                                     "Le mot de passe ne correspond pas",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                                 return@OnClickListener
                             }
                         })
@@ -185,18 +195,18 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         dbCurrentUser.child("email").setValue(email)
                         dbCurrentUser.child("firstName").setValue(firstName)
                         dbCurrentUser.child("lastName").setValue(lastName)
-                        dbCurrentUser.child("betaVerified").setValue("false")
+                        loading.visibility = View.GONE
+                        Toast.makeText(
+                            this@HypnoSignupActivity,
+                            "Création du compte réussie",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         startActivity(
                             Intent(
                                 applicationContext,
                                 LoginActivity::class.java
                             )
                         )
-                        Toast.makeText(
-                            this@HypnoSignupActivity,
-                            "Création du compte réussie",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     } else {
                         Toast.makeText(
                             this@HypnoSignupActivity,

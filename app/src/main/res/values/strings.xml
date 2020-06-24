@@ -36,4 +36,9 @@
     <string name="add_question">Ajouter une question</string>
     <string name="add_cig">Ajouter une cigarette</string>
     <string name="see_stats">Voir les statistiques</string>
+    <string name="question_indispensable">A quel point cette cigarette est-elle indispensable ?</string>
+    <string name="c_no_cig_yet">Vous n\'avez pas encore consommé de cigarette.</string>
+    <string name="h_no_cig_yet">Ce client n\'a pas encore consommé de cigarette.</string>
+    <string name="forgot_password">Mot de passe oublié</string>
+    <string name="not_enough_data">Il n\'y a pas encore assez de données pour afficher les graphiques.</string>
 </resources>

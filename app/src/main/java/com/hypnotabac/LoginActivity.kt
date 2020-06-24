@@ -3,22 +3,17 @@ package com.hypnotabac
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.hypnotabac.client.ClientMainActivity
 import com.hypnotabac.hypno.HypnoMainActivity
 import com.hypnotabac.hypno.HypnoSignupActivity
-import com.hypnotabac.hypno.client_list.Client
-import com.hypnotabac.hypno.client_list.ClientsViewModel
 import kotlinx.android.synthetic.main.activity_h_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -36,11 +31,13 @@ class LoginActivity : AppCompatActivity() {
         } else {
             firebaseAuth = FirebaseAuth.getInstance()
             login!!.setOnClickListener(View.OnClickListener {
+                loading.visibility = View.VISIBLE
                 val email = username!!.text.toString().trim { it <= ' ' }
                 val password = password!!.text.toString().trim { it <= ' ' }
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(this@LoginActivity, "Veuillez entrer un email", Toast.LENGTH_SHORT)
                         .show()
+                    loading.visibility = View.GONE
                     return@OnClickListener
                 }
                 if (TextUtils.isEmpty(password)) {
@@ -49,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
                         "Veuillez entrer un mot de passe",
                         Toast.LENGTH_SHORT
                     ).show()
+                    loading.visibility = View.GONE
                     return@OnClickListener
                 }
                 firebaseAuth!!.signInWithEmailAndPassword(email, password)
@@ -56,41 +54,38 @@ class LoginActivity : AppCompatActivity() {
                         this@LoginActivity,
                         OnCompleteListener<AuthResult?> { task ->
                             if (task.isSuccessful) {
-                                firebaseDatabase.getReference("users").child(firebaseAuth!!.uid!!).child("betaVerified")
-                                    .addValueEventListener(object : ValueEventListener {
-                                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                            if(dataSnapshot.value!=null){
-                                                if(dataSnapshot.value as String == "true"){
-                                                    SaveSharedPreferences.setEmail(this@LoginActivity, email)
-                                                    SaveSharedPreferences.setUserType(this@LoginActivity, "hypno")
-                                                    SaveSharedPreferences.setUserID(this@LoginActivity, firebaseAuth!!.uid)
-                                                    startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
-                                                } else {
-                                                    Toast.makeText(
-                                                        this@LoginActivity,
-                                                        "Vous n'êtes pas enregistré pour la beta de cette application",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                                firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this@LoginActivity)).child("clients").removeEventListener(this)
-                                            }
-                                        }
-                                        override fun onCancelled(error: DatabaseError) {
-                                            Log.w(TAG, "Failed to read value.", error.toException())
-                                        }
-                                    })
+                                SaveSharedPreferences.resetAll(this@LoginActivity)
+                                SaveSharedPreferences.setEmail(this@LoginActivity, email)
+                                SaveSharedPreferences.setUserType(this@LoginActivity, "hypno")
+                                SaveSharedPreferences.setUserID(this@LoginActivity, firebaseAuth!!.uid)
+                                loading.visibility = View.GONE
+                                startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
                             } else {
                                 Toast.makeText(
                                     this@LoginActivity,
                                     "L'adresse email ou le mot de passe est incorrect",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                             }
                         })
             })
 
             signup.setOnClickListener{
                 startActivity(Intent(applicationContext, HypnoSignupActivity::class.java))
+            }
+            forgotPassword.setOnClickListener{
+                val email = username!!.text.toString().trim { it <= ' ' }
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(this@LoginActivity, "Veuillez entrer un email", Toast.LENGTH_SHORT)
+                        .show()
+                    loading.visibility = View.GONE
+                    return@setOnClickListener
+                } else {
+                    val actionCodeSettings =
+                    ActionCodeSettings.newBuilder().setHandleCodeInApp(false).setUrl("https://hypnotabac.page.link/AY2a").build()
+                    firebaseAuth!!.sendPasswordResetEmail(email, actionCodeSettings)
+                }
             }
         }
     }

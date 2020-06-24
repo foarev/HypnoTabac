@@ -106,8 +106,10 @@ class ClientsViewModel(
                         }
                         _clients.value = clients
                         _clientsSetChangedAction.value = ListAction.DataSetChangedAction
+                        _clientsLoadingStatus.value = LoadingStatus.NOT_LOADING
                         firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(context)).child("clients").removeEventListener(this)
-                    }
+                    } else
+                        _clientsLoadingStatus.value = LoadingStatus.NOT_LOADING
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(TAG, "Failed to read value.", error.toException())
@@ -117,8 +119,7 @@ class ClientsViewModel(
 
     fun onClientsReset() {
         _clients.value = mutableListOf()
-        _clientsSetChangedAction.value =
-            ListAction.DataSetChangedAction
+        _clientsSetChangedAction.value = ListAction.DataSetChangedAction
         onNewClientsRequest()
     }
 

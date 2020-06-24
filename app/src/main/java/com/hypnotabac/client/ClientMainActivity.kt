@@ -34,7 +34,6 @@ import java.time.format.DateTimeFormatter
 class ClientMainActivity : AppCompatActivity() {
     val TAG = "ClientMainActivity"
     private val firebaseDatabase = FirebaseDatabase.getInstance()
-    private val firebaseAuth = FirebaseAuth.getInstance()
     var grade = 0
     var condition = ""
     val conditions_list = arrayOf(
@@ -79,19 +78,16 @@ class ClientMainActivity : AppCompatActivity() {
             grade = 1
             resetButtonTint1()
             btn1.setImageResource(R.drawable.btn1_full)
-            //btn1.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
         }
         btn2.setOnClickListener {
             grade = 2
             resetButtonTint1()
             btn2.setImageResource(R.drawable.btn2_full)
-            //btn2.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
         }
         btn3.setOnClickListener {
             grade = 3
             resetButtonTint1()
             btn3.setImageResource(R.drawable.btn3_full)
-            //btn3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary2))
         }
         next.setOnClickListener {
             if(grade!=0){

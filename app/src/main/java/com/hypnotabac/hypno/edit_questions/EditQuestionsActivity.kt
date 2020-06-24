@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -16,8 +17,7 @@ import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import com.hypnotabac.hypno.*
-import kotlinx.android.synthetic.main.activity_edit_questions.*
-import kotlinx.android.synthetic.main.status_bar_hypno.*
+import kotlinx.android.synthetic.main.activity_h_edit_questions.*
 
 class EditQuestionsActivity : AppCompatActivity() {
     private val TAG = "EditQuestionsActivity"
@@ -29,7 +29,7 @@ class EditQuestionsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_questions)
+        setContentView(R.layout.activity_h_edit_questions)
 
         addQuestion.setOnClickListener{
             viewModel.addQuestionBox()

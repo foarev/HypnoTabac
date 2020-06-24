@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -20,7 +21,7 @@ import com.hypnotabac.BuildConfig
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import com.hypnotabac.hypno.HypnoMainActivity
-import kotlinx.android.synthetic.main.activity_add_client.*
+import kotlinx.android.synthetic.main.activity_h_add_client.*
 
 class AddClientActivity : AppCompatActivity() {
     val TAG = "AddClientActivity"
@@ -32,9 +33,10 @@ class AddClientActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_client)
+        setContentView(R.layout.activity_h_add_client)
 
         sendemail.setOnClickListener{
+            loading.visibility = View.VISIBLE
             questionsResponsesAdapter.retrieveAllValues()
             val email = questionsResponsesAdapter.models[0].editTextValue//editEmail!!.text.toString().trim { it <= ' ' }
             val firstName = questionsResponsesAdapter.models[1].editTextValue
@@ -83,10 +85,9 @@ class AddClientActivity : AppCompatActivity() {
                             if(i>2)
                                 firebaseDatabase.getReference("users").child(SaveSharedPreferences.getUserID(this)).child("clients").child(id).child("responses").child((i-3).toString()).setValue(model.editTextValue)
                         }
-
-                        Log.d(TAG, "Email envoyé.")
                         Toast.makeText(this, "Email envoyé.", Toast.LENGTH_SHORT).show()
 
+                        loading.visibility = View.GONE
                         startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
                     }
                 }
