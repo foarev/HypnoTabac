@@ -41,4 +41,12 @@
     <string name="h_no_cig_yet">Ce client n\'a pas encore consommé de cigarette.</string>
     <string name="forgot_password">Mot de passe oublié</string>
     <string name="not_enough_data">Il n\'y a pas encore assez de données pour afficher les graphiques.</string>
+    <string name="client_explanation">Veuillez vous connecter sur l\'application à l\'aide du lien reçu par email. Si vous n\'avez rien reçu, vérifiez vos spams ou contactez votre thérapeute.</string>
+    <string name="youre_a_client">Si vous êtes un client</string>
+    <string name="youre_a_hypno">Si vous êtes un hypnothérapeute</string>
+    <string name="hypno_explanation">Veuillez vous connecter ou créer un compte ci-dessous. Les comptes hypnothérapeute sont payants.</string>
+    <string name="reset_password">Réinitialiser le mot de passe</string>
+    <string name="send_reset_email">Envoyer</string>
+    <string name="verify_email">Confirmez votre addresse email pour continuer</string>
+    <string name="sign_up">Créer un compte</string>
 </resources>

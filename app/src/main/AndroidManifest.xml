@@ -11,11 +11,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:screenOrientation="nosensor"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".LoginActivity"
+        <activity android:name=".hypno.ForgotPasswordActivity"></activity>
+        <activity
+            android:name=".WelcomeActivity"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,30 +25,43 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".hypno.HypnoSignupActivity"
+        <activity
+            android:name=".LoginActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".hypno.HypnoMainActivity"
+        <activity
+            android:name=".hypno.HypnoSignupActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".hypno.edit_questions.EditQuestionsActivity"
+        <activity
+            android:name=".hypno.HypnoMainActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".hypno.stats.HypnoStatsActivity"
+        <activity
+            android:name=".hypno.edit_questions.EditQuestionsActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".hypno.add_client.AddClientActivity"
+        <activity
+            android:name=".hypno.stats.HypnoStatsActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".client.ClientSignupActivity"
+        <activity
+            android:name=".hypno.add_client.AddClientActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".client.ClientSignupActivity"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <data
                     android:host="hypnotabac.page.link"
                     android:scheme="https" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".client.ClientMainActivity"
+        <activity
+            android:name=".client.ClientMainActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".client.ClientStatsActivity"
+        <activity
+            android:name=".client.ClientStatsActivity"
             android:screenOrientation="nosensor" />
     </application>
 

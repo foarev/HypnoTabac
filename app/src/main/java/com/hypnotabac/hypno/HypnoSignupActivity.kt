@@ -21,8 +21,6 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
     private val TAG = "HypnoSignupActivity"
     private lateinit var billingClient:BillingClient
     private lateinit var email:String
-    private lateinit var firstName:String
-    private lateinit var lastName:String
     private lateinit var password:String
 
     private val skuList = listOf("hypno")
@@ -72,31 +70,11 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         btnSignUp!!.setOnClickListener(View.OnClickListener {
                             loading.visibility = View.VISIBLE
                             email = editEmail!!.text.toString().trim { it <= ' ' }
-                            firstName = editFirstName!!.text.toString().trim { it <= ' ' }
-                            lastName = editLastName!!.text.toString().trim { it <= ' ' }
                             password = editPassword!!.text.toString().trim { it <= ' ' }
                             val confirmPwd = confirmPassword!!.text.toString().trim { it <= ' ' }
                             if (TextUtils.isEmpty(email)) {
                                 Toast.makeText(this@HypnoSignupActivity, "Veuillez entrer un email", Toast.LENGTH_SHORT)
                                     .show()
-                                loading.visibility = View.GONE
-                                return@OnClickListener
-                            }
-                            if (TextUtils.isEmpty(firstName)) {
-                                Toast.makeText(
-                                    this@HypnoSignupActivity,
-                                    "Veuillez entrer un prénom",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                loading.visibility = View.GONE
-                                return@OnClickListener
-                            }
-                            if (TextUtils.isEmpty(lastName)) {
-                                Toast.makeText(
-                                    this@HypnoSignupActivity,
-                                    "Veuillez entrer un nom de famille",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                                 loading.visibility = View.GONE
                                 return@OnClickListener
                             }
@@ -193,8 +171,6 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                             firebaseDatabase.getReference("users")
                                 .child(user.uid)
                         dbCurrentUser.child("email").setValue(email)
-                        dbCurrentUser.child("firstName").setValue(firstName)
-                        dbCurrentUser.child("lastName").setValue(lastName)
                         loading.visibility = View.GONE
                         Toast.makeText(
                             this@HypnoSignupActivity,
