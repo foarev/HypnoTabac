@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
-import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 
@@ -32,7 +31,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 loading.visibility = View.GONE
                 Toast.makeText(this@ForgotPasswordActivity, "Email envoyé", Toast.LENGTH_SHORT)
                     .show()
-                startActivity(Intent(applicationContext, LoginActivity::class.java))
+                startActivity(Intent(applicationContext, HypnoLoginActivity::class.java))
             }
         }
     }

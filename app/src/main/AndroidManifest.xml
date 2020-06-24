@@ -14,19 +14,22 @@
         android:screenOrientation="nosensor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".hypno.ForgotPasswordActivity"></activity>
-        <activity
-            android:name=".WelcomeActivity"
+        <activity android:name=".StartupActivity"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            </intent-filter></activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".WelcomeActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".hypno.HypnoLoginActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".hypno.ForgotPasswordActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".hypno.HypnoSignupActivity"

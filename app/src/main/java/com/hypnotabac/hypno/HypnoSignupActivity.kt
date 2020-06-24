@@ -11,7 +11,6 @@ import com.android.billingclient.api.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.FirebaseDatabase
-import com.hypnotabac.LoginActivity
 import com.hypnotabac.R
 import kotlinx.android.synthetic.main.activity_h_signup.*
 
@@ -29,7 +28,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_h_signup)
         login.setOnClickListener{
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
+            startActivity(Intent(applicationContext, HypnoLoginActivity::class.java))
         }
         setupBillingClient()
     }
@@ -180,7 +179,7 @@ class HypnoSignupActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         startActivity(
                             Intent(
                                 applicationContext,
-                                LoginActivity::class.java
+                                HypnoLoginActivity::class.java
                             )
                         )
                     } else {

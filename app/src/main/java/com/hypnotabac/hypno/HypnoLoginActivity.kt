@@ -1,4 +1,4 @@
-package com.hypnotabac
+package com.hypnotabac.hypno
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,12 +9,11 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.app.AppCompatActivity
-import com.hypnotabac.hypno.ForgotPasswordActivity
-import com.hypnotabac.hypno.HypnoMainActivity
-import com.hypnotabac.hypno.HypnoSignupActivity
+import com.hypnotabac.R
+import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_h_login.*
 
-class LoginActivity : AppCompatActivity() {
+class HypnoLoginActivity : AppCompatActivity() {
     private var firebaseAuth: FirebaseAuth? = null
     private val RC_SIGN_IN = 0
     private val TAG = "LoginActivity"
@@ -27,14 +26,14 @@ class LoginActivity : AppCompatActivity() {
             val email = username!!.text.toString().trim { it <= ' ' }
             val password = password!!.text.toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
-                Toast.makeText(this@LoginActivity, "Veuillez entrer un email", Toast.LENGTH_SHORT)
+                Toast.makeText(this@HypnoLoginActivity, "Veuillez entrer un email", Toast.LENGTH_SHORT)
                     .show()
                 loading.visibility = View.GONE
                 return@OnClickListener
             }
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(
-                    this@LoginActivity,
+                    this@HypnoLoginActivity,
                     "Veuillez entrer un mot de passe",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -43,18 +42,27 @@ class LoginActivity : AppCompatActivity() {
             }
             firebaseAuth!!.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
-                    this@LoginActivity,
+                    this@HypnoLoginActivity,
                     OnCompleteListener<AuthResult?> { task ->
                         if (task.isSuccessful) {
-                            SaveSharedPreferences.resetAll(this@LoginActivity)
-                            SaveSharedPreferences.setEmail(this@LoginActivity, email)
-                            SaveSharedPreferences.setUserType(this@LoginActivity, "hypno")
-                            SaveSharedPreferences.setUserID(this@LoginActivity, firebaseAuth!!.uid)
+                            SaveSharedPreferences.resetAll(this@HypnoLoginActivity)
+                            SaveSharedPreferences.setEmail(
+                                this@HypnoLoginActivity,
+                                email
+                            )
+                            SaveSharedPreferences.setUserType(
+                                this@HypnoLoginActivity,
+                                "hypno"
+                            )
+                            SaveSharedPreferences.setUserID(
+                                this@HypnoLoginActivity,
+                                firebaseAuth!!.uid
+                            )
                             loading.visibility = View.GONE
                             startActivity(Intent(applicationContext, HypnoMainActivity::class.java))
                         } else {
                             Toast.makeText(
-                                this@LoginActivity,
+                                this@HypnoLoginActivity,
                                 "L'adresse email ou le mot de passe est incorrect",
                                 Toast.LENGTH_SHORT
                             ).show()

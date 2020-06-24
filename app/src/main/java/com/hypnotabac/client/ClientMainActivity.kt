@@ -17,12 +17,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.hypnotabac.LoginActivity
+import com.hypnotabac.hypno.HypnoLoginActivity
 import com.hypnotabac.R
 import com.hypnotabac.SaveSharedPreferences
 import kotlinx.android.synthetic.main.activity_c_main.*
@@ -141,7 +140,7 @@ class ClientMainActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Une erreur est survenue.", Toast.LENGTH_SHORT).show()
                     SaveSharedPreferences.resetAll(this)
-                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    startActivity(Intent(applicationContext, HypnoLoginActivity::class.java))
                 }
             } else {
                 Toast.makeText(this, "Veuillez choisir une condition", Toast.LENGTH_SHORT).show()
@@ -201,7 +200,7 @@ class SimpleAdapter(
         btns.add(linearLayout.btn_condition1 as Button)
         btns.add(linearLayout.btn_condition2 as Button)
         btns.add(linearLayout.btn_condition3 as Button)
-        (0..spanCount-1).forEach { index ->
+        (0 until spanCount).forEach { index ->
             val position = (p1-index)/spanCount
             Log.w(TAG, "position : "+position+"; index : "+index+"; p1 : "+p1)
             if(p1>conditions_list.lastIndex)
