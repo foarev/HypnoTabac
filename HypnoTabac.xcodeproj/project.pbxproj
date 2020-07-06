@@ -1,0 +1,801 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0ABE6DDF6D05FD96F387F372 /* Pods_HypnoTabac_HypnoTabacUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B599727C6A64C0DF9201DC /* Pods_HypnoTabac_HypnoTabacUITests.framework */; };
+		46666BD894ED37801A045C9D /* Pods_HypnoTabac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC12190E11B7348218134D3F /* Pods_HypnoTabac.framework */; };
+		6357DAB279DC8CE493072D44 /* Pods_HypnoTabacTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680C1C2374A5346A4AB74CEA /* Pods_HypnoTabacTests.framework */; };
+		A70C415D24A649C00047F5AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70C415C24A649C00047F5AB /* AppDelegate.swift */; };
+		A70C415F24A649C00047F5AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70C415E24A649C00047F5AB /* SceneDelegate.swift */; };
+		A70C416124A649C00047F5AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70C416024A649C00047F5AB /* ContentView.swift */; };
+		A70C416324A649C20047F5AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A70C416224A649C20047F5AB /* Assets.xcassets */; };
+		A70C416624A649C20047F5AB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A70C416524A649C20047F5AB /* Preview Assets.xcassets */; };
+		A70C416924A649C20047F5AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A70C416724A649C20047F5AB /* LaunchScreen.storyboard */; };
+		A70C417424A649C20047F5AB /* HypnoTabacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70C417324A649C20047F5AB /* HypnoTabacTests.swift */; };
+		A70C417F24A649C20047F5AB /* HypnoTabacUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70C417E24A649C20047F5AB /* HypnoTabacUITests.swift */; };
+		A71AC27224AB6C380088BD25 /* ClientMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AC27124AB6C380088BD25 /* ClientMainView.swift */; };
+		A71AC27424AB724A0088BD25 /* ClientStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AC27324AB724A0088BD25 /* ClientStatsView.swift */; };
+		A758700924A9D19400937AB9 /* StatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758700824A9D19400937AB9 /* StatusBarView.swift */; };
+		A758700B24A9DF8C00937AB9 /* Colours.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A758700A24A9DF8C00937AB9 /* Colours.xcassets */; };
+		A758700D24A9E32600937AB9 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758700C24A9E32600937AB9 /* ColorManager.swift */; };
+		A758700F24AA0A1200937AB9 /* WelcomeStatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758700E24AA0A1200937AB9 /* WelcomeStatusBarView.swift */; };
+		A758701124AA253300937AB9 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758701024AA253300937AB9 /* WelcomeView.swift */; };
+		A760CDB024AB2A60008A2221 /* ClientLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A760CDAF24AB2A60008A2221 /* ClientLoginView.swift */; };
+		A7615A4C24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */; };
+		A7615A4D24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */; };
+		A7615A4E24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */; };
+		A7615A5024ADCFFC00C9D262 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = A7615A4F24ADCFFC00C9D262 /* Podfile */; };
+		A76342D424AF679100269D27 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76342D324AF679100269D27 /* SessionStore.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A70C417024A649C20047F5AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A70C415124A649C00047F5AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A70C415824A649C00047F5AB;
+			remoteInfo = HypnoTabac;
+		};
+		A70C417B24A649C20047F5AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A70C415124A649C00047F5AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A70C415824A649C00047F5AB;
+			remoteInfo = HypnoTabac;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		251DC7927770D8BE17A1825C /* Pods-HypnoTabacTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HypnoTabacTests.debug.xcconfig"; path = "Target Support Files/Pods-HypnoTabacTests/Pods-HypnoTabacTests.debug.xcconfig"; sourceTree = "<group>"; };
+		47687EBD2878ECD6E3BA18AB /* Pods-HypnoTabac-HypnoTabacUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HypnoTabac-HypnoTabacUITests.release.xcconfig"; path = "Target Support Files/Pods-HypnoTabac-HypnoTabacUITests/Pods-HypnoTabac-HypnoTabacUITests.release.xcconfig"; sourceTree = "<group>"; };
+		680C1C2374A5346A4AB74CEA /* Pods_HypnoTabacTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HypnoTabacTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73142C8E628F993369E51B63 /* Pods-HypnoTabacTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HypnoTabacTests.release.xcconfig"; path = "Target Support Files/Pods-HypnoTabacTests/Pods-HypnoTabacTests.release.xcconfig"; sourceTree = "<group>"; };
+		77CAAD3F945BB756A72FD01A /* Pods-HypnoTabac-HypnoTabacUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HypnoTabac-HypnoTabacUITests.debug.xcconfig"; path = "Target Support Files/Pods-HypnoTabac-HypnoTabacUITests/Pods-HypnoTabac-HypnoTabacUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		99E3120075BBE6B4F2B732B1 /* Pods-HypnoTabac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HypnoTabac.release.xcconfig"; path = "Target Support Files/Pods-HypnoTabac/Pods-HypnoTabac.release.xcconfig"; sourceTree = "<group>"; };
+		A70C415924A649C00047F5AB /* HypnoTabac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HypnoTabac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A70C415C24A649C00047F5AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A70C415E24A649C00047F5AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A70C416024A649C00047F5AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A70C416224A649C20047F5AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A70C416524A649C20047F5AB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A70C416824A649C20047F5AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A70C416A24A649C20047F5AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A70C416F24A649C20047F5AB /* HypnoTabacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HypnoTabacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A70C417324A649C20047F5AB /* HypnoTabacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnoTabacTests.swift; sourceTree = "<group>"; };
+		A70C417524A649C20047F5AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A70C417A24A649C20047F5AB /* HypnoTabacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HypnoTabacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A70C417E24A649C20047F5AB /* HypnoTabacUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnoTabacUITests.swift; sourceTree = "<group>"; };
+		A70C418024A649C20047F5AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A71AC27124AB6C380088BD25 /* ClientMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientMainView.swift; sourceTree = "<group>"; };
+		A71AC27324AB724A0088BD25 /* ClientStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientStatsView.swift; sourceTree = "<group>"; };
+		A758700824A9D19400937AB9 /* StatusBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarView.swift; sourceTree = "<group>"; };
+		A758700A24A9DF8C00937AB9 /* Colours.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colours.xcassets; sourceTree = "<group>"; };
+		A758700C24A9E32600937AB9 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		A758700E24AA0A1200937AB9 /* WelcomeStatusBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeStatusBarView.swift; sourceTree = "<group>"; };
+		A758701024AA253300937AB9 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		A760CDAF24AB2A60008A2221 /* ClientLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientLoginView.swift; sourceTree = "<group>"; };
+		A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A7615A4F24ADCFFC00C9D262 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A76342D224AF279F00269D27 /* HypnoTabac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HypnoTabac.entitlements; sourceTree = "<group>"; };
+		A76342D324AF679100269D27 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		B9B599727C6A64C0DF9201DC /* Pods_HypnoTabac_HypnoTabacUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HypnoTabac_HypnoTabacUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC12190E11B7348218134D3F /* Pods_HypnoTabac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HypnoTabac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5DD76E2CC7BA86B54380D78 /* Pods-HypnoTabac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HypnoTabac.debug.xcconfig"; path = "Target Support Files/Pods-HypnoTabac/Pods-HypnoTabac.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A70C415624A649C00047F5AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46666BD894ED37801A045C9D /* Pods_HypnoTabac.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A70C416C24A649C20047F5AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6357DAB279DC8CE493072D44 /* Pods_HypnoTabacTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A70C417724A649C20047F5AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ABE6DDF6D05FD96F387F372 /* Pods_HypnoTabac_HypnoTabacUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7565334D5257D6FEA3D1196C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F5DD76E2CC7BA86B54380D78 /* Pods-HypnoTabac.debug.xcconfig */,
+				99E3120075BBE6B4F2B732B1 /* Pods-HypnoTabac.release.xcconfig */,
+				77CAAD3F945BB756A72FD01A /* Pods-HypnoTabac-HypnoTabacUITests.debug.xcconfig */,
+				47687EBD2878ECD6E3BA18AB /* Pods-HypnoTabac-HypnoTabacUITests.release.xcconfig */,
+				251DC7927770D8BE17A1825C /* Pods-HypnoTabacTests.debug.xcconfig */,
+				73142C8E628F993369E51B63 /* Pods-HypnoTabacTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A70C415024A649C00047F5AB = {
+			isa = PBXGroup;
+			children = (
+				A7615A4F24ADCFFC00C9D262 /* Podfile */,
+				A70C415B24A649C00047F5AB /* HypnoTabac */,
+				A70C417224A649C20047F5AB /* HypnoTabacTests */,
+				A70C417D24A649C20047F5AB /* HypnoTabacUITests */,
+				A70C415A24A649C00047F5AB /* Products */,
+				7565334D5257D6FEA3D1196C /* Pods */,
+				C1B6BCD2B72F5E77AEA9A901 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A70C415A24A649C00047F5AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A70C415924A649C00047F5AB /* HypnoTabac.app */,
+				A70C416F24A649C20047F5AB /* HypnoTabacTests.xctest */,
+				A70C417A24A649C20047F5AB /* HypnoTabacUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A70C415B24A649C00047F5AB /* HypnoTabac */ = {
+			isa = PBXGroup;
+			children = (
+				A76342D224AF279F00269D27 /* HypnoTabac.entitlements */,
+				A70C415C24A649C00047F5AB /* AppDelegate.swift */,
+				A70C415E24A649C00047F5AB /* SceneDelegate.swift */,
+				A70C416024A649C00047F5AB /* ContentView.swift */,
+				A71AC27124AB6C380088BD25 /* ClientMainView.swift */,
+				A71AC27324AB724A0088BD25 /* ClientStatsView.swift */,
+				A758701024AA253300937AB9 /* WelcomeView.swift */,
+				A760CDAF24AB2A60008A2221 /* ClientLoginView.swift */,
+				A758700824A9D19400937AB9 /* StatusBarView.swift */,
+				A758700E24AA0A1200937AB9 /* WelcomeStatusBarView.swift */,
+				A758700A24A9DF8C00937AB9 /* Colours.xcassets */,
+				A70C416224A649C20047F5AB /* Assets.xcassets */,
+				A70C416724A649C20047F5AB /* LaunchScreen.storyboard */,
+				A70C416A24A649C20047F5AB /* Info.plist */,
+				A70C416424A649C20047F5AB /* Preview Content */,
+				A758700C24A9E32600937AB9 /* ColorManager.swift */,
+				A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */,
+				A76342D324AF679100269D27 /* SessionStore.swift */,
+			);
+			path = HypnoTabac;
+			sourceTree = "<group>";
+		};
+		A70C416424A649C20047F5AB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A70C416524A649C20047F5AB /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A70C417224A649C20047F5AB /* HypnoTabacTests */ = {
+			isa = PBXGroup;
+			children = (
+				A70C417324A649C20047F5AB /* HypnoTabacTests.swift */,
+				A70C417524A649C20047F5AB /* Info.plist */,
+			);
+			path = HypnoTabacTests;
+			sourceTree = "<group>";
+		};
+		A70C417D24A649C20047F5AB /* HypnoTabacUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A70C417E24A649C20047F5AB /* HypnoTabacUITests.swift */,
+				A70C418024A649C20047F5AB /* Info.plist */,
+			);
+			path = HypnoTabacUITests;
+			sourceTree = "<group>";
+		};
+		C1B6BCD2B72F5E77AEA9A901 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC12190E11B7348218134D3F /* Pods_HypnoTabac.framework */,
+				B9B599727C6A64C0DF9201DC /* Pods_HypnoTabac_HypnoTabacUITests.framework */,
+				680C1C2374A5346A4AB74CEA /* Pods_HypnoTabacTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A70C415824A649C00047F5AB /* HypnoTabac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70C418324A649C20047F5AB /* Build configuration list for PBXNativeTarget "HypnoTabac" */;
+			buildPhases = (
+				A4813207D289D4976A5DFBC7 /* [CP] Check Pods Manifest.lock */,
+				A70C415524A649C00047F5AB /* Sources */,
+				A70C415624A649C00047F5AB /* Frameworks */,
+				A70C415724A649C00047F5AB /* Resources */,
+				FCDE95148CE38B437C1516F4 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HypnoTabac;
+			productName = HypnoTabac;
+			productReference = A70C415924A649C00047F5AB /* HypnoTabac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A70C416E24A649C20047F5AB /* HypnoTabacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70C418624A649C20047F5AB /* Build configuration list for PBXNativeTarget "HypnoTabacTests" */;
+			buildPhases = (
+				E76CCC750983A8E8A6D08472 /* [CP] Check Pods Manifest.lock */,
+				A70C416B24A649C20047F5AB /* Sources */,
+				A70C416C24A649C20047F5AB /* Frameworks */,
+				A70C416D24A649C20047F5AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A70C417124A649C20047F5AB /* PBXTargetDependency */,
+			);
+			name = HypnoTabacTests;
+			productName = HypnoTabacTests;
+			productReference = A70C416F24A649C20047F5AB /* HypnoTabacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A70C417924A649C20047F5AB /* HypnoTabacUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70C418924A649C20047F5AB /* Build configuration list for PBXNativeTarget "HypnoTabacUITests" */;
+			buildPhases = (
+				AFB503E33F8EA2AE84EE4739 /* [CP] Check Pods Manifest.lock */,
+				A70C417624A649C20047F5AB /* Sources */,
+				A70C417724A649C20047F5AB /* Frameworks */,
+				A70C417824A649C20047F5AB /* Resources */,
+				2959D0796EB62FE307FEFD92 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A70C417C24A649C20047F5AB /* PBXTargetDependency */,
+			);
+			name = HypnoTabacUITests;
+			productName = HypnoTabacUITests;
+			productReference = A70C417A24A649C20047F5AB /* HypnoTabacUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A70C415124A649C00047F5AB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1150;
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = HypnoTabac;
+				TargetAttributes = {
+					A70C415824A649C00047F5AB = {
+						CreatedOnToolsVersion = 11.5;
+					};
+					A70C416E24A649C20047F5AB = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = A70C415824A649C00047F5AB;
+					};
+					A70C417924A649C20047F5AB = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = A70C415824A649C00047F5AB;
+					};
+				};
+			};
+			buildConfigurationList = A70C415424A649C00047F5AB /* Build configuration list for PBXProject "HypnoTabac" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A70C415024A649C00047F5AB;
+			productRefGroup = A70C415A24A649C00047F5AB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A70C415824A649C00047F5AB /* HypnoTabac */,
+				A70C416E24A649C20047F5AB /* HypnoTabacTests */,
+				A70C417924A649C20047F5AB /* HypnoTabacUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A70C415724A649C00047F5AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7615A5024ADCFFC00C9D262 /* Podfile in Resources */,
+				A70C416924A649C20047F5AB /* LaunchScreen.storyboard in Resources */,
+				A70C416624A649C20047F5AB /* Preview Assets.xcassets in Resources */,
+				A7615A4C24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */,
+				A70C416324A649C20047F5AB /* Assets.xcassets in Resources */,
+				A758700B24A9DF8C00937AB9 /* Colours.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A70C416D24A649C20047F5AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7615A4D24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A70C417824A649C20047F5AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7615A4E24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2959D0796EB62FE307FEFD92 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HypnoTabac-HypnoTabacUITests/Pods-HypnoTabac-HypnoTabacUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HypnoTabac-HypnoTabacUITests/Pods-HypnoTabac-HypnoTabacUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HypnoTabac-HypnoTabacUITests/Pods-HypnoTabac-HypnoTabacUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4813207D289D4976A5DFBC7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HypnoTabac-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AFB503E33F8EA2AE84EE4739 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HypnoTabac-HypnoTabacUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E76CCC750983A8E8A6D08472 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HypnoTabacTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FCDE95148CE38B437C1516F4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HypnoTabac/Pods-HypnoTabac-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HypnoTabac/Pods-HypnoTabac-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HypnoTabac/Pods-HypnoTabac-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A70C415524A649C00047F5AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A70C415D24A649C00047F5AB /* AppDelegate.swift in Sources */,
+				A71AC27224AB6C380088BD25 /* ClientMainView.swift in Sources */,
+				A758700F24AA0A1200937AB9 /* WelcomeStatusBarView.swift in Sources */,
+				A758700D24A9E32600937AB9 /* ColorManager.swift in Sources */,
+				A760CDB024AB2A60008A2221 /* ClientLoginView.swift in Sources */,
+				A71AC27424AB724A0088BD25 /* ClientStatsView.swift in Sources */,
+				A70C415F24A649C00047F5AB /* SceneDelegate.swift in Sources */,
+				A758700924A9D19400937AB9 /* StatusBarView.swift in Sources */,
+				A70C416124A649C00047F5AB /* ContentView.swift in Sources */,
+				A76342D424AF679100269D27 /* SessionStore.swift in Sources */,
+				A758701124AA253300937AB9 /* WelcomeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A70C416B24A649C20047F5AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A70C417424A649C20047F5AB /* HypnoTabacTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A70C417624A649C20047F5AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A70C417F24A649C20047F5AB /* HypnoTabacUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A70C417124A649C20047F5AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A70C415824A649C00047F5AB /* HypnoTabac */;
+			targetProxy = A70C417024A649C20047F5AB /* PBXContainerItemProxy */;
+		};
+		A70C417C24A649C20047F5AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A70C415824A649C00047F5AB /* HypnoTabac */;
+			targetProxy = A70C417B24A649C20047F5AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A70C416724A649C20047F5AB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A70C416824A649C20047F5AB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A70C418124A649C20047F5AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A70C418224A649C20047F5AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A70C418424A649C20047F5AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5DD76E2CC7BA86B54380D78 /* Pods-HypnoTabac.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HypnoTabac/HypnoTabac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"HypnoTabac/Preview Content\"";
+				DEVELOPMENT_TEAM = Y5P3URKQ2F;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = HypnoTabac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hypnotabac.HypnoTabac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A70C418524A649C20047F5AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99E3120075BBE6B4F2B732B1 /* Pods-HypnoTabac.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HypnoTabac/HypnoTabac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"HypnoTabac/Preview Content\"";
+				DEVELOPMENT_TEAM = Y5P3URKQ2F;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = HypnoTabac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hypnotabac.HypnoTabac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A70C418724A649C20047F5AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 251DC7927770D8BE17A1825C /* Pods-HypnoTabacTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HypnoTabacTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hypnotabac.HypnoTabacTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HypnoTabac.app/HypnoTabac";
+			};
+			name = Debug;
+		};
+		A70C418824A649C20047F5AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73142C8E628F993369E51B63 /* Pods-HypnoTabacTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HypnoTabacTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hypnotabac.HypnoTabacTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HypnoTabac.app/HypnoTabac";
+			};
+			name = Release;
+		};
+		A70C418A24A649C20047F5AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77CAAD3F945BB756A72FD01A /* Pods-HypnoTabac-HypnoTabacUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HypnoTabacUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hypnotabac.HypnoTabacUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HypnoTabac;
+			};
+			name = Debug;
+		};
+		A70C418B24A649C20047F5AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47687EBD2878ECD6E3BA18AB /* Pods-HypnoTabac-HypnoTabacUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = HypnoTabacUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hypnotabac.HypnoTabacUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HypnoTabac;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A70C415424A649C00047F5AB /* Build configuration list for PBXProject "HypnoTabac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70C418124A649C20047F5AB /* Debug */,
+				A70C418224A649C20047F5AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70C418324A649C20047F5AB /* Build configuration list for PBXNativeTarget "HypnoTabac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70C418424A649C20047F5AB /* Debug */,
+				A70C418524A649C20047F5AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70C418624A649C20047F5AB /* Build configuration list for PBXNativeTarget "HypnoTabacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70C418724A649C20047F5AB /* Debug */,
+				A70C418824A649C20047F5AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70C418924A649C20047F5AB /* Build configuration list for PBXNativeTarget "HypnoTabacUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A70C418A24A649C20047F5AB /* Debug */,
+				A70C418B24A649C20047F5AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A70C415124A649C00047F5AB /* Project object */;
+}

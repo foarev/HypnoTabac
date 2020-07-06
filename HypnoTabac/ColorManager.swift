@@ -18,5 +18,7 @@ struct ColorManager{
     static let colorPrimaryDark = Color("ColorPrimaryDark")
     static let colorPrimarySuperLight = Color("ColorPrimarySuperLight")
     static let colorBackground = Color("ColorBackground")
-    static let colorShadow = Color("colorShadow")
+    static let colorShadow = Color("ColorShadow")
+    static let colorUnpressedBtn1 = Color("ColorUnpressedBtn1")
+    static let colorUnpressedBtn2 = Color("ColorUnpressedBtn2")
 }

@@ -1,0 +1,6 @@
+framework module Pods_HypnoTabac_HypnoTabacUITests {
+  umbrella header "Pods-HypnoTabac-HypnoTabacUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
