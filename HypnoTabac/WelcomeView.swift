@@ -37,29 +37,28 @@ struct WelcomeView: View {
                         Spacer()
                     }
                     HStack{
-                        Text(verbatim: "Cette fonctionnalité n'est pour l'instant disponible que sur Android.").padding()
-//                        Text(verbatim: "Veuillez vous connecter ou créer un compte ci-dessous. Les comptes hypnothérapeute sont payants.").padding()
+                        Text(verbatim: "Veuillez vous connecter ou créer un compte ci-dessous. Les comptes hypnothérapeute sont payants.").padding()
                         Spacer()
                     }
                 }
                 Spacer()
-//                VStack{
-//                    Button(action: {
-//                        //TODO
-//                    }){
-//                        Text("Connexion").bold().foregroundColor(.white).padding(8).frame(width: 300).background(LinearGradient(gradient: .init(colors: [ColorManager.colorPrimaryLight, ColorManager.colorPrimary]), startPoint: .leading, endPoint: .trailing)).cornerRadius(50).shadow(color:.gray, radius: 2, x: 0, y: 2)
-//                    }
-//                    HStack{
-//                        Spacer()
-//                        Text(verbatim: "Vous n'avez pas encore de compte?")
-//                        Button(action: {
-//                            //TODO
-//                        }){
-//                            Text("S'inscrire").foregroundColor(ColorManager.colorPrimary)
-//                        }
-//                        Spacer()
-//                    }.padding(8).scaleEffect(0.8)
-//                }
+                VStack{
+                    Button(action: {
+                        //TODO
+                    }){
+                        Text("Connexion").bold().foregroundColor(.white).padding(8).frame(width: 300).background(LinearGradient(gradient: .init(colors: [ColorManager.colorPrimaryLight, ColorManager.colorPrimary]), startPoint: .leading, endPoint: .trailing)).cornerRadius(50)
+                    }
+                    HStack{
+                        Spacer()
+                        Text(verbatim: "Vous n'avez pas encore de compte?")
+                        Button(action: {
+                            //TODO
+                        }){
+                            Text("S'inscrire").foregroundColor(ColorManager.colorPrimary)
+                        }
+                        Spacer()
+                    }.padding(8).scaleEffect(0.8)
+                }
                 Spacer()
                 Spacer()
             }
