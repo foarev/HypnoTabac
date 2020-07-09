@@ -25,6 +25,7 @@
 		A758700D24A9E32600937AB9 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758700C24A9E32600937AB9 /* ColorManager.swift */; };
 		A758700F24AA0A1200937AB9 /* WelcomeStatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758700E24AA0A1200937AB9 /* WelcomeStatusBarView.swift */; };
 		A758701124AA253300937AB9 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758701024AA253300937AB9 /* WelcomeView.swift */; };
+		A75B48AF24B5ED3800BA0B74 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75B48AE24B5ED3800BA0B74 /* Loader.swift */; };
 		A760CDB024AB2A60008A2221 /* ClientLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A760CDAF24AB2A60008A2221 /* ClientLoginView.swift */; };
 		A7615A4C24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */; };
 		A7615A4D24ADCDB400C9D262 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */; };
@@ -78,6 +79,7 @@
 		A758700C24A9E32600937AB9 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		A758700E24AA0A1200937AB9 /* WelcomeStatusBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeStatusBarView.swift; sourceTree = "<group>"; };
 		A758701024AA253300937AB9 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		A75B48AE24B5ED3800BA0B74 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		A760CDAF24AB2A60008A2221 /* ClientLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientLoginView.swift; sourceTree = "<group>"; };
 		A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A7615A4F24ADCFFC00C9D262 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -173,6 +175,7 @@
 				A758700C24A9E32600937AB9 /* ColorManager.swift */,
 				A7615A4B24ADCDB400C9D262 /* GoogleService-Info.plist */,
 				A76342D324AF679100269D27 /* SessionStore.swift */,
+				A75B48AE24B5ED3800BA0B74 /* Loader.swift */,
 			);
 			path = HypnoTabac;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 			files = (
 				A70C415D24A649C00047F5AB /* AppDelegate.swift in Sources */,
 				A71AC27224AB6C380088BD25 /* ClientMainView.swift in Sources */,
+				A75B48AF24B5ED3800BA0B74 /* Loader.swift in Sources */,
 				A758700F24AA0A1200937AB9 /* WelcomeStatusBarView.swift in Sources */,
 				A758700D24A9E32600937AB9 /* ColorManager.swift in Sources */,
 				A760CDB024AB2A60008A2221 /* ClientLoginView.swift in Sources */,

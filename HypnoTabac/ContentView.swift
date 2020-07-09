@@ -12,10 +12,6 @@ struct ContentView: View {
     @EnvironmentObject var session: SessionStore
     var link:String
     
-    func getUser(){
-        session.listen()
-    }
-    
     var body: some View {
         NavigationView{
             ZStack{
@@ -40,7 +36,9 @@ struct ContentView: View {
             }.navigationBarTitle("")
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
-            .onAppear(perform: getUser)
+            .onAppear{
+                self.session.listen()
+            }
         }
     }
 }
