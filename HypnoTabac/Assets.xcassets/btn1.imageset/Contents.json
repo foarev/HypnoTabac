@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "btn1 1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "btn1 2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

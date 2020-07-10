@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // apply a promotional offer to the user's account.
             print(dynamicLink)
             print(url)
+            UserDefaults.standard.set(dynamicLink.url?.absoluteString, forKey: "emailLink")
             return true
         }
         return false
